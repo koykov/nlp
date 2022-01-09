@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	mod, in, trg string
+	fmod, fin, ftrg string
 
 	mods = map[string]module{
 		"languages": modLanguages{},
@@ -19,19 +19,36 @@ func init() {
 			flag.StringVar(v, names[i], value, usage)
 		}
 	}
-	rf(&mod, []string{"module", "mod", "m"}, "", "Module to compile: [languages]")
-	rf(&in, []string{"input", "in", "i"}, "", "Path to source data file")
-	rf(&trg, []string{"target", "t"}, "", "Target file or directory")
+	rf(&fmod, []string{"module", "mod", "m"}, "", "Module to compile: [languages]")
+	rf(&fin, []string{"input", "in", "i"}, "", "Path to source data file")
+	rf(&ftrg, []string{"target", "t"}, "", "Target file or directory")
 	flag.Parse()
 
-	if len(mod) == 0 {
+	if len(fmod) == 0 {
 		log.Fatalln("param -module is required")
 	}
-	if _, ok := mods[mod]; !ok {
-		log.Fatalf("unknown module: %s\n", mod)
+	var (
+		mod module
+		ok  bool
+		err error
+	)
+	if mod, ok = mods[fmod]; !ok {
+		log.Fatalf("unknown module: %s\n", fmod)
+	}
+	if err = mod.Validate(fin, ftrg); err != nil {
+		log.Fatalf("module validation failed: %s\n", err.Error())
 	}
 }
 
 func main() {
-
+	var (
+		err error
+		mod module
+	)
+	mod = mods[fmod]
+	log.Printf("%s compilation started\n", fmod)
+	if err = mod.Compile(fin, ftrg); err != nil {
+		log.Fatalf("%s compilation failed: %s\n", fmod, err.Error())
+	}
+	log.Printf("%s compilation done\n", fmod)
 }

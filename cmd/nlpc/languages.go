@@ -1,11 +1,17 @@
 package main
 
+import "fmt"
+
 type modLanguages struct{}
 
-func (m modLanguages) Validate(input, _ string, reason *string) bool {
+func (m modLanguages) Validate(input, _ string) error {
 	if len(input) == 0 {
-		*reason = "param -input is required"
-		return false
+		return fmt.Errorf("param -input is required")
 	}
-	return true
+	return nil
+}
+
+func (m modLanguages) Compile(input, target string) error {
+	//
+	return nil
 }
