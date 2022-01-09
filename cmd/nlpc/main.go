@@ -9,7 +9,7 @@ var (
 	fmod, fin, ftrg string
 
 	mods = map[string]module{
-		"languages": modLanguages{},
+		"languages": languagesModule{},
 	}
 )
 
