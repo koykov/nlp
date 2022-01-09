@@ -1,0 +1,12 @@
+[
+  {
+    "name": "English",
+    "iso639_1": "en",
+    "iso639_3": "eng"
+  },
+  {
+    "name": "Russian",
+    "iso639_1": "ru",
+    "iso639_3": "rus"
+  }
+]
