@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"path/filepath"
+	"strings"
 )
 
 type languagesModule struct{}
@@ -24,6 +26,10 @@ func (m languagesModule) Validate(input, _ string) error {
 }
 
 func (m languagesModule) Compile(input, target string) (err error) {
+	if len(target) == 0 {
+		target = strings.TrimSuffix(input, filepath.Ext(input)) + "_repo.go"
+	}
+
 	var body []byte
 	if body, err = ioutil.ReadFile(input); err != nil {
 		return
