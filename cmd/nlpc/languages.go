@@ -11,6 +11,7 @@ type languagesModule struct{}
 
 type languagesTuple struct {
 	Name    string `json:"name"`
+	Native  string `json:"native"`
 	Iso6391 string `json:"iso639_1"`
 	Iso6393 string `json:"iso639_3"`
 }
@@ -35,6 +36,13 @@ func (m languagesModule) Compile(input, target string) (err error) {
 	if err = json.Unmarshal(body, &tuples); err != nil {
 		return
 	}
-	//
+
+	for i := 0; i < len(tuples)-1; i++ {
+		tuple := &tuples[i]
+		if len(tuple.Native) == 0 {
+			tuple.Native = tuple.Name
+		}
+	}
+
 	return
 }
