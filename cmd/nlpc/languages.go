@@ -4,9 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"go/format"
 	"io/ioutil"
 	"path/filepath"
 	"strings"
+
+	"github.com/koykov/nlp"
 )
 
 type languagesModule struct{}
@@ -25,7 +28,7 @@ func (m languagesModule) Validate(input, _ string) error {
 	return nil
 }
 
-func (m languagesModule) Compile(input, target string) (err error) {
+func (m languagesModule) Compile(w moduleWriter, input, target string) (err error) {
 	if len(target) == 0 {
 		target = strings.TrimSuffix(input, filepath.Ext(input)) + "_repo.go"
 	}
@@ -43,12 +46,74 @@ func (m languagesModule) Compile(input, target string) (err error) {
 		return
 	}
 
-	for i := 0; i < len(tuples)-1; i++ {
+	_, _ = w.WriteString("const (\n")
+	for i := 0; i < len(tuples); i++ {
 		tuple := &tuples[i]
 		if len(tuple.Native) == 0 {
 			tuple.Native = tuple.Name
 		}
+		_, _ = w.WriteString(tuple.Name)
+		if i == 0 {
+			_, _ = w.WriteString(" Language = iota")
+		}
+		_ = w.WriteByte('\n')
 	}
+	_, _ = w.WriteString(")\n\n")
+
+	var (
+		lo, hi uint16
+		ol     nlp.OL32
+	)
+	_, _ = w.WriteString("type lt struct {\n\tname, native, iso1, iso3 OL32\n}\n\nvar (\n")
+	_, _ = w.WriteString("__lt_lst = []lt{\n")
+	for i := 0; i < len(tuples); i++ {
+		tuple := &tuples[i]
+		hi = lo + uint16(len(tuple.Name))
+		ol.Encode(lo, hi)
+		lo = hi
+		_, _ = w.WriteString("{name:0x")
+		_, _ = w.WriteString(fmt.Sprintf("%08x", ol))
+
+		hi = lo + uint16(len(tuple.Native))
+		ol.Encode(lo, hi)
+		lo = hi
+		_, _ = w.WriteString(",native:0x")
+		_, _ = w.WriteString(fmt.Sprintf("%08x", ol))
+
+		hi = lo + uint16(len(tuple.Iso6391))
+		ol.Encode(lo, hi)
+		lo = hi
+		_, _ = w.WriteString(",iso1:0x")
+		_, _ = w.WriteString(fmt.Sprintf("%08x", ol))
+
+		hi = lo + uint16(len(tuple.Iso6393))
+		ol.Encode(lo, hi)
+		lo = hi
+		_, _ = w.WriteString(",iso3:0x")
+		_, _ = w.WriteString(fmt.Sprintf("%08x", ol))
+		_, _ = w.WriteString("},\n")
+	}
+	_, _ = w.WriteString("}\n")
+
+	_, _ = w.WriteString("__lt_buf = []byte(\"")
+	for i := 0; i < len(tuples); i++ {
+		tuple := &tuples[i]
+		_, _ = w.WriteString(tuple.Name)
+		_, _ = w.WriteString(tuple.Native)
+		_, _ = w.WriteString(tuple.Iso6391)
+		_, _ = w.WriteString(tuple.Iso6393)
+	}
+	_, _ = w.WriteString("\")\n")
+
+	_, _ = w.WriteString(")\n")
+
+	source := w.Bytes()
+	var fmtSource []byte
+	if fmtSource, err = format.Source(source); err != nil {
+		return
+	}
+
+	err = ioutil.WriteFile(target, fmtSource, 0644)
 
 	return
 }
