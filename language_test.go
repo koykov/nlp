@@ -15,24 +15,32 @@ func TestLanguage(t *testing.T) {
 }
 
 func BenchmarkLanguage(b *testing.B) {
-	assert := func(b *testing.B, l Language, typ uint) {
+	b.Run("name", func(b *testing.B) {
 		var x string
 		for i := 0; i < b.N; i++ {
-			switch typ {
-			case 0:
-				x = l.String()
-			case 1:
-				x = l.Native()
-			case 2:
-				x = l.Iso6391()
-			case 3:
-				x = l.Iso6393()
-			}
+			x = Russian.String()
 		}
 		_ = x
-	}
-	b.Run("name", func(b *testing.B) { assert(b, Russian, 0) })
-	// b.Run("native", func(b *testing.B) { assert(b, Russian, 1) })
-	// b.Run("iso639-1", func(b *testing.B) { assert(b, Russian, 2) })
-	// b.Run("iso639-3", func(b *testing.B) { assert(b, Russian, 3) })
+	})
+	b.Run("native", func(b *testing.B) {
+		var x string
+		for i := 0; i < b.N; i++ {
+			x = Russian.Native()
+		}
+		_ = x
+	})
+	b.Run("iso639-1", func(b *testing.B) {
+		var x string
+		for i := 0; i < b.N; i++ {
+			x = Russian.Iso6391()
+		}
+		_ = x
+	})
+	b.Run("iso639-3", func(b *testing.B) {
+		var x string
+		for i := 0; i < b.N; i++ {
+			x = Russian.Iso6393()
+		}
+		_ = x
+	})
 }
