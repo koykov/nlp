@@ -52,7 +52,10 @@ func (m languagesModule) Compile(w moduleWriter, input, target string) (err erro
 		if len(tuple.Native) == 0 {
 			tuple.Native = tuple.Name
 		}
-		_, _ = w.WriteString(tuple.Name)
+		name := tuple.Name
+		name = strings.ReplaceAll(name, " ", "_")
+		name = strings.ReplaceAll(name, "-", "_")
+		_, _ = w.WriteString(name)
 		if i == 0 {
 			_, _ = w.WriteString(" Language = iota")
 		}
