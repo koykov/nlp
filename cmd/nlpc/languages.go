@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/koykov/nlp"
+	"github.com/koykov/entry"
 )
 
 type languagesModule struct{}
@@ -46,7 +46,7 @@ func (m languagesModule) Compile(w moduleWriter, input, target string) (err erro
 		return
 	}
 
-	_, _ = w.WriteString("const (\n")
+	_, _ = w.WriteString("import \"github.com/koykov/entry\"\n\nconst (\n")
 	for i := 0; i < len(tuples); i++ {
 		tuple := &tuples[i]
 		if len(tuple.Native) == 0 {
@@ -65,9 +65,9 @@ func (m languagesModule) Compile(w moduleWriter, input, target string) (err erro
 
 	var (
 		lo, hi uint16
-		ol     nlp.OL32
+		ol     entry.Entry32
 	)
-	_, _ = w.WriteString("type lt struct {\n\tname, native, iso1, iso3 OL32\n}\n\nvar (\n")
+	_, _ = w.WriteString("type lt struct {\n\tname, native, iso1, iso3 entry.Entry32\n}\n\nvar (\n")
 	_, _ = w.WriteString("__lt_lst = []lt{\n")
 	for i := 0; i < len(tuples); i++ {
 		tuple := &tuples[i]

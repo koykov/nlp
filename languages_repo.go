@@ -2,6 +2,8 @@
 
 package nlp
 
+import "github.com/koykov/entry"
+
 const (
 	Abkhaz Language = iota
 	Afar
@@ -190,7 +192,7 @@ const (
 )
 
 type lt struct {
-	name, native, iso1, iso3 OL32
+	name, native, iso1, iso3 entry.Entry32
 }
 
 var (
