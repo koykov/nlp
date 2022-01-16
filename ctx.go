@@ -1,5 +1,6 @@
 package nlp
 
 type Ctx struct {
-	bufLDP []LanguageDetectProba
+	BufSDP []ScriptDetectProba
+	BufLDP []LanguageDetectProba
 }
