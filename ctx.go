@@ -4,8 +4,8 @@ type Ctx struct {
 	sd ScriptDetector
 	ld LanguageDetector
 
-	BufSDS ScriptDetectScores
-	BufLDS LanguageDetectScores
+	BufSDS ScriptDetectProba
+	BufLDS LanguageDetectProba
 }
 
 func NewCtx() *Ctx {
