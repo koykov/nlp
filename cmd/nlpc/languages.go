@@ -15,10 +15,11 @@ import (
 type languagesModule struct{}
 
 type languagesTuple struct {
-	Name    string `json:"name"`
-	Native  string `json:"native"`
-	Iso6391 string `json:"iso639_1"`
-	Iso6393 string `json:"iso639_3"`
+	Name    string   `json:"name"`
+	Native  string   `json:"native"`
+	Iso6391 string   `json:"iso639_1"`
+	Iso6393 string   `json:"iso639_3"`
+	Scripts []string `json:"scripts"`
 }
 
 func (m languagesModule) Validate(input, _ string) error {

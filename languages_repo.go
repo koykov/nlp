@@ -5,189 +5,108 @@ package nlp
 import "github.com/koykov/entry"
 
 const (
-	Abkhaz Language = iota
-	Afar
-	Afrikaans
+	Afrikaans Language = iota
 	Akan
 	Albanian
 	Amharic
 	Arabic
-	Aragonese
 	Armenian
-	Assamese
-	Avaric
-	Avestan
-	Aymara
 	Azerbaijani
-	Bambara
-	Bashkir
 	Basque
+	Bhojpuri
 	Belarusian
 	Bengali
-	Bihari
-	Bislama
 	Bosnian
-	Breton
 	Bulgarian
 	Burmese
 	Catalan
-	Chamorro
-	Chechen
-	Chichewa
+	Chewa
 	Chinese
-	Chuvash
-	Cornish
-	Corsican
-	Cree
 	Croatian
 	Czech
 	Danish
-	Divehi
 	Dutch
-	Dzongkha
 	English
 	Esperanto
 	Estonian
-	Ewe
-	Faroese
-	Fijian
 	Finnish
 	French
-	Fula
-	Galician
 	Georgian
 	German
 	Greek
-	Guaraní
 	Gujarati
-	Haitian
+	Haitian_Creole
 	Hausa
 	Hebrew
-	Herero
 	Hindi
-	Hiri_Motu
 	Hungarian
-	Interlingua
 	Indonesian
-	Interlingue
 	Irish
 	Igbo
-	Inupiaq
-	Ido
 	Icelandic
+	Ilocano
 	Italian
-	Inuktitut
 	Japanese
 	Javanese
-	Greenlandic
 	Kannada
-	Kanuri
-	Kashmiri
 	Kazakh
 	Khmer
-	Kikuyu
 	Kinyarwanda
-	Kyrgyz
-	Komi
-	Kongo
 	Korean
 	Kurdish
-	Kwanyama
 	Latin
-	Luxembourgish
 	Ganda
-	Limburgish
-	Lingala
-	Lao
 	Lithuanian
-	Luba_Katanga
 	Latvian
-	Manx
 	Macedonian
 	Malagasy
 	Malay
 	Malayalam
-	Maltese
-	Māori
+	Maori
 	Marathi
-	Marshallese
 	Mongolian
-	Nauruan
-	Navajo
-	Northern_Ndebele
+	Maithili
 	Nepali
-	Ndonga
-	Norwegian_Bokmål
+	Norwegian_Bokmal
 	Norwegian_Nynorsk
-	Norwegian
-	Nuosu
-	Southern_Ndebele
-	Occitan
-	Ojibwe
-	Old_Bulgarian
 	Oromo
 	Oriya
-	Ossetian
 	Punjabi
-	Pāli
 	Persian
 	Polish
-	Pashto
 	Portuguese
-	Quechua
-	Romansh
 	Kirundi
 	Romanian
 	Russian
-	Sanskrit
-	Sardinian
-	Sindhi
-	Northern_Sami
-	Samoan
-	Sango
+	Saraiki
 	Serbian
-	Gaelic
 	Shona
 	Sinhalese
 	Slovak
-	Slovene
+	Slovenian
 	Somali
-	Southern_Sotho
+	Sotho
 	Spanish
-	Sundanese
 	Swahili
-	Swati
 	Swedish
 	Tamil
 	Telugu
-	Tajik
 	Thai
 	Tigrinya
-	Tibetan
 	Turkmen
 	Tagalog
 	Tswana
-	Tonga
 	Turkish
 	Tsonga
-	Tatar
-	Twi
-	Tahitian
 	Uyghur
 	Ukrainian
 	Urdu
 	Uzbek
-	Venda
 	Vietnamese
-	Volapük
-	Walloon
 	Welsh
-	Wolof
-	Western_Frisian
 	Xhosa
 	Yiddish
 	Yoruba
-	Zhuang
 	Zulu
 )
 
@@ -197,190 +116,109 @@ type lt struct {
 
 var (
 	__lt_lst = []lt{
-		{name: 0x00000006, native: 0x0006002b, iso1: 0x002b002d, iso3: 0x002d0030},
-		{name: 0x00300034, native: 0x0034003a, iso1: 0x003a003c, iso3: 0x003c003f},
-		{name: 0x003f0048, native: 0x00480051, iso1: 0x00510053, iso3: 0x00530056},
-		{name: 0x0056005a, native: 0x005a005e, iso1: 0x005e0060, iso3: 0x00600063},
-		{name: 0x0063006b, native: 0x006b0070, iso1: 0x00700072, iso3: 0x00720075},
-		{name: 0x0075007c, native: 0x007c0088, iso1: 0x0088008a, iso3: 0x008a008d},
-		{name: 0x008d0093, native: 0x009300a1, iso1: 0x00a100a3, iso3: 0x00a300a6},
-		{name: 0x00a600af, native: 0x00af00b8, iso1: 0x00b800ba, iso3: 0x00ba00bd},
-		{name: 0x00bd00c5, native: 0x00c500d3, iso1: 0x00d300d5, iso3: 0x00d500d8},
-		{name: 0x00d800e0, native: 0x00e000f5, iso1: 0x00f500f7, iso3: 0x00f700fa},
-		{name: 0x00fa0100, native: 0x0100012c, iso1: 0x012c012e, iso3: 0x012e0131},
-		{name: 0x01310138, native: 0x0138013e, iso1: 0x013e0140, iso3: 0x01400143},
-		{name: 0x01430149, native: 0x01490152, iso1: 0x01520154, iso3: 0x01540157},
-		{name: 0x01570162, native: 0x01620172, iso1: 0x01720174, iso3: 0x01740177},
-		{name: 0x0177017e, native: 0x017e0188, iso1: 0x0188018a, iso3: 0x018a018d},
-		{name: 0x018d0194, native: 0x019401ab, iso1: 0x01ab01ad, iso3: 0x01ad01b0},
-		{name: 0x01b001b6, native: 0x01b601c6, iso1: 0x01c601c8, iso3: 0x01c801cb},
-		{name: 0x01cb01d5, native: 0x01d501f2, iso1: 0x01f201f4, iso3: 0x01f401f7},
-		{name: 0x01f701fe, native: 0x01fe020d, iso1: 0x020d020f, iso3: 0x020f0212},
-		{name: 0x02120218, native: 0x0218022d, iso1: 0x022d022f, iso3: 0x022f0232},
-		{name: 0x02320239, native: 0x02390240, iso1: 0x02400242, iso3: 0x02420245},
-		{name: 0x0245024c, native: 0x024c025a, iso1: 0x025a025c, iso3: 0x025c025f},
-		{name: 0x025f0265, native: 0x0265026e, iso1: 0x026e0270, iso3: 0x02700273},
-		{name: 0x0273027c, native: 0x027c0297, iso1: 0x02970299, iso3: 0x0299029c},
-		{name: 0x029c02a3, native: 0x02a302b2, iso1: 0x02b202b4, iso3: 0x02b402b7},
-		{name: 0x02b702be, native: 0x02be02c5, iso1: 0x02c502c7, iso3: 0x02c702ca},
-		{name: 0x02ca02d2, native: 0x02d202d9, iso1: 0x02d902db, iso3: 0x02db02de},
-		{name: 0x02de02e5, native: 0x02e502fc, iso1: 0x02fc02fe, iso3: 0x02fe0301},
-		{name: 0x03010309, native: 0x0309031d, iso1: 0x031d031f, iso3: 0x031f0322},
-		{name: 0x03220329, native: 0x0329034c, iso1: 0x034c034e, iso3: 0x034e0351},
-		{name: 0x03510358, native: 0x0358036d, iso1: 0x036d036f, iso3: 0x036f0372},
-		{name: 0x03720379, native: 0x03790381, iso1: 0x03810383, iso3: 0x03830386},
-		{name: 0x0386038e, native: 0x038e03a1, iso1: 0x03a103a3, iso3: 0x03a303a6},
-		{name: 0x03a603aa, native: 0x03aa03bf, iso1: 0x03bf03c1, iso3: 0x03c103c4},
-		{name: 0x03c403cc, native: 0x03cc03da, iso1: 0x03da03dc, iso3: 0x03dc03df},
-		{name: 0x03df03e4, native: 0x03e403fc, iso1: 0x03fc03fe, iso3: 0x03fe0401},
-		{name: 0x04010407, native: 0x0407040c, iso1: 0x040c040e, iso3: 0x040e0411},
-		{name: 0x04110417, native: 0x04170423, iso1: 0x04230425, iso3: 0x04250428},
-		{name: 0x0428042d, native: 0x042d043f, iso1: 0x043f0441, iso3: 0x04410444},
-		{name: 0x0444044c, native: 0x044c045e, iso1: 0x045e0460, iso3: 0x04600463},
-		{name: 0x0463046a, native: 0x046a0471, iso1: 0x04710473, iso3: 0x04730476},
-		{name: 0x0476047f, native: 0x047f0488, iso1: 0x0488048a, iso3: 0x048a048d},
-		{name: 0x048d0495, native: 0x049504a6, iso1: 0x04a604a8, iso3: 0x04a804ab},
-		{name: 0x04ab04ae, native: 0x04ae04b5, iso1: 0x04b504b7, iso3: 0x04b704ba},
-		{name: 0x04ba04c1, native: 0x04c104ca, iso1: 0x04ca04cc, iso3: 0x04cc04cf},
-		{name: 0x04cf04d5, native: 0x04d504e2, iso1: 0x04e204e4, iso3: 0x04e404e7},
-		{name: 0x04e704ee, native: 0x04ee0501, iso1: 0x05010503, iso3: 0x05030506},
-		{name: 0x0506050c, native: 0x050c0528, iso1: 0x0528052a, iso3: 0x052a052d},
-		{name: 0x052d0531, native: 0x05310548, iso1: 0x0548054a, iso3: 0x054a054d},
-		{name: 0x054d0555, native: 0x0555055b, iso1: 0x055b055d, iso3: 0x055d0560},
-		{name: 0x05600568, native: 0x0568057d, iso1: 0x057d057f, iso3: 0x057f0582},
-		{name: 0x05820588, native: 0x0588058f, iso1: 0x058f0591, iso3: 0x05910594},
-		{name: 0x05940599, native: 0x059905a9, iso1: 0x05a905ab, iso3: 0x05ab05ae},
-		{name: 0x05ae05b6, native: 0x05b605c0, iso1: 0x05c005c2, iso3: 0x05c205c5},
-		{name: 0x05c505cd, native: 0x05cd05e2, iso1: 0x05e205e4, iso3: 0x05e405e7},
-		{name: 0x05e705ee, native: 0x05ee05fd, iso1: 0x05fd05ff, iso3: 0x05ff0602},
-		{name: 0x06020607, native: 0x0607061b, iso1: 0x061b061d, iso3: 0x061d0620},
-		{name: 0x06200626, native: 0x06260630, iso1: 0x06300632, iso3: 0x06320635},
-		{name: 0x0635063b, native: 0x063b0645, iso1: 0x06450647, iso3: 0x0647064a},
-		{name: 0x064a064f, native: 0x064f0672, iso1: 0x06720674, iso3: 0x06740677},
-		{name: 0x06770680, native: 0x06800689, iso1: 0x0689068b, iso3: 0x068b068e},
-		{name: 0x068e0697, native: 0x0697069d, iso1: 0x069d069f, iso3: 0x069f06a2},
-		{name: 0x06a206ad, native: 0x06ad06b8, iso1: 0x06b806ba, iso3: 0x06ba06bd},
-		{name: 0x06bd06c7, native: 0x06c706d7, iso1: 0x06d706d9, iso3: 0x06d906dc},
-		{name: 0x06dc06e7, native: 0x06e70720, iso1: 0x07200722, iso3: 0x07220725},
-		{name: 0x0725072a, native: 0x072a0731, iso1: 0x07310733, iso3: 0x07330736},
-		{name: 0x0736073a, native: 0x073a0748, iso1: 0x0748074a, iso3: 0x074a074d},
-		{name: 0x074d0754, native: 0x07540768, iso1: 0x0768076a, iso3: 0x076a076d},
-		{name: 0x076d0770, native: 0x07700773, iso1: 0x07730775, iso3: 0x07750778},
-		{name: 0x07780781, native: 0x0781078a, iso1: 0x078a078c, iso3: 0x078c078f},
-		{name: 0x078f0796, native: 0x0796079e, iso1: 0x079e07a0, iso3: 0x07a007a3},
-		{name: 0x07a307ac, native: 0x07ac07be, iso1: 0x07be07c0, iso3: 0x07c007c3},
-		{name: 0x07c307cb, native: 0x07cb07e3, iso1: 0x07e307e5, iso3: 0x07e507e8},
-		{name: 0x07e807f0, native: 0x07f00807, iso1: 0x08070809, iso3: 0x0809080c},
-		{name: 0x080c0817, native: 0x08170835, iso1: 0x08350837, iso3: 0x0837083a},
-		{name: 0x083a0841, native: 0x08410850, iso1: 0x08500852, iso3: 0x08520855},
-		{name: 0x0855085b, native: 0x085b0861, iso1: 0x08610863, iso3: 0x08630866},
-		{name: 0x0866086e, native: 0x086e0894, iso1: 0x08940896, iso3: 0x08960899},
-		{name: 0x0899089f, native: 0x089f08b2, iso1: 0x08b208b4, iso3: 0x08b408b7},
-		{name: 0x08b708bc, native: 0x08bc0902, iso1: 0x09020904, iso3: 0x09040907},
-		{name: 0x0907090d, native: 0x090d0916, iso1: 0x09160918, iso3: 0x0918091b},
-		{name: 0x091b0926, native: 0x09260932, iso1: 0x09320934, iso3: 0x09340937},
-		{name: 0x0937093d, native: 0x093d0964, iso1: 0x09640966, iso3: 0x09660969},
-		{name: 0x0969096d, native: 0x096d097c, iso1: 0x097c097e, iso3: 0x097e0981},
-		{name: 0x09810986, native: 0x0986098d, iso1: 0x098d098f, iso3: 0x098f0992},
-		{name: 0x09920998, native: 0x099809a1, iso1: 0x09a109a3, iso3: 0x09a309a6},
-		{name: 0x09a609ad, native: 0x09ad09c2, iso1: 0x09c209c4, iso3: 0x09c409c7},
-		{name: 0x09c709cf, native: 0x09cf09d7, iso1: 0x09d709d9, iso3: 0x09d909dc},
-		{name: 0x09dc09e1, native: 0x09e109f6, iso1: 0x09f609f8, iso3: 0x09f809fb},
-		{name: 0x09fb0a08, native: 0x0a080a17, iso1: 0x0a170a19, iso3: 0x0a190a1c},
-		{name: 0x0a1c0a21, native: 0x0a210a28, iso1: 0x0a280a2a, iso3: 0x0a2a0a2d},
-		{name: 0x0a2d0a37, native: 0x0a370a3f, iso1: 0x0a3f0a41, iso3: 0x0a410a44},
-		{name: 0x0a440a4b, native: 0x0a4b0a53, iso1: 0x0a530a55, iso3: 0x0a550a58},
-		{name: 0x0a580a5b, native: 0x0a5b0a70, iso1: 0x0a700a72, iso3: 0x0a720a75},
-		{name: 0x0a750a7f, native: 0x0a7f0a8e, iso1: 0x0a8e0a90, iso3: 0x0a900a93},
-		{name: 0x0a930a9f, native: 0x0a9f0aa7, iso1: 0x0aa70aa9, iso3: 0x0aa90aac},
-		{name: 0x0aac0ab3, native: 0x0ab30ac3, iso1: 0x0ac30ac5, iso3: 0x0ac50ac8},
-		{name: 0x0ac80acc, native: 0x0acc0ad9, iso1: 0x0ad90adb, iso3: 0x0adb0ade},
-		{name: 0x0ade0ae8, native: 0x0ae80b07, iso1: 0x0b070b09, iso3: 0x0b090b0c},
-		{name: 0x0b0c0b14, native: 0x0b140b23, iso1: 0x0b230b25, iso3: 0x0b250b28},
-		{name: 0x0b280b2d, native: 0x0b2d0b52, iso1: 0x0b520b54, iso3: 0x0b540b57},
-		{name: 0x0b570b60, native: 0x0b600b72, iso1: 0x0b720b74, iso3: 0x0b740b77},
-		{name: 0x0b770b7e, native: 0x0b7e0b83, iso1: 0x0b830b85, iso3: 0x0b850b88},
-		{name: 0x0b880b8e, native: 0x0b8e0b9b, iso1: 0x0b9b0b9d, iso3: 0x0b9d0ba0},
-		{name: 0x0ba00ba7, native: 0x0ba70bb6, iso1: 0x0bb60bb8, iso3: 0x0bb80bbb},
-		{name: 0x0bbb0bc6, native: 0x0bc60bd4, iso1: 0x0bd40bd6, iso3: 0x0bd60bd9},
-		{name: 0x0bd90be2, native: 0x0be20bf5, iso1: 0x0bf50bf7, iso3: 0x0bf70bfa},
-		{name: 0x0bfa0c01, native: 0x0c010c0f, iso1: 0x0c0f0c11, iso3: 0x0c110c14},
-		{name: 0x0c140c1a, native: 0x0c1a0c26, iso1: 0x0c260c28, iso3: 0x0c280c2b},
-		{name: 0x0c2b0c3b, native: 0x0c3b0c45, iso1: 0x0c450c47, iso3: 0x0c470c4a},
-		{name: 0x0c4a0c50, native: 0x0c500c62, iso1: 0x0c620c64, iso3: 0x0c640c67},
-		{name: 0x0c670c6d, native: 0x0c6d0c73, iso1: 0x0c730c75, iso3: 0x0c750c78},
-		{name: 0x0c780c89, native: 0x0c890c96, iso1: 0x0c960c98, iso3: 0x0c980c9b},
-		{name: 0x0c9b0cac, native: 0x0cac0cb9, iso1: 0x0cb90cbb, iso3: 0x0cbb0cbe},
-		{name: 0x0cbe0cc7, native: 0x0cc70ccc, iso1: 0x0ccc0cce, iso3: 0x0cce0cd1},
-		{name: 0x0cd10cd6, native: 0x0cd60ce9, iso1: 0x0ce90ceb, iso3: 0x0ceb0cee},
-		{name: 0x0cee0cfe, native: 0x0cfe0d08, iso1: 0x0d080d0a, iso3: 0x0d0a0d0d},
-		{name: 0x0d0d0d14, native: 0x0d140d28, iso1: 0x0d280d2a, iso3: 0x0d2a0d2d},
-		{name: 0x0d2d0d33, native: 0x0d330d4b, iso1: 0x0d4b0d4d, iso3: 0x0d4d0d50},
-		{name: 0x0d500d5d, native: 0x0d5d0d7c, iso1: 0x0d7c0d7e, iso3: 0x0d7e0d81},
-		{name: 0x0d810d86, native: 0x0d860d92, iso1: 0x0d920d94, iso3: 0x0d940d97},
-		{name: 0x0d970d9c, native: 0x0d9c0dab, iso1: 0x0dab0dad, iso3: 0x0dad0db0},
-		{name: 0x0db00db8, native: 0x0db80dcb, iso1: 0x0dcb0dcd, iso3: 0x0dcd0dd0},
-		{name: 0x0dd00dd7, native: 0x0dd70de9, iso1: 0x0de90deb, iso3: 0x0deb0dee},
-		{name: 0x0dee0df3, native: 0x0df30dff, iso1: 0x0dff0e01, iso3: 0x0e010e04},
-		{name: 0x0e040e0b, native: 0x0e0b0e15, iso1: 0x0e150e17, iso3: 0x0e170e1a},
-		{name: 0x0e1a0e20, native: 0x0e200e3a, iso1: 0x0e3a0e3c, iso3: 0x0e3c0e3f},
-		{name: 0x0e3f0e45, native: 0x0e450e4d, iso1: 0x0e4d0e4f, iso3: 0x0e4f0e52},
-		{name: 0x0e520e5c, native: 0x0e5c0e66, iso1: 0x0e660e68, iso3: 0x0e680e6b},
-		{name: 0x0e6b0e72, native: 0x0e720e83, iso1: 0x0e830e85, iso3: 0x0e850e88},
-		{name: 0x0e880e8f, native: 0x0e8f0ea1, iso1: 0x0ea10ea3, iso3: 0x0ea30ea6},
-		{name: 0x0ea60ead, native: 0x0ead0eb5, iso1: 0x0eb50eb7, iso3: 0x0eb70eba},
-		{name: 0x0eba0ec2, native: 0x0ec20eca, iso1: 0x0eca0ecc, iso3: 0x0ecc0ecf},
-		{name: 0x0ecf0ed6, native: 0x0ed60ee4, iso1: 0x0ee40ee6, iso3: 0x0ee60ee9},
-		{name: 0x0ee90ef1, native: 0x0ef10f0c, iso1: 0x0f0c0f0e, iso3: 0x0f0e0f11},
-		{name: 0x0f110f1a, native: 0x0f1a0f1f, iso1: 0x0f1f0f21, iso3: 0x0f210f24},
-		{name: 0x0f240f2a, native: 0x0f2a0f56, iso1: 0x0f560f58, iso3: 0x0f580f5b},
-		{name: 0x0f5b0f68, native: 0x0f680f78, iso1: 0x0f780f7a, iso3: 0x0f7a0f7d},
-		{name: 0x0f7d0f83, native: 0x0f830f94, iso1: 0x0f940f96, iso3: 0x0f960f99},
-		{name: 0x0f990f9e, native: 0x0f9e0fb1, iso1: 0x0fb10fb3, iso3: 0x0fb30fb6},
-		{name: 0x0fb60fbd, native: 0x0fbd0fd4, iso1: 0x0fd40fd6, iso3: 0x0fd60fd9},
-		{name: 0x0fd90fdf, native: 0x0fdf0fe8, iso1: 0x0fe80fea, iso3: 0x0fea0fed},
-		{name: 0x0fed0ff2, native: 0x0ff20ffa, iso1: 0x0ffa0ffc, iso3: 0x0ffc0fff},
-		{name: 0x0fff1008, native: 0x10081017, iso1: 0x10171019, iso3: 0x1019101c},
-		{name: 0x101c1022, native: 0x1022103f, iso1: 0x103f1041, iso3: 0x10411044},
-		{name: 0x1044104b, native: 0x104b1069, iso1: 0x1069106b, iso3: 0x106b106e},
-		{name: 0x106e1074, native: 0x1074108b, iso1: 0x108b108d, iso3: 0x108d1090},
-		{name: 0x1090109e, native: 0x109e10a5, iso1: 0x10a510a7, iso3: 0x10a710aa},
-		{name: 0x10aa10b1, native: 0x10b110b9, iso1: 0x10b910bb, iso3: 0x10bb10be},
-		{name: 0x10be10c7, native: 0x10c710d1, iso1: 0x10d110d3, iso3: 0x10d310d6},
-		{name: 0x10d610dd, native: 0x10dd10e6, iso1: 0x10e610e8, iso3: 0x10e810eb},
-		{name: 0x10eb10f0, native: 0x10f010f7, iso1: 0x10f710f9, iso3: 0x10f910fc},
-		{name: 0x10fc1103, native: 0x1103110a, iso1: 0x110a110c, iso3: 0x110c110f},
-		{name: 0x110f1114, native: 0x11141123, iso1: 0x11231125, iso3: 0x11251128},
-		{name: 0x1128112e, native: 0x112e1140, iso1: 0x11401142, iso3: 0x11421145},
-		{name: 0x1145114a, native: 0x114a1171, iso1: 0x11711173, iso3: 0x11731176},
-		{name: 0x1176117a, native: 0x117a1183, iso1: 0x11831185, iso3: 0x11851188},
-		{name: 0x11881190, native: 0x1190119c, iso1: 0x119c119e, iso3: 0x119e11a1},
-		{name: 0x11a111a8, native: 0x11a811bd, iso1: 0x11bd11bf, iso3: 0x11bf11c2},
-		{name: 0x11c211c9, native: 0x11c911e1, iso1: 0x11e111e3, iso3: 0x11e311e6},
-		{name: 0x11e611ed, native: 0x11ed11fb, iso1: 0x11fb11fd, iso3: 0x11fd1200},
-		{name: 0x12001206, native: 0x1206120e, iso1: 0x120e1210, iso3: 0x12101213},
-		{name: 0x12131218, native: 0x12181222, iso1: 0x12221224, iso3: 0x12241227},
-		{name: 0x1227122e, native: 0x122e1236, iso1: 0x12361238, iso3: 0x1238123b},
-		{name: 0x123b1241, native: 0x12411249, iso1: 0x1249124b, iso3: 0x124b124e},
-		{name: 0x124e1253, native: 0x12531272, iso1: 0x12721274, iso3: 0x12741277},
-		{name: 0x1277127a, native: 0x127a127d, iso1: 0x127d127f, iso3: 0x127f1282},
-		{name: 0x1282128a, native: 0x128a1294, iso1: 0x12941296, iso3: 0x12961299},
-		{name: 0x1299129f, native: 0x129f12bd, iso1: 0x12bd12bf, iso3: 0x12bf12c2},
-		{name: 0x12c212cb, native: 0x12cb12df, iso1: 0x12df12e1, iso3: 0x12e112e4},
-		{name: 0x12e412e8, native: 0x12e812f0, iso1: 0x12f012f2, iso3: 0x12f212f5},
-		{name: 0x12f512fa, native: 0x12fa131e, iso1: 0x131e1320, iso3: 0x13201323},
-		{name: 0x13231328, native: 0x13281333, iso1: 0x13331335, iso3: 0x13351338},
-		{name: 0x13381342, native: 0x13421350, iso1: 0x13501352, iso3: 0x13521355},
-		{name: 0x1355135d, native: 0x135d1365, iso1: 0x13651367, iso3: 0x1367136a},
-		{name: 0x136a1371, native: 0x13711376, iso1: 0x13761378, iso3: 0x1378137b},
-		{name: 0x137b1380, native: 0x13801387, iso1: 0x13871389, iso3: 0x1389138c},
-		{name: 0x138c1391, native: 0x13911397, iso1: 0x13971399, iso3: 0x1399139c},
-		{name: 0x139c13ab, native: 0x13ab13b0, iso1: 0x13b013b2, iso3: 0x13b213b5},
-		{name: 0x13b513ba, native: 0x13ba13c2, iso1: 0x13c213c4, iso3: 0x13c413c7},
-		{name: 0x13c713ce, native: 0x13ce13da, iso1: 0x13da13dc, iso3: 0x13dc13df},
-		{name: 0x13df13e5, native: 0x13e513ed, iso1: 0x13ed13ef, iso3: 0x13ef13f2},
-		{name: 0x13f213f8, native: 0x13f81410, iso1: 0x14101412, iso3: 0x14121415},
-		{name: 0x14151419, native: 0x14191420, iso1: 0x14201422, iso3: 0x14221425},
+		{name: 0x00000009, native: 0x00090012, iso1: 0x00120014, iso3: 0x00140017},
+		{name: 0x0017001b, native: 0x001b001f, iso1: 0x001f0021, iso3: 0x00210024},
+		{name: 0x0024002c, native: 0x002c0031, iso1: 0x00310033, iso3: 0x00330036},
+		{name: 0x0036003d, native: 0x003d0049, iso1: 0x0049004b, iso3: 0x004b004e},
+		{name: 0x004e0054, native: 0x00540062, iso1: 0x00620064, iso3: 0x00640067},
+		{name: 0x0067006f, native: 0x006f007d, iso1: 0x007d007f, iso3: 0x007f0082},
+		{name: 0x0082008d, native: 0x008d009d, iso1: 0x009d009f, iso3: 0x009f00a2},
+		{name: 0x00a200a8, native: 0x00a800b8, iso1: 0x00b800ba, iso3: 0x00ba00bd},
+		{name: 0x00bd00c5, native: 0x00c500da, iso1: 0x00da00dc, iso3: 0x00dc00df},
+		{name: 0x00df00e9, native: 0x00e90106, iso1: 0x01060108, iso3: 0x0108010b},
+		{name: 0x010b0112, native: 0x01120121, iso1: 0x01210123, iso3: 0x01230126},
+		{name: 0x0126012d, native: 0x012d013b, iso1: 0x013b013d, iso3: 0x013d0140},
+		{name: 0x01400149, native: 0x01490164, iso1: 0x01640166, iso3: 0x01660169},
+		{name: 0x01690170, native: 0x0170017f, iso1: 0x017f0181, iso3: 0x01810184},
+		{name: 0x0184018b, native: 0x018b0192, iso1: 0x01920194, iso3: 0x01940197},
+		{name: 0x0197019c, native: 0x019c01b0, iso1: 0x01b001b2, iso3: 0x01b201b5},
+		{name: 0x01b501bc, native: 0x01bc01df, iso1: 0x01df01e1, iso3: 0x01e101e4},
+		{name: 0x01e401ec, native: 0x01ec01fa, iso1: 0x01fa01fc, iso3: 0x01fc01ff},
+		{name: 0x01ff0204, native: 0x0204021c, iso1: 0x021c021e, iso3: 0x021e0221},
+		{name: 0x02210227, native: 0x0227022c, iso1: 0x022c022e, iso3: 0x022e0231},
+		{name: 0x02310236, native: 0x02360248, iso1: 0x0248024a, iso3: 0x024a024d},
+		{name: 0x024d0254, native: 0x0254025b, iso1: 0x025b025d, iso3: 0x025d0260},
+		{name: 0x02600269, native: 0x02690272, iso1: 0x02720274, iso3: 0x02740277},
+		{name: 0x0277027f, native: 0x027f0290, iso1: 0x02900292, iso3: 0x02920295},
+		{name: 0x0295029c, native: 0x029c02af, iso1: 0x02af02b1, iso3: 0x02b102b4},
+		{name: 0x02b402ba, native: 0x02ba02d6, iso1: 0x02d602d8, iso3: 0x02d802db},
+		{name: 0x02db02e3, native: 0x02e302f8, iso1: 0x02f802fa, iso3: 0x02fa02fd},
+		{name: 0x02fd0303, native: 0x0303030a, iso1: 0x030a030c, iso3: 0x030c030f},
+		{name: 0x030f0314, native: 0x03140324, iso1: 0x03240326, iso3: 0x03260329},
+		{name: 0x03290331, native: 0x03310346, iso1: 0x03460348, iso3: 0x0348034b},
+		{name: 0x034b0359, native: 0x03590368, iso1: 0x0368036a, iso3: 0x036a036d},
+		{name: 0x036d0372, native: 0x03720386, iso1: 0x03860388, iso3: 0x0388038b},
+		{name: 0x038b0391, native: 0x0391039b, iso1: 0x039b039d, iso3: 0x039d03a0},
+		{name: 0x03a003a5, native: 0x03a503c8, iso1: 0x03c803ca, iso3: 0x03ca03cd},
+		{name: 0x03cd03d6, native: 0x03d603dc, iso1: 0x03dc03de, iso3: 0x03de03e1},
+		{name: 0x03e103eb, native: 0x03eb03fb, iso1: 0x03fb03fd, iso3: 0x03fd0400},
+		{name: 0x04000405, native: 0x0405040c, iso1: 0x040c040e, iso3: 0x040e0411},
+		{name: 0x04110415, native: 0x04150423, iso1: 0x04230425, iso3: 0x04250428},
+		{name: 0x04280431, native: 0x0431043a, iso1: 0x043a043c, iso3: 0x043c043f},
+		{name: 0x043f0446, native: 0x0446044d, iso1: 0x044d044d, iso3: 0x044d0450},
+		{name: 0x04500457, native: 0x0457045f, iso1: 0x045f0461, iso3: 0x04610464},
+		{name: 0x0464046c, native: 0x046c0484, iso1: 0x04840486, iso3: 0x04860489},
+		{name: 0x04890491, native: 0x049104a8, iso1: 0x04a804aa, iso3: 0x04aa04ad},
+		{name: 0x04ad04b4, native: 0x04b404c3, iso1: 0x04c304c5, iso3: 0x04c504c8},
+		{name: 0x04c804ce, native: 0x04ce04e1, iso1: 0x04e104e3, iso3: 0x04e304e6},
+		{name: 0x04e604eb, native: 0x04eb0531, iso1: 0x05310533, iso3: 0x05330536},
+		{name: 0x05360541, native: 0x0541054d, iso1: 0x054d054f, iso3: 0x054f0552},
+		{name: 0x05520558, native: 0x05580561, iso1: 0x05610563, iso3: 0x05630566},
+		{name: 0x0566056d, native: 0x056d0582, iso1: 0x05820584, iso3: 0x05840587},
+		{name: 0x0587058c, native: 0x058c05a1, iso1: 0x05a105a3, iso3: 0x05a305a6},
+		{name: 0x05a605ab, native: 0x05ab05b2, iso1: 0x05b205b4, iso3: 0x05b405b7},
+		{name: 0x05b705c1, native: 0x05c105d0, iso1: 0x05d005d2, iso3: 0x05d205d5},
+		{name: 0x05d505dc, native: 0x05dc05ec, iso1: 0x05ec05ee, iso3: 0x05ee05f1},
+		{name: 0x05f105fb, native: 0x05fb061a, iso1: 0x061a061c, iso3: 0x061c061f},
+		{name: 0x061f0627, native: 0x06270636, iso1: 0x06360638, iso3: 0x0638063b},
+		{name: 0x063b0640, native: 0x06400665, iso1: 0x06650667, iso3: 0x0667066a},
+		{name: 0x066a0673, native: 0x06730685, iso1: 0x06850687, iso3: 0x0687068a},
+		{name: 0x068a068f, native: 0x068f069c, iso1: 0x069c069e, iso3: 0x069e06a1},
+		{name: 0x06a106a8, native: 0x06a806b7, iso1: 0x06b706b9, iso3: 0x06b906bc},
+		{name: 0x06bc06c5, native: 0x06c506d8, iso1: 0x06d806da, iso3: 0x06da06dd},
+		{name: 0x06dd06e5, native: 0x06e506f4, iso1: 0x06f406f4, iso3: 0x06f406f7},
+		{name: 0x06f706fd, native: 0x06fd070f, iso1: 0x070f0711, iso3: 0x07110714},
+		{name: 0x07140724, native: 0x07240731, iso1: 0x07310733, iso3: 0x07330736},
+		{name: 0x07360747, native: 0x07470754, iso1: 0x07540756, iso3: 0x07560759},
+		{name: 0x0759075e, native: 0x075e076a, iso1: 0x076a076c, iso3: 0x076c076f},
+		{name: 0x076f0774, native: 0x07740783, iso1: 0x07830785, iso3: 0x07850788},
+		{name: 0x0788078f, native: 0x078f07a1, iso1: 0x07a107a3, iso3: 0x07a307a6},
+		{name: 0x07a607ad, native: 0x07ad07b7, iso1: 0x07b707b9, iso3: 0x07b907bc},
+		{name: 0x07bc07c2, native: 0x07c207dc, iso1: 0x07dc07de, iso3: 0x07de07e1},
+		{name: 0x07e107eb, native: 0x07eb07f5, iso1: 0x07f507f7, iso3: 0x07f707fa},
+		{name: 0x07fa0801, native: 0x08010809, iso1: 0x0809080b, iso3: 0x080b080e},
+		{name: 0x080e0816, native: 0x0816081e, iso1: 0x081e0820, iso3: 0x08200823},
+		{name: 0x0823082a, native: 0x082a0838, iso1: 0x0838083a, iso3: 0x083a083d},
+		{name: 0x083d0844, native: 0x0844084f, iso1: 0x084f084f, iso3: 0x084f0852},
+		{name: 0x08520859, native: 0x08590870, iso1: 0x08700872, iso3: 0x08720875},
+		{name: 0x0875087a, native: 0x087a0882, iso1: 0x08820884, iso3: 0x08840887},
+		{name: 0x08870890, native: 0x0890089f, iso1: 0x089f08a1, iso3: 0x08a108a4},
+		{name: 0x08a408aa, native: 0x08aa08c7, iso1: 0x08c708c9, iso3: 0x08c908cc},
+		{name: 0x08cc08d5, native: 0x08d508f3, iso1: 0x08f308f5, iso3: 0x08f508f8},
+		{name: 0x08f808fe, native: 0x08fe0915, iso1: 0x09150917, iso3: 0x0917091a},
+		{name: 0x091a091f, native: 0x091f0926, iso1: 0x09260928, iso3: 0x0928092b},
+		{name: 0x092b0932, native: 0x0932093a, iso1: 0x093a093c, iso3: 0x093c093f},
+		{name: 0x093f0946, native: 0x0946094f, iso1: 0x094f0951, iso3: 0x09510954},
+		{name: 0x0954095b, native: 0x095b0962, iso1: 0x09620964, iso3: 0x09640967},
+		{name: 0x0967096c, native: 0x096c097b, iso1: 0x097b097d, iso3: 0x097d0980},
+		{name: 0x09800986, native: 0x09860998, iso1: 0x0998099a, iso3: 0x099a099d},
+		{name: 0x099d09a1, native: 0x09a109aa, iso1: 0x09aa09ac, iso3: 0x09ac09af},
+		{name: 0x09af09b7, native: 0x09b709c3, iso1: 0x09c309c5, iso3: 0x09c509c8},
+		{name: 0x09c809cf, native: 0x09cf09e7, iso1: 0x09e709e9, iso3: 0x09e909ec},
+		{name: 0x09ec09f3, native: 0x09f30a01, iso1: 0x0a010a03, iso3: 0x0a030a06},
+		{name: 0x0a060a0c, native: 0x0a0c0a14, iso1: 0x0a140a16, iso3: 0x0a160a19},
+		{name: 0x0a190a20, native: 0x0a200a28, iso1: 0x0a280a2a, iso3: 0x0a2a0a2d},
+		{name: 0x0a2d0a33, native: 0x0a330a3b, iso1: 0x0a3b0a3d, iso3: 0x0a3d0a40},
+		{name: 0x0a400a46, native: 0x0a460a64, iso1: 0x0a640a66, iso3: 0x0a660a69},
+		{name: 0x0a690a72, native: 0x0a720a86, iso1: 0x0a860a88, iso3: 0x0a880a8b},
+		{name: 0x0a8b0a8f, native: 0x0a8f0a97, iso1: 0x0a970a99, iso3: 0x0a990a9c},
+		{name: 0x0a9c0aa1, native: 0x0aa10ac5, iso1: 0x0ac50ac7, iso3: 0x0ac70aca},
+		{name: 0x0aca0ad4, native: 0x0ad40ae2, iso1: 0x0ae20ae4, iso3: 0x0ae40ae7},
+		{name: 0x0ae70aec, native: 0x0aec0af3, iso1: 0x0af30af5, iso3: 0x0af50af8},
+		{name: 0x0af80afd, native: 0x0afd0b05, iso1: 0x0b050b07, iso3: 0x0b070b0a},
+		{name: 0x0b0a0b11, native: 0x0b110b1d, iso1: 0x0b1d0b1f, iso3: 0x0b1f0b22},
+		{name: 0x0b220b28, native: 0x0b280b30, iso1: 0x0b300b32, iso3: 0x0b320b35},
+		{name: 0x0b350b39, native: 0x0b390b40, iso1: 0x0b400b42, iso3: 0x0b420b45},
 	}
-	__lt_buf = []byte("Abkhazаҧсуа бызшәа, аҧсшәаababkAfarAfarafaaaarAfrikaansAfrikaansafafrAkanAkanakakaAlbanianShqipsqsqiAmharicአማርኛamamhArabicالعربيةararaAragonesearagonésanargArmenianՀայերենhyhyeAssameseঅসমীয়াasasmAvaricавар мацӀ, магӀарул мацӀavavaAvestanavestaaeaveAymaraaymar aruayaymAzerbaijaniazərbaycan diliazazeBambarabamanankanbmbamBashkirбашҡорт телеbabakBasqueeuskara, euskeraeueusBelarusianбеларуская моваbebelBengaliবাংলাbnbenBihariभोजपुरीbhbihBislamaBislamabibisBosnianbosanski jezikbsbosBretonbrezhonegbrbreBulgarianбългарски езикbgbulBurmeseဗမာစာmymyaCatalancatalàcacatChamorroChamoruchchaChechenнохчийн моттcecheChichewachiCheŵa, chinyanjanynyaChinese中文 (Zhōngwén), 汉语, 漢語zhzhoChuvashчӑваш чӗлхиcvchvCornishKernewekkwcorCorsicancorsu, lingua corsacocosCreeᓀᐦᐃᔭᐍᐏᐣcrcreCroatianhrvatski jezikhrhrvCzechčeština, český jazykcscesDanishdanskdadanDivehiދިވެހިdvdivDutchNederlands, VlaamsnlnldDzongkhaརྫོང་ཁdzdzoEnglishEnglishenengEsperantoEsperantoeoepoEstonianeesti, eesti keeletestEweEʋegbeeeeweFaroeseføroysktfofaoFijianvosa VakavitifjfijFinnishsuomi, suomen kielififinFrenchfrançais, langue françaisefrfraFulaFulfulde, Pulaar, PularfffulGaliciangalegoglglgGeorgianქართულიkakatGermanDeutschdedeuGreekελληνικάelellGuaraníAvañe'ẽgngrnGujaratiગુજરાતીgugujHaitianKreyòl ayisyenhthatHausa(Hausa) هَوُسَhahauHebrewעבריתhehebHereroOtjihererohzherHindiहिन्दी, हिंदीhihinHiri MotuHiri MotuhohmoHungarianmagyarhuhunInterlinguaInterlinguaiainaIndonesianBahasa IndonesiaidindInterlingueOriginally called Occidental; then Interlingue after WWIIieileIrishGaeilgegagleIgboAsụsụ IgboigiboInupiaqIñupiaq, IñupiatunikipkIdoIdoioidoIcelandicÍslenskaisislItalianItalianoititaInuktitutᐃᓄᒃᑎᑐᑦiuikuJapanese日本語 (にほんご)jajpnJavaneseꦧꦱꦗꦮ, Basa JawajvjavGreenlandickalaallisut, kalaallit oqaasiiklkalKannadaಕನ್ನಡknkanKanuriKanurikrkauKashmiriकश्मीरी, كشميري‎kskasKazakhқазақ тіліkkkazKhmerខ្មែរ, ខេមរភាសា, ភាសាខ្មែរkmkhmKikuyuGĩkũyũkikikKinyarwandaIkinyarwandarwkinKyrgyzКыргызча, Кыргыз тилиkykirKomiкоми кывkvkomKongoKikongokgkonKorean한국어kokorKurdishKurdî, كوردی‎kukurKwanyamaKuanyamakjkuaLatinlatine, lingua latinalalatLuxembourgishLëtzebuergeschlbltzGandaLugandalglugLimburgishLimburgslilimLingalaLingálalnlinLaoພາສາລາວlolaoLithuanianlietuvių kalbaltlitLuba-KatangaTshilubalulubLatvianlatviešu valodalvlavManxGaelg, GailckgvglvMacedonianмакедонски јазикmkmkdMalagasyfiteny malagasymgmlgMalaybahasa Melayu, بهاس ملايو‎msmsaMalayalamമലയാളംmlmalMalteseMaltimtmltMāorite reo MāorimimriMarathiमराठीmrmarMarshalleseKajin M̧ajeļmhmahMongolianМонгол хэлmnmonNauruanDorerin NaoeronanauNavajoDiné bizaadnvnavNorthern NdebeleisiNdebelendndeNepaliनेपालीnenepNdongaOwambongndoNorwegian BokmålNorsk bokmålnbnobNorwegian NynorskNorsk nynorsknnnnoNorwegianNorsknonorNuosuꆈꌠ꒿ NuosuhxopiiiiiSouthern NdebeleisiNdebelenrnblOccitanoccitan, lenga d'òcocociOjibweᐊᓂᔑᓈᐯᒧᐎᓐojojiOld-Bulgarianѩзыкъ словѣньскъcuchuOromoAfaan OromooomormOriyaଓଡ଼ିଆororiOssetianирон æвзагosossPunjabiਪੰਜਾਬੀpapanPāliपाऴिpipliPersianفارسیfafasPolishjęzyk polski, polszczyznaplpolPashtoپښتوpspusPortuguesePortuguêsptporQuechuaRuna Simi, KichwaququeRomanshrumantsch grischunrmrohKirundiIkirundirnrunRomanianRomânăroronRussianРусскийrurusSanskritसंस्कृतम्sasanSardiniansarduscsrdSindhiसिन्धी, سنڌي، سندھی‎sdsndNorthern SamiDavvisámegiellasesmeSamoangagana fa'a SamoasmsmoSangoyângâ tî sängösgsagSerbianсрпски језикsrsrpGaelicGàidhliggdglaShonachiShonasnsnaSinhaleseසිංහලsisinSlovakslovenčina, slovenský jazykskslkSloveneslovenski jezik, slovenščinaslslvSomaliSoomaaliga, af SoomaalisosomSouthern SothoSesothostsotSpanishEspañolesspaSundaneseBasa SundasusunSwahiliKiswahiliswswaSwatiSiSwatisssswSwedishsvenskasvsweTamilதமிழ்tatamTeluguతెలుగుtetelTajikтоҷикӣ, toçikī, تاجیکی‎tgtgkThaiไทยththaTigrinyaትግርኛtitirTibetanབོད་ཡིགbobodTurkmenTürkmen, ТүркменtktukTagalogWikang TagalogtltglTswanaSetswanatntsnTongafaka TongatotonTurkishTürkçetrturTsongaXitsongatstsoTatarтатар теле, tatar teletttatTwiTwitwtwiTahitianReo TahititytahUyghurئۇيغۇرچە‎, UyghurcheuguigUkrainianУкраїнськаukukrUrduاردوururdUzbekOʻzbek, Ўзбек, أۇزبېك‎uzuzbVendaTshivenḓavevenVietnameseTiếng ViệtvivieVolapükVolapükvovolWalloonwalonwawlnWelshCymraegcycymWolofWollofwowolWestern FrisianFryskfyfryXhosaisiXhosaxhxhoYiddishייִדישyiyidYorubaYorùbáyoyorZhuangSaɯ cueŋƅ, Saw cuenghzazhaZuluisiZuluzuzul")
+	__lt_buf = []byte("AfrikaansAfrikaansafafrAkanAkanakakaAlbanianShqipsqsqiAmharicአማርኛamamhArabicالعربيةararaArmenianՀայերենhyhyeAzerbaijaniazərbaycan diliazazeBasqueeuskara, euskeraeueusBhojpuriभोजपुरीbhbhoBelarusianбеларуская моваbebelBengaliবাংলাbnbenBosnianbosanski jezikbsbosBulgarianбългарски езикbgbulBurmeseဗမာစာmymyaCatalancatalàcacatChewachiCheŵa, chinyanjanynyaChinese中文 (Zhōngwén), 汉语, 漢語zhzhoCroatianhrvatski jezikhrhrvCzechčeština, český jazykcscesDanishdanskdadanDutchNederlands, VlaamsnlnldEnglishEnglishenengEsperantoEsperantoeoepoEstonianeesti, eesti keeletestFinnishsuomi, suomen kielififinFrenchfrançais, langue françaisefrfraGeorgianქართულიkakatGermanDeutschdedeuGreekελληνικάelellGujaratiગુજરાતીgugujHaitian CreoleKreyòl ayisyenhthatHausa(Hausa) هَوُسَhahauHebrewעבריתhehebHindiहिन्दी, हिंदीhihinHungarianmagyarhuhunIndonesianBahasa IndonesiaidindIrishGaeilgegagleIgboAsụsụ IgboigiboIcelandicÍslenskaisislIlocanoIlocanoiloItalianItalianoititaJapanese日本語 (にほんご)jajpnJavaneseꦧꦱꦗꦮ, Basa JawajvjavKannadaಕನ್ನಡknkanKazakhқазақ тіліkkkazKhmerខ្មែរ, ខេមរភាសា, ភាសាខ្មែរkmkhmKinyarwandaIkinyarwandarwkinKorean한국어kokorKurdishKurdî, كوردی‎kukurLatinlatine, lingua latinalalatGandaLugandalglugLithuanianlietuvių kalbaltlitLatvianlatviešu valodalvlavMacedonianмакедонски јазикmkmkdMalagasyfiteny malagasymgmlgMalaybahasa Melayu, بهاس ملايو‎msmsaMalayalamമലയാളംmlmalMaorite reo MāorimimriMarathiमराठीmrmarMongolianМонгол хэлmnmonMaithiliˈməi̯tʰɪlimaiNepaliनेपालीnenepNorwegian BokmalNorsk bokmålnbnobNorwegian NynorskNorsk nynorsknnnnoOromoAfaan OromooomormOriyaଓଡ଼ିଆororiPunjabiਪੰਜਾਬੀpapanPersianفارسیfafasPolishjęzyk polski, polszczyznaplpolPortuguesePortuguêsptporKirundiIkirundirnrunRomanianRomânăroronRussianРусскийrurusSaraikiSarā'īkīskrSerbianсрпски језикsrsrpShonachiShonasnsnaSinhaleseසිංහලsisinSlovakslovenčina, slovenský jazykskslkSlovenianslovenski jezik, slovenščinaslslvSomaliSoomaaliga, af SoomaalisosomSothoSesothostsotSpanishEspañolesspaSwahiliKiswahiliswswaSwedishsvenskasvsweTamilதமிழ்tatamTeluguతెలుగుtetelThaiไทยththaTigrinyaትግርኛtitirTurkmenTürkmen, ТүркменtktukTagalogWikang TagalogtltglTswanaSetswanatntsnTurkishTürkçetrturTsongaXitsongatstsoUyghurئۇيغۇرچە‎, UyghurcheuguigUkrainianУкраїнськаukukrUrduاردوururdUzbekOʻzbek, Ўзбек, أۇزبېك‎uzuzbVietnameseTiếng ViệtvivieWelshCymraegcycymXhosaisiXhosaxhxhoYiddishייִדישyiyidYorubaYorùbáyoyorZuluisiZuluzuzul")
 )
