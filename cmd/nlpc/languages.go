@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"go/format"
 	"io/ioutil"
-	"path/filepath"
 	"strings"
 
 	"github.com/koykov/entry"
@@ -31,7 +30,7 @@ func (m languagesModule) Validate(input, _ string) error {
 
 func (m languagesModule) Compile(w moduleWriter, input, target string) (err error) {
 	if len(target) == 0 {
-		target = strings.TrimSuffix(input, filepath.Ext(input)) + "_repo.go"
+		target = "languages_repo.go"
 	}
 
 	var body []byte
@@ -56,6 +55,7 @@ func (m languagesModule) Compile(w moduleWriter, input, target string) (err erro
 		name := tuple.Name
 		name = strings.ReplaceAll(name, " ", "_")
 		name = strings.ReplaceAll(name, "-", "_")
+		_, _ = w.WriteString("Language")
 		_, _ = w.WriteString(name)
 		if i == 0 {
 			_, _ = w.WriteString(" Language = iota")
