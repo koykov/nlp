@@ -45,10 +45,10 @@ func (s Script) gets() (*unicode.RangeTable, bool) {
 
 // EvaluateRune1 is testing precompiled version of Han script todo remove me
 func (s Script) EvaluateRune1(r rune) bool {
-	t := unicode.Han
+	l16 := len(unicode.Han.R16)
 	if r <= rune(0xfad9) {
 		c := uint16(r)
-		if len(t.R16) < 18 || c <= unicode.MaxLatin1 {
+		if l16 <= 18 || c <= unicode.MaxLatin1 {
 			if c < 0x2e80 {
 				return false
 			}
