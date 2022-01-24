@@ -7,9 +7,7 @@ const (
 	sreLinearMax = 18
 )
 
-type SRE interface {
-	Evaluate(r rune) bool
-}
+type SRE func(r rune) bool
 
 func sreBinary16(ranges []unicode.Range16, r uint16) bool {
 	lo := 0

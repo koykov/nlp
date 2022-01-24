@@ -47,11 +47,9 @@ const (
 	ScriptTirhuta
 )
 
-type SREHan struct{}
-
-func (S SREHan) Evaluate(r rune) bool {
+func sreEvalHan(r rune) bool {
+	l16 := len(unicode.Han.R16)
 	if r <= rune(0xfad9) {
-		l16 := len(unicode.Han.R16)
 		r16 := uint16(r)
 		if l16 <= sreLinearMax || r16 <= unicode.MaxLatin1 {
 			if r16 < 0x2e80 {
@@ -208,7 +206,7 @@ var (
 		nil,
 		nil,
 		nil,
-		SREHan{},
+		sreEvalHan,
 		nil,
 		nil,
 		nil,

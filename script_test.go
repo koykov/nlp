@@ -30,7 +30,16 @@ func BenchmarkScript(b *testing.B) {
 		r := '汉'
 		for i := 0; i < b.N; i++ {
 			if !ScriptHan.EvaluateRune1(r) {
-				// b.FailNow()
+				b.FailNow()
+			}
+		}
+	})
+	b.Run("eval-rune2", func(b *testing.B) {
+		b.ReportAllocs()
+		r := '汉'
+		for i := 0; i < b.N; i++ {
+			if !ScriptHan.EvaluateRune2(r) {
+				b.FailNow()
 			}
 		}
 	})
