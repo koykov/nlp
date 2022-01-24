@@ -47,7 +47,194 @@ const (
 	ScriptTirhuta
 )
 
+type SREHan struct{}
+
+func (S SREHan) Evaluate(r rune) bool {
+	if r <= rune(0xfad9) {
+		l16 := len(unicode.Han.R16)
+		r16 := uint16(r)
+		if l16 <= sreLinearMax || r16 <= unicode.MaxLatin1 {
+			if r16 < 0x2e80 {
+				return false
+			}
+			if r16 <= 0x2e99 {
+				return true
+			}
+
+			if r16 < 0x2e9b {
+				return false
+			}
+			if r16 <= 0x2ef3 {
+				return true
+			}
+
+			if r16 < 0x2f00 {
+				return false
+			}
+			if r16 <= 0x2fd5 {
+				return true
+			}
+
+			if r16 < 0x3005 {
+				return false
+			}
+			if r16 <= 0x3007 {
+				return true
+			}
+
+			if r16 < 0x3021 {
+				return false
+			}
+			if r16 <= 0x3029 {
+				return true
+			}
+
+			if r16 < 0x3038 {
+				return false
+			}
+			if r16 <= 0x303b {
+				return true
+			}
+
+			if r16 < 0x3400 {
+				return false
+			}
+			if r16 <= 0x4dbf {
+				return true
+			}
+
+			if r16 < 0x4e00 {
+				return false
+			}
+			if r16 <= 0x9ffc {
+				return true
+			}
+
+			if r16 < 0xf900 {
+				return false
+			}
+			if r16 <= 0xfa6d {
+				return true
+			}
+
+			if r16 < 0xfa70 {
+				return false
+			}
+			if r16 <= 0xfad9 {
+				return true
+			}
+		}
+		return sreBinary16(unicode.Han.R16, r16)
+	}
+	if r >= rune(0x16ff0) {
+		l32 := len(unicode.Han.R32)
+		r32 := uint32(r)
+		if l32 <= sreLinearMax {
+			if r32 < 0x16ff0 {
+				return false
+			}
+			if r32 <= 0x16ff1 {
+				return true
+			}
+
+			if r32 < 0x20000 {
+				return false
+			}
+			if r32 <= 0x2a6dd {
+				return true
+			}
+
+			if r32 < 0x2a700 {
+				return false
+			}
+			if r32 <= 0x2b734 {
+				return true
+			}
+
+			if r32 < 0x2b740 {
+				return false
+			}
+			if r32 <= 0x2b81d {
+				return true
+			}
+
+			if r32 < 0x2b820 {
+				return false
+			}
+			if r32 <= 0x2cea1 {
+				return true
+			}
+
+			if r32 < 0x2ceb0 {
+				return false
+			}
+			if r32 <= 0x2ebe0 {
+				return true
+			}
+
+			if r32 < 0x2f800 {
+				return false
+			}
+			if r32 <= 0x2fa1d {
+				return true
+			}
+
+			if r32 < 0x30000 {
+				return false
+			}
+			if r32 <= 0x3134a {
+				return true
+			}
+
+			return sreBinary32(unicode.Han.R32, r32)
+		}
+	}
+	return false
+}
+
 var (
+	__sre_buf = []SRE{
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		SREHan{},
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+	}
 	__st_buf = []*unicode.RangeTable{
 		unicode.Arabic,
 		unicode.Armenian,
