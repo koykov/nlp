@@ -44,12 +44,11 @@ func (s Script) gets() (*unicode.RangeTable, bool) {
 }
 
 func (s Script) EvaluateRune2(r rune) bool {
-	return __sre_buf[s](r)
+	return __sre_buf[s].Evaluate(r)
 }
 
 // EvaluateRune1 is testing precompiled version of Han script todo remove me
 func (s Script) EvaluateRune1(r rune) bool {
-	// return __sre_buf[s].Evaluate(r)
 	l16 := len(unicode.Han.R16)
 	if r <= rune(0xfad9) {
 		c := uint16(r)

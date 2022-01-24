@@ -122,7 +122,7 @@ func sreEvalHan(r rune) bool {
 				return true
 			}
 		}
-		return sreBinary16(unicode.Han.R16, r16)
+		return sreEvalBinary16(unicode.Han.R16, r16)
 	}
 	if r >= rune(0x16ff0) {
 		l32 := len(unicode.Han.R32)
@@ -184,7 +184,7 @@ func sreEvalHan(r rune) bool {
 				return true
 			}
 
-			return sreBinary32(unicode.Han.R32, r32)
+			return sreEvalBinary32(unicode.Han.R32, r32)
 		}
 	}
 	return false
@@ -192,46 +192,46 @@ func sreEvalHan(r rune) bool {
 
 var (
 	__sre_buf = []SRE{
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		sreEvalHan,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
-		nil,
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{Evaluate: sreEvalHan},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
+		SRE{},
 	}
 	__st_buf = []*unicode.RangeTable{
 		unicode.Arabic,

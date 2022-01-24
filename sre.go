@@ -7,9 +7,13 @@ const (
 	sreLinearMax = 18
 )
 
-type SRE func(r rune) bool
+// SRE ...
+// Nested functions approach performance https://github.com/koykov/lab/tree/master/call_perf
+type SRE struct {
+	Evaluate func(r rune) bool
+}
 
-func sreBinary16(ranges []unicode.Range16, r uint16) bool {
+func sreEvalBinary16(ranges []unicode.Range16, r uint16) bool {
 	lo := 0
 	hi := len(ranges)
 	for lo < hi {
@@ -27,7 +31,7 @@ func sreBinary16(ranges []unicode.Range16, r uint16) bool {
 	return false
 }
 
-func sreBinary32(ranges []unicode.Range32, r uint32) bool {
+func sreEvalBinary32(ranges []unicode.Range32, r uint32) bool {
 	lo := 0
 	hi := len(ranges)
 	for lo < hi {
