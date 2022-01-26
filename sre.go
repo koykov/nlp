@@ -11,6 +11,8 @@ const (
 // Nested functions approach performance https://github.com/koykov/lab/tree/master/call_perf
 type SRE struct {
 	Evaluate func(r rune) bool
+
+	t *unicode.RangeTable
 }
 
 func sreEvalBinary16(ranges []unicode.Range16, r uint16) bool {

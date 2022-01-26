@@ -29,15 +29,15 @@ func (s Script) EvaluateByte(b byte) bool {
 }
 
 func (s Script) EvaluateRune(r rune) bool {
-	if int(s) >= len(__st_buf) {
+	if int(s) >= len(__sre_buf) {
 		return false
 	}
 	return __sre_buf[s].Evaluate(r)
 }
 
 func (s Script) Is(r rune) bool {
-	if int(s) >= len(__st_buf) {
+	if int(s) >= len(__sre_buf) {
 		return false
 	}
-	return unicode.Is(__st_buf[s], r)
+	return unicode.Is(__sre_buf[s].t, r)
 }

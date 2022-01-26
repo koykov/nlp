@@ -65,15 +65,9 @@ func (m scriptsModule) Compile(w moduleWriter, input, target string) (err error)
 		t := &tuples[i]
 		_, _ = w.WriteString("SRE{Evaluate: __sreEval")
 		_, _ = w.WriteString(t.Name)
-		_, _ = w.WriteString("},\n")
-	}
-	_, _ = w.WriteString("}\n")
-	_, _ = w.WriteString("__st_buf = []*unicode.RangeTable{\n")
-	for i := 0; i < len(tuples); i++ {
-		t := &tuples[i]
-		_, _ = w.WriteString("unicode.")
+		_, _ = w.WriteString(",t: unicode.")
 		_, _ = w.WriteString(t.Name)
-		_, _ = w.WriteString(",\n")
+		_, _ = w.WriteString("},\n")
 	}
 	_, _ = w.WriteString("}\n)\n")
 
