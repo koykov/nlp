@@ -6,7 +6,7 @@ type ScriptDetector interface {
 	Detect(ctx *Ctx, text []byte) *unicode.RangeTable
 	DetectString(ctx *Ctx, text string) *unicode.RangeTable
 
-	DetectScore(ctx *Ctx, text []byte) ScriptDetectProba
+	DetectProba(ctx *Ctx, text []byte) ScriptDetectProba
 	DetectProbaString(ctx *Ctx, text string) ScriptDetectProba
 }
 
