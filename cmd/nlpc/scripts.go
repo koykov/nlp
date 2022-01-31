@@ -8,6 +8,8 @@ import (
 	"io/ioutil"
 	"strings"
 	"unicode"
+
+	"github.com/koykov/entry"
 )
 
 type scriptsModule struct{}
@@ -43,7 +45,7 @@ func (m scriptsModule) Compile(w moduleWriter, input, target string) (err error)
 		return
 	}
 
-	_, _ = w.WriteString("import \"unicode\"\n\nconst (\n")
+	_, _ = w.WriteString("import (\n\"github.com/koykov/entry\"\n\"unicode\"\n)\nconst (\n")
 	for i := 0; i < len(tuples); i++ {
 		t := &tuples[i]
 		t.Name = strings.ReplaceAll(t.Name, " ", "_")
@@ -60,7 +62,8 @@ func (m scriptsModule) Compile(w moduleWriter, input, target string) (err error)
 	}
 	_, _ = w.WriteString(")\n\n")
 
-	_, _ = w.WriteString("var (\n__sre_buf = []SRE{\n")
+	_, _ = w.WriteString("var (\n")
+	_, _ = w.WriteString("__sre_buf = []SRE{\n")
 	for i := 0; i < len(tuples); i++ {
 		t := &tuples[i]
 		_, _ = w.WriteString("SRE{Evaluate: __sreEval")
@@ -69,7 +72,34 @@ func (m scriptsModule) Compile(w moduleWriter, input, target string) (err error)
 		_, _ = w.WriteString(t.Name)
 		_, _ = w.WriteString("},\n")
 	}
-	_, _ = w.WriteString("}\n)\n")
+	_, _ = w.WriteString("}\n")
+	_, _ = w.WriteString("__sl_idx = []entry.Entry32{")
+	var (
+		e      entry.Entry32
+		lo, hi uint16
+	)
+	for i := 0; i < len(tuples); i++ {
+		t := &tuples[i]
+		hi += uint16(len(t.Languages))
+		e.Encode(lo, hi)
+		lo = hi
+		_, _ = w.WriteString("0x")
+		_, _ = w.WriteString(fmt.Sprintf("%08x", e))
+		_, _ = w.WriteString(",\n")
+	}
+	_, _ = w.WriteString("}\n")
+	_, _ = w.WriteString("__sl_buf = []Language{\n")
+	var ls []string
+	for i := 0; i < len(tuples); i++ {
+		t := &tuples[i]
+		for j := 0; j < len(t.Languages); j++ {
+			t.Languages[j] = strings.ReplaceAll(t.Languages[j], " ", "_")
+			ls = append(ls, fmt.Sprintf("Language%s", t.Languages[j]))
+		}
+	}
+	_, _ = w.WriteString(strings.Join(ls, ",\n"))
+	_, _ = w.WriteString(",\n}\n")
+	_, _ = w.WriteString(")\n")
 
 	for i := 0; i < len(tuples); i++ {
 		t := &tuples[i]

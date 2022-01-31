@@ -20,3 +20,14 @@ func (s Script) Is(r rune) bool {
 	}
 	return unicode.Is(__sre_buf[s].t, r)
 }
+
+func (s Script) Languages() []Language {
+	if int(s) >= len(__sl_idx) {
+		return nil
+	}
+	lo, hi := __sl_idx[s].Decode()
+	if lo > hi || hi >= uint16(len(__sl_buf)) {
+		return nil
+	}
+	return __sl_buf[lo:hi]
+}
