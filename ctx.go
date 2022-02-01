@@ -1,11 +1,8 @@
 package nlp
 
 type Ctx struct {
-	sd ScriptDetector
-	ld LanguageDetector
-
-	BufSDS ScriptDetectProba
-	BufLDS LanguageDetectProba
+	bufSP ScriptProba
+	bufLP LanguageProba
 }
 
 func NewCtx() *Ctx {
@@ -14,6 +11,6 @@ func NewCtx() *Ctx {
 }
 
 func (c *Ctx) Reset() {
-	c.BufSDS = c.BufSDS[:0]
-	c.BufLDS = c.BufLDS[:0]
+	c.bufSP = c.bufSP[:0]
+	c.bufLP = c.bufLP[:0]
 }
