@@ -73,6 +73,16 @@ func (m scriptsModule) Compile(w moduleWriter, input, target string) (err error)
 		_, _ = w.WriteString("},\n")
 	}
 	_, _ = w.WriteString("}\n")
+
+	_, _ = w.WriteString("__sl = []Script{\n")
+	for i := 0; i < len(tuples); i++ {
+		t := &tuples[i]
+		_, _ = w.WriteString("Script")
+		_, _ = w.WriteString(t.Name)
+		_, _ = w.WriteString(",\n")
+	}
+	_, _ = w.WriteString("}\n")
+
 	_, _ = w.WriteString("__sl_idx = []entry.Entry32{")
 	var (
 		e      entry.Entry32
