@@ -4,6 +4,10 @@ import "unicode"
 
 type Script uint
 
+func ScriptsSupported() []Script {
+	return __sl
+}
+
 // Evaluate checks if given rune r is written on script s.
 // Use precompiled SRE (script rune evaluator) to speed up evaluation.
 // See performance tests https://github.com/koykov/versus/blob/master/nlp_script/evaluate_test.go

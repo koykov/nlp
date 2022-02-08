@@ -38,11 +38,19 @@ func DetectScript(ctx *Ctx, text []byte) (Script, error) {
 }
 
 func DetectScriptString(ctx *Ctx, text string) (Script, error) {
-	proba, err := DetectScriptStringProba(ctx, text)
-	if err != nil {
+	if err := dsProba(ctx, text); err != nil {
 		return 0, err
 	}
-	return proba[0].Script, nil
+	var (
+		max  float32
+		maxi int
+	)
+	for i := 0; i < len(ctx.bufSP); i++ {
+		if score := ctx.bufSP[i].Score; score > max {
+			max, maxi = score, i
+		}
+	}
+	return ctx.bufSP[maxi].Script, nil
 }
 
 func DetectScriptProba(ctx *Ctx, text []byte) (ScriptProba, error) {
@@ -50,13 +58,21 @@ func DetectScriptProba(ctx *Ctx, text []byte) (ScriptProba, error) {
 }
 
 func DetectScriptStringProba(ctx *Ctx, text string) (ScriptProba, error) {
+	if err := dsProba(ctx, text); err != nil {
+		return nil, err
+	}
+	sort.Sort(&ctx.bufSP)
+	return ctx.bufSP, nil
+}
+
+func dsProba(ctx *Ctx, text string) error {
 	for _, r := range text {
 		if !mustSkip(r) {
 			ctx.bufR = append(ctx.bufR, r)
 		}
 	}
 	if len(ctx.bufR) == 0 {
-		return nil, ErrEmptyInput
+		return ErrEmptyInput
 	}
 	if len(ctx.bufSP) == 0 {
 		ctx.LimitScripts(ScriptsSupported())
@@ -79,8 +95,7 @@ func DetectScriptStringProba(ctx *Ctx, text string) (ScriptProba, error) {
 	for i := 0; i < len(ctx.bufSP); i++ {
 		ctx.bufSP[i].Score /= float32(l)
 	}
-	sort.Sort(&ctx.bufSP)
-	return ctx.bufSP, nil
+	return nil
 }
 
 func dsStep(l int) int {
