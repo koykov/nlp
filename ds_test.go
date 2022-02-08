@@ -44,3 +44,24 @@ func TestDetectScript(t *testing.T) {
 		})
 	}
 }
+
+func BenchmarkDetectScript(b *testing.B) {
+	for _, stage := range dsStages {
+		b.Run(stage.key, func(b *testing.B) {
+			b.ReportAllocs()
+			for i := 0; i < b.N; i++ {
+				ctx := AcquireCtx()
+				ctx.SetDetectScriptAlgo(DetectScriptDistributed)
+				script, err := DetectScriptString(ctx, stage.key)
+				if err != nil {
+					if err != stage.err {
+						b.Error(err)
+					}
+				} else if script != stage.script {
+					b.Errorf("detect script failed: need %d, got %d", stage.script, script)
+				}
+				ReleaseCtx(ctx)
+			}
+		})
+	}
+}
