@@ -4,6 +4,7 @@ type Ctx struct {
 	dsa DetectScriptAlgo
 
 	bufR  []rune
+	bufOR []rune
 	bufSP ScriptProba
 	bufLP LanguageProba
 }
@@ -11,6 +12,16 @@ type Ctx struct {
 func NewCtx() *Ctx {
 	ctx := Ctx{}
 	return &ctx
+}
+
+func (c *Ctx) bufferize(text string) {
+	c.bufOR, c.bufR = c.bufOR[:0], c.bufR[:0]
+	for _, r := range text {
+		c.bufOR = append(c.bufOR, r)
+		if !mustSkip(r) {
+			c.bufR = append(c.bufR, r)
+		}
+	}
 }
 
 func (c *Ctx) SetDetectScriptAlgo(algo DetectScriptAlgo) {
@@ -36,6 +47,7 @@ func (c *Ctx) LimitScripts(list []Script) {
 
 func (c *Ctx) Reset() {
 	c.bufR = c.bufR[:0]
+	c.bufOR = c.bufOR[:0]
 	c.bufSP = c.bufSP[:0]
 	c.bufLP = c.bufLP[:0]
 }

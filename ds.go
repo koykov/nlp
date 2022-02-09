@@ -19,6 +19,10 @@ type ScriptScore struct {
 	Score  float32
 }
 
+var (
+	_, _ = DetectScript, DetectScriptProba
+)
+
 type ScriptProba []ScriptScore
 
 func (s ScriptProba) Len() int {
@@ -42,15 +46,16 @@ func DetectScriptString(ctx *Ctx, text string) (Script, error) {
 		return 0, err
 	}
 	var (
-		max  float32
-		maxi int
+		mx float32
+		mi int
 	)
+	_ = ctx.bufSP[len(ctx.bufSP)-1]
 	for i := 0; i < len(ctx.bufSP); i++ {
-		if score := ctx.bufSP[i].Score; score > max {
-			max, maxi = score, i
+		if score := ctx.bufSP[i].Score; score > mx {
+			mx, mi = score, i
 		}
 	}
-	return ctx.bufSP[maxi].Script, nil
+	return ctx.bufSP[mi].Script, nil
 }
 
 func DetectScriptProba(ctx *Ctx, text []byte) (ScriptProba, error) {
@@ -66,11 +71,7 @@ func DetectScriptStringProba(ctx *Ctx, text string) (ScriptProba, error) {
 }
 
 func dsProba(ctx *Ctx, text string) error {
-	for _, r := range text {
-		if !mustSkip(r) {
-			ctx.bufR = append(ctx.bufR, r)
-		}
-	}
+	ctx.bufferize(text)
 	if len(ctx.bufR) == 0 {
 		return ErrEmptyInput
 	}
