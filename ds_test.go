@@ -5,24 +5,24 @@ import (
 )
 
 type dsStage struct {
-	key    string
-	script Script
-	err    error
+	key, text string
+	script    Script
+	err       error
 }
 
 var (
 	dsStages = []dsStage{
-		{key: "012345678987654321!", err: ErrEmptyInput},
-		{key: "Hello, world!", script: ScriptLatin},
-		{key: "Привет, мир!", script: ScriptCyrillic},
-		{key: "ქართული ენა მსოფლიო", script: ScriptGeorgian},
-		{key: "ككل حوالي 1.6، ومعظم الناس", script: ScriptArabic},
-		{key: "የኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊሪፐብሊክ", script: ScriptEthiopic},
-		{key: "היסטוריה והתפתחות של האלפבית העברי", script: ScriptHebrew},
-		{key: "県見夜上温国阪題富販", script: ScriptHan},
-		{key: "আমি ভালো আছি, ধন্যবাদ!", script: ScriptBengali},
-		{key: "Английское слово fluctuate означает \"неустойчивый\"", script: ScriptCyrillic},
-		{key: "Russian word собственник means proprietor", script: ScriptLatin},
+		{key: "no script", text: "012345678987654321!", err: ErrEmptyInput},
+		{key: "pure latin", text: "Hello, world!", script: ScriptLatin},
+		{key: "pure cyrillic", text: "Привет, мир!", script: ScriptCyrillic},
+		{key: "pure georgian", text: "ქართული ენა მსოფლიო", script: ScriptGeorgian},
+		{key: "pure arabic", text: "ككل حوالي 1.6، ومعظم الناس", script: ScriptArabic},
+		{key: "pure ethiopic", text: "የኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊሪፐብሊክ", script: ScriptEthiopic},
+		{key: "pure hebrew", text: "היסטוריה והתפתחות של האלפבית העברי", script: ScriptHebrew},
+		{key: "pure han", text: "県見夜上温国阪題富販", script: ScriptHan},
+		{key: "pure bengali", text: "আমি ভালো আছি, ধন্যবাদ!", script: ScriptBengali},
+		{key: "mixed cyrillic and latin", text: "Английское слово fluctuate означает \"неустойчивый\"", script: ScriptCyrillic},
+		{key: "mixed latin and cyrillic", text: "Russian word собственник means proprietor", script: ScriptLatin},
 	}
 )
 
@@ -31,7 +31,7 @@ func TestDetectScript(t *testing.T) {
 		t.Run(stage.key, func(t *testing.T) {
 			ctx := NewCtx()
 			ctx.SetDetectScriptAlgo(DetectScriptFull)
-			script, err := DetectScriptString(ctx, stage.key)
+			script, err := DetectScriptString(ctx, stage.text)
 			if err != nil {
 				if err != stage.err {
 					t.Error(err)
@@ -52,12 +52,33 @@ func BenchmarkDetectScript(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				ctx := AcquireCtx()
 				ctx.SetDetectScriptAlgo(DetectScriptDistributed)
-				script, err := DetectScriptString(ctx, stage.key)
+				script, err := DetectScriptString(ctx, stage.text)
 				if err != nil {
 					if err != stage.err {
 						b.Error(err)
 					}
 				} else if script != stage.script {
+					b.Errorf("detect script failed: need %d, got %d", stage.script, script)
+				}
+				ReleaseCtx(ctx)
+			}
+		})
+	}
+}
+
+func BenchmarkDetectScriptProba(b *testing.B) {
+	for _, stage := range dsStages {
+		b.Run(stage.key, func(b *testing.B) {
+			b.ReportAllocs()
+			for i := 0; i < b.N; i++ {
+				ctx := AcquireCtx()
+				ctx.SetDetectScriptAlgo(DetectScriptDistributed)
+				proba, err := DetectScriptStringProba(ctx, stage.text)
+				if err != nil {
+					if err != stage.err {
+						b.Error(err)
+					}
+				} else if script := proba[0].Script; script != stage.script {
 					b.Errorf("detect script failed: need %d, got %d", stage.script, script)
 				}
 				ReleaseCtx(ctx)
