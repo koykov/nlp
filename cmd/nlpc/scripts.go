@@ -161,10 +161,6 @@ func (m scriptsModule) Compile(w moduleWriter, input, target string) (err error)
 			_, _ = w.WriteString("}\n")
 		}
 
-		if l32 > 0 {
-			//
-		}
-
 		_, _ = w.WriteString("return false\n}\n\n")
 	}
 
