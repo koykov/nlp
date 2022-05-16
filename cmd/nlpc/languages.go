@@ -33,7 +33,7 @@ func (m languagesModule) Compile(w moduleWriter, input, target string) (err erro
 		target = "languages_repo.go"
 	}
 
-	var body []byte
+	var body, buf []byte
 	if body, err = ioutil.ReadFile(input); err != nil {
 		return
 	}
@@ -99,15 +99,21 @@ func (m languagesModule) Compile(w moduleWriter, input, target string) (err erro
 	}
 	_, _ = w.WriteString("}\n")
 
-	_, _ = w.WriteString("__lt_buf = []byte(\"")
 	for i := 0; i < len(tuples); i++ {
 		tuple := &tuples[i]
-		_, _ = w.WriteString(tuple.Name)
-		_, _ = w.WriteString(tuple.Native)
-		_, _ = w.WriteString(tuple.Iso6391)
-		_, _ = w.WriteString(tuple.Iso6393)
+		buf = append(buf, tuple.Name...)
+		buf = append(buf, tuple.Native...)
+		buf = append(buf, tuple.Iso6391...)
+		buf = append(buf, tuple.Iso6393...)
 	}
-	_, _ = w.WriteString("\")\n")
+	_, _ = w.WriteString("__lt_buf = []byte{\n")
+	for i := 0; i < len(buf); i++ {
+		if i > 0 && i%16 == 0 {
+			_ = w.WriteByte('\n')
+		}
+		_, _ = w.WriteString(fmt.Sprintf("0x%02x, ", buf[i]))
+	}
+	_, _ = w.WriteString("\n}\n")
 
 	_, _ = w.WriteString(")\n")
 
