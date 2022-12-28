@@ -1,6 +1,10 @@
 package nlp
 
-import "github.com/koykov/fastconv"
+import (
+	"sort"
+
+	"github.com/koykov/fastconv"
+)
 
 type LanguageScore struct {
 	Language Language
@@ -22,19 +26,40 @@ func (s *LanguageProba) Swap(i, j int) {
 }
 
 func DetectLanguage(ctx *Ctx, text []byte) (Language, error) {
-	// ...
-	return 0, nil
+	return DetectLanguageString(ctx, fastconv.B2S(text))
 }
 
 func DetectLanguageString(ctx *Ctx, text string) (Language, error) {
-	return DetectLanguage(ctx, fastconv.S2B(text))
+	if err := dlProba(ctx, text); err != nil {
+		return 0, err
+	}
+	var (
+		mx float32
+		mi int
+	)
+	_ = ctx.bufLP[len(ctx.bufLP)-1]
+	for i := 0; i < len(ctx.bufLP); i++ {
+		if score := ctx.bufLP[i].Score; score > mx {
+			mx, mi = score, i
+		}
+	}
+	return ctx.bufLP[mi].Language, nil
 }
 
 func DetectLanguageProba(ctx *Ctx, text []byte) (LanguageProba, error) {
-	// ...
-	return nil, nil
+	return DetectLanguageStringProba(ctx, fastconv.B2S(text))
 }
 
 func DetectLanguageStringProba(ctx *Ctx, text string) (LanguageProba, error) {
-	return DetectLanguageProba(ctx, fastconv.S2B(text))
+	if err := dlProba(ctx, text); err != nil {
+		return nil, err
+	}
+	sort.Sort(&ctx.bufLP)
+	return ctx.bufLP, nil
+}
+
+func dlProba(ctx *Ctx, text string) error {
+	_, _ = ctx, text
+	// todo implement me
+	return nil
 }
