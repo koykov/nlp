@@ -1,6 +1,6 @@
 module github.com/koykov/nlp
 
-go 1.16
+go 1.18
 
 require (
 	github.com/koykov/entry v1.0.1
