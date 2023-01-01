@@ -3,8 +3,9 @@
 package nlp
 
 import (
-	"github.com/koykov/entry"
 	"unicode"
+
+	"github.com/koykov/entry"
 )
 
 const (

@@ -1,7 +1,7 @@
 package nlp
 
 type Ctx struct {
-	dsa DetectScriptAlgo
+	sd ScriptDetector
 
 	bufR  []rune
 	bufOR []rune
@@ -14,40 +14,34 @@ func NewCtx() *Ctx {
 	return &ctx
 }
 
-func (c *Ctx) bufferize(text string) {
-	c.bufOR, c.bufR = c.bufOR[:0], c.bufR[:0]
+func (ctx *Ctx) bufferize(text string) {
+	ctx.bufOR, ctx.bufR = ctx.bufOR[:0], ctx.bufR[:0]
 	for _, r := range text {
-		c.bufOR = append(c.bufOR, r)
+		ctx.bufOR = append(ctx.bufOR, r)
 		if !mustSkip(r) {
-			c.bufR = append(c.bufR, r)
+			ctx.bufR = append(ctx.bufR, r)
 		}
 	}
 }
 
-func (c *Ctx) SetDetectScriptAlgo(algo DetectScriptAlgo) {
-	c.dsa = algo
-}
-
-func (c *Ctx) LimitScripts(list []Script) {
+func (ctx *Ctx) LimitScripts(list []Script) {
 	l := len(list)
 	if l == 0 {
 		return
 	}
-	if len(c.bufSP) > 0 {
-		c.bufSP = c.bufSP[:0]
-	}
 	_ = list[l-1]
+	ctx.bufSP = ctx.bufSP[:0]
 	for i := 0; i < l; i++ {
-		c.bufSP = append(c.bufSP, ScriptScore{
+		ctx.bufSP = append(ctx.bufSP, ScriptScore{
 			Script: list[i],
 			Score:  0,
 		})
 	}
 }
 
-func (c *Ctx) Reset() {
-	c.bufR = c.bufR[:0]
-	c.bufOR = c.bufOR[:0]
-	c.bufSP = c.bufSP[:0]
-	c.bufLP = c.bufLP[:0]
+func (ctx *Ctx) Reset() {
+	ctx.bufR = ctx.bufR[:0]
+	ctx.bufOR = ctx.bufOR[:0]
+	ctx.bufSP = ctx.bufSP[:0]
+	ctx.bufLP = ctx.bufLP[:0]
 }

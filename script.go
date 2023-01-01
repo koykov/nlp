@@ -2,8 +2,6 @@ package nlp
 
 import "unicode"
 
-type Script uint
-
 func ScriptsSupported() []Script {
 	return __sl
 }
