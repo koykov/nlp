@@ -2,6 +2,34 @@ package nlp
 
 import "unicode"
 
+type Script uint
+
+type ScriptDetector interface {
+	Detect(ctx *Ctx) (Script, error)
+	DetectProba(ctx *Ctx) (ScriptProba, error)
+	DetectString(ctx *Ctx) (Script, error)
+	DetectProbaString(ctx *Ctx) (ScriptProba, error)
+}
+
+type ScriptScore struct {
+	Script Script
+	Score  float32
+}
+
+type ScriptProba []ScriptScore
+
+func (s ScriptProba) Len() int {
+	return len(s)
+}
+
+func (s ScriptProba) Less(i, j int) bool {
+	return s[i].Score > s[j].Score
+}
+
+func (s *ScriptProba) Swap(i, j int) {
+	(*s)[i], (*s)[j] = (*s)[j], (*s)[i]
+}
+
 func ScriptsSupported() []Script {
 	return __sl
 }

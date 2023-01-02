@@ -2,13 +2,6 @@ package nlp
 
 import "github.com/koykov/fastconv"
 
-type ScriptDetector interface {
-	Detect(ctx *Ctx) (Script, error)
-	DetectProba(ctx *Ctx) (ScriptProba, error)
-	DetectString(ctx *Ctx) (Script, error)
-	DetectProbaString(ctx *Ctx) (ScriptProba, error)
-}
-
 func (ctx *Ctx) WithScriptDetector(ds ScriptDetector) *Ctx {
 	ctx.sd = ds
 	return ctx
@@ -47,5 +40,3 @@ func (ctx *Ctx) DetectScriptStringProba(text string) (ScriptProba, error) {
 	}
 	return ctx.sd.DetectProbaString(ctx)
 }
-
-// func (ctx *Ctx)
