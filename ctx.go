@@ -1,12 +1,17 @@
 package nlp
 
-type Ctx struct {
-	dsa DetectScriptAlgo
+import "github.com/koykov/fastconv"
 
-	bufR  []rune
-	bufOR []rune
-	bufSP ScriptProba
-	bufLP LanguageProba
+type Ctx struct {
+	t string
+
+	bufR []rune
+
+	sd    ScriptDetector
+	bufSC []Script
+	BufSP ScriptProba
+
+	BufLP LanguageProba
 }
 
 func NewCtx() *Ctx {
@@ -14,40 +19,53 @@ func NewCtx() *Ctx {
 	return &ctx
 }
 
-func (c *Ctx) bufferize(text string) {
-	c.bufOR, c.bufR = c.bufOR[:0], c.bufR[:0]
+func (ctx *Ctx) SetText(text []byte) *Ctx {
+	return ctx.SetTextString(fastconv.B2S(text))
+}
+
+func (ctx Ctx) GetText() []byte {
+	return fastconv.S2B(ctx.t)
+}
+
+func (ctx *Ctx) SetTextString(text string) *Ctx {
+	ctx.t = text
+	ctx.bufR = ctx.bufR[:0]
 	for _, r := range text {
-		c.bufOR = append(c.bufOR, r)
 		if !mustSkip(r) {
-			c.bufR = append(c.bufR, r)
+			ctx.bufR = append(ctx.bufR, r)
 		}
 	}
+	return ctx
 }
 
-func (c *Ctx) SetDetectScriptAlgo(algo DetectScriptAlgo) {
-	c.dsa = algo
+func (ctx Ctx) GetTextString() string {
+	return ctx.t
 }
 
-func (c *Ctx) LimitScripts(list []Script) {
-	l := len(list)
-	if l == 0 {
-		return
-	}
-	if len(c.bufSP) > 0 {
-		c.bufSP = c.bufSP[:0]
-	}
-	_ = list[l-1]
-	for i := 0; i < l; i++ {
-		c.bufSP = append(c.bufSP, ScriptScore{
+func (ctx Ctx) GetRunes() []rune {
+	return ctx.bufR
+}
+
+func (ctx *Ctx) LimitScripts(list []Script) *Ctx {
+	ctx.bufSC = append(ctx.bufSC[:0], list...)
+	ctx.BufSP = ctx.BufSP[:0]
+	for i := 0; i < len(list); i++ {
+		ctx.BufSP = append(ctx.BufSP, ScriptScore{
 			Script: list[i],
 			Score:  0,
 		})
 	}
+	return ctx
 }
 
-func (c *Ctx) Reset() {
-	c.bufR = c.bufR[:0]
-	c.bufOR = c.bufOR[:0]
-	c.bufSP = c.bufSP[:0]
-	c.bufLP = c.bufLP[:0]
+func (ctx *Ctx) GetScripts() []Script {
+	return ctx.bufSC
+}
+
+func (ctx *Ctx) Reset() *Ctx {
+	ctx.t = ""
+	ctx.bufR = ctx.bufR[:0]
+	ctx.BufSP = ctx.BufSP[:0]
+	ctx.BufLP = ctx.BufLP[:0]
+	return ctx
 }

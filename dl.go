@@ -37,13 +37,13 @@ func DetectLanguageString(ctx *Ctx, text string) (Language, error) {
 		mx float32
 		mi int
 	)
-	_ = ctx.bufLP[len(ctx.bufLP)-1]
-	for i := 0; i < len(ctx.bufLP); i++ {
-		if score := ctx.bufLP[i].Score; score > mx {
+	_ = ctx.BufLP[len(ctx.BufLP)-1]
+	for i := 0; i < len(ctx.BufLP); i++ {
+		if score := ctx.BufLP[i].Score; score > mx {
 			mx, mi = score, i
 		}
 	}
-	return ctx.bufLP[mi].Language, nil
+	return ctx.BufLP[mi].Language, nil
 }
 
 func DetectLanguageProba(ctx *Ctx, text []byte) (LanguageProba, error) {
@@ -54,8 +54,8 @@ func DetectLanguageStringProba(ctx *Ctx, text string) (LanguageProba, error) {
 	if err := dlProba(ctx, text); err != nil {
 		return nil, err
 	}
-	sort.Sort(&ctx.bufLP)
-	return ctx.bufLP, nil
+	sort.Sort(&ctx.BufLP)
+	return ctx.BufLP, nil
 }
 
 func dlProba(ctx *Ctx, text string) error {

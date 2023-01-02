@@ -7,7 +7,7 @@ const (
 	sreLinearMax = 18
 )
 
-// SRE ...
+// SRE is a script rune evaluator.
 // Nested functions approach performance https://github.com/koykov/lab/tree/master/call_perf
 type SRE struct {
 	Evaluate func(r rune) bool
