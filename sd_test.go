@@ -29,9 +29,8 @@ var (
 func TestDetectScript(t *testing.T) {
 	for _, stage := range dsStages {
 		t.Run(stage.key, func(t *testing.T) {
-			ctx := NewCtx()
-			ctx.SetDetectScriptAlgo(ScriptDetectFull)
-			script, err := DetectScriptString(ctx, stage.text)
+			ctx := NewCtx().WithScriptDetector(NewDetectorWithAlgo(DetectAlgoFull))
+			script, err := ctx.DetectScriptString(stage.text)
 			if err != nil {
 				if err != stage.err {
 					t.Error(err)
@@ -50,9 +49,8 @@ func BenchmarkDetectScript(b *testing.B) {
 		b.Run(stage.key, func(b *testing.B) {
 			b.ReportAllocs()
 			for i := 0; i < b.N; i++ {
-				ctx := AcquireCtx()
-				ctx.SetDetectScriptAlgo(ScriptDetectDistributed)
-				script, err := DetectScriptString(ctx, stage.text)
+				ctx := AcquireCtx().WithScriptDetector(NewDetectorWithAlgo(DetectAlgoDistributed))
+				script, err := ctx.DetectScriptString(stage.text)
 				if err != nil {
 					if err != stage.err {
 						b.Error(err)
@@ -71,9 +69,8 @@ func BenchmarkDetectScriptProba(b *testing.B) {
 		b.Run(stage.key, func(b *testing.B) {
 			b.ReportAllocs()
 			for i := 0; i < b.N; i++ {
-				ctx := AcquireCtx()
-				ctx.SetDetectScriptAlgo(ScriptDetectDistributed)
-				proba, err := DetectScriptStringProba(ctx, stage.text)
+				ctx := AcquireCtx().WithScriptDetector(NewDetectorWithAlgo(DetectAlgoDistributed))
+				proba, err := ctx.DetectScriptStringProba(stage.text)
 				if err != nil {
 					if err != stage.err {
 						b.Error(err)

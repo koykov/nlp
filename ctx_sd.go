@@ -3,10 +3,10 @@ package nlp
 import "github.com/koykov/fastconv"
 
 type ScriptDetector interface {
-	Detect(ctx *Ctx, text []byte) (Script, error)
-	DetectProba(ctx *Ctx, text []byte) (ScriptProba, error)
-	DetectString(ctx *Ctx, text string) (Script, error)
-	DetectProbaString(ctx *Ctx, text string) (ScriptProba, error)
+	Detect(ctx *Ctx) (Script, error)
+	DetectProba(ctx *Ctx) (ScriptProba, error)
+	DetectString(ctx *Ctx) (Script, error)
+	DetectProbaString(ctx *Ctx) (ScriptProba, error)
 }
 
 func (ctx *Ctx) WithScriptDetector(ds ScriptDetector) *Ctx {
@@ -22,7 +22,14 @@ func (ctx *Ctx) DetectScriptString(text string) (Script, error) {
 	if ctx.sd == nil {
 		return 0, ErrNoScriptDetector
 	}
-	return ctx.sd.DetectString(ctx, text)
+	if len(text) > 0 {
+		ctx.SetTextString(text)
+	}
+	if len(ctx.bufSC) == 0 {
+		ctx.LimitScripts(ScriptsSupported())
+	}
+	ctx.bufSP = ctx.bufSP[:0]
+	return ctx.sd.DetectString(ctx)
 }
 
 func (ctx *Ctx) DetectScriptProba(text []byte) (ScriptProba, error) {
@@ -33,5 +40,14 @@ func (ctx *Ctx) DetectScriptStringProba(text string) (ScriptProba, error) {
 	if ctx.sd == nil {
 		return nil, ErrNoScriptDetector
 	}
-	return ctx.sd.DetectProbaString(ctx, text)
+	if len(text) > 0 {
+		ctx.SetTextString(text)
+	}
+	if len(ctx.bufSC) == 0 {
+		ctx.LimitScripts(ScriptsSupported())
+	}
+	ctx.bufSP = ctx.bufSP[:0]
+	return ctx.sd.DetectProbaString(ctx)
 }
+
+// func (ctx *Ctx)
