@@ -29,7 +29,7 @@ var (
 func TestDetectScript(t *testing.T) {
 	for _, stage := range dsStages {
 		t.Run(stage.key, func(t *testing.T) {
-			ctx := NewCtx().WithScriptDetector(NewDetectorWithAlgo(DetectAlgoFull))
+			ctx := NewCtx().WithScriptDetector(NewDetector())
 			script, err := ctx.DetectScriptString(stage.text)
 			if err != nil {
 				if err != stage.err {

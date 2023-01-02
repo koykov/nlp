@@ -9,9 +9,9 @@ type Ctx struct {
 
 	sd    ScriptDetector
 	bufSC []Script
-	bufSP ScriptProba
+	BufSP ScriptProba
 
-	bufLP LanguageProba
+	BufLP LanguageProba
 }
 
 func NewCtx() *Ctx {
@@ -48,9 +48,9 @@ func (ctx Ctx) GetRunes() []rune {
 
 func (ctx *Ctx) LimitScripts(list []Script) *Ctx {
 	ctx.bufSC = append(ctx.bufSC[:0], list...)
-	ctx.bufSP = ctx.bufSP[:0]
+	ctx.BufSP = ctx.BufSP[:0]
 	for i := 0; i < len(list); i++ {
-		ctx.bufSP = append(ctx.bufSP, ScriptScore{
+		ctx.BufSP = append(ctx.BufSP, ScriptScore{
 			Script: list[i],
 			Score:  0,
 		})
@@ -65,7 +65,7 @@ func (ctx *Ctx) GetScripts() []Script {
 func (ctx *Ctx) Reset() *Ctx {
 	ctx.t = ""
 	ctx.bufR = ctx.bufR[:0]
-	ctx.bufSP = ctx.bufSP[:0]
-	ctx.bufLP = ctx.bufLP[:0]
+	ctx.BufSP = ctx.BufSP[:0]
+	ctx.BufLP = ctx.BufLP[:0]
 	return ctx
 }

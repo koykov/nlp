@@ -28,7 +28,6 @@ func (ctx *Ctx) DetectScriptString(text string) (Script, error) {
 	if len(ctx.bufSC) == 0 {
 		ctx.LimitScripts(ScriptsSupported())
 	}
-	ctx.bufSP = ctx.bufSP[:0]
 	return ctx.sd.DetectString(ctx)
 }
 
@@ -46,7 +45,6 @@ func (ctx *Ctx) DetectScriptStringProba(text string) (ScriptProba, error) {
 	if len(ctx.bufSC) == 0 {
 		ctx.LimitScripts(ScriptsSupported())
 	}
-	ctx.bufSP = ctx.bufSP[:0]
 	return ctx.sd.DetectProbaString(ctx)
 }
 
