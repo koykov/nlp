@@ -1,6 +1,10 @@
 package nlp
 
-import "github.com/koykov/fastconv"
+import (
+	"unicode"
+
+	"github.com/koykov/fastconv"
+)
 
 type Ctx struct {
 	t string
@@ -32,6 +36,7 @@ func (ctx *Ctx) SetTextString(text string) *Ctx {
 	ctx.bufR = ctx.bufR[:0]
 	for _, r := range text {
 		if !mustSkip(r) {
+			r = unicode.ToLower(r)
 			ctx.bufR = append(ctx.bufR, r)
 		}
 	}
