@@ -26,14 +26,6 @@ func NewScriptDetectorWithAlgo(algo ScriptDetectAlgo) ScriptDetector {
 }
 
 func (d ScriptDetector) Detect(ctx *Ctx) (Script, error) {
-	return d.DetectString(ctx)
-}
-
-func (d ScriptDetector) DetectProba(ctx *Ctx) (ScriptProba, error) {
-	return d.DetectProbaString(ctx)
-}
-
-func (d ScriptDetector) DetectString(ctx *Ctx) (Script, error) {
 	if err := d.dsProba(ctx); err != nil {
 		return 0, err
 	}
@@ -50,7 +42,7 @@ func (d ScriptDetector) DetectString(ctx *Ctx) (Script, error) {
 	return ctx.BufSP[mi].Script, nil
 }
 
-func (d ScriptDetector) DetectProbaString(ctx *Ctx) (ScriptProba, error) {
+func (d ScriptDetector) DetectProba(ctx *Ctx) (ScriptProba, error) {
 	if err := d.dsProba(ctx); err != nil {
 		return nil, err
 	}

@@ -5,8 +5,6 @@ import "unicode"
 type ScriptDetectorInterface interface {
 	Detect(ctx *Ctx) (Script, error)
 	DetectProba(ctx *Ctx) (ScriptProba, error)
-	DetectString(ctx *Ctx) (Script, error)
-	DetectProbaString(ctx *Ctx) (ScriptProba, error)
 }
 
 type Script uint
