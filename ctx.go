@@ -11,7 +11,7 @@ type Ctx struct {
 
 	bufR []rune
 
-	sd    ScriptDetector
+	sd    ScriptDetectorInterface
 	bufSC []Script
 	BufSP ScriptProba
 

@@ -2,7 +2,7 @@ package nlp
 
 import "github.com/koykov/fastconv"
 
-func (ctx *Ctx) WithScriptDetector(ds ScriptDetector) *Ctx {
+func (ctx *Ctx) WithScriptDetector(ds ScriptDetectorInterface) *Ctx {
 	ctx.sd = ds
 	return ctx
 }
@@ -12,8 +12,9 @@ func (ctx *Ctx) DetectScript(text []byte) (Script, error) {
 }
 
 func (ctx *Ctx) DetectScriptString(text string) (Script, error) {
-	if ctx.sd == nil {
-		return 0, ErrNoScriptDetector
+	sd := ctx.sd
+	if sd == nil {
+		sd = NewScriptDetector()
 	}
 	if len(text) > 0 {
 		ctx.SetTextString(text)
@@ -21,7 +22,7 @@ func (ctx *Ctx) DetectScriptString(text string) (Script, error) {
 	if len(ctx.bufSC) == 0 {
 		ctx.LimitScripts(ScriptsSupported())
 	}
-	return ctx.sd.DetectString(ctx)
+	return sd.DetectString(ctx)
 }
 
 func (ctx *Ctx) DetectScriptProba(text []byte) (ScriptProba, error) {
@@ -29,8 +30,9 @@ func (ctx *Ctx) DetectScriptProba(text []byte) (ScriptProba, error) {
 }
 
 func (ctx *Ctx) DetectScriptStringProba(text string) (ScriptProba, error) {
-	if ctx.sd == nil {
-		return nil, ErrNoScriptDetector
+	sd := ctx.sd
+	if sd == nil {
+		sd = NewScriptDetector()
 	}
 	if len(text) > 0 {
 		ctx.SetTextString(text)
@@ -38,5 +40,5 @@ func (ctx *Ctx) DetectScriptStringProba(text string) (ScriptProba, error) {
 	if len(ctx.bufSC) == 0 {
 		ctx.LimitScripts(ScriptsSupported())
 	}
-	return ctx.sd.DetectProbaString(ctx)
+	return sd.DetectProbaString(ctx)
 }

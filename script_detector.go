@@ -1,40 +1,39 @@
-package script
+package nlp
 
 import (
 	"sort"
-
-	"github.com/koykov/nlp"
 )
 
-type DetectAlgo uint
+type ScriptDetectAlgo uint
 
 const (
-	DetectAlgoHalf DetectAlgo = iota
-	DetectAlgoDistributed
-	DetectAlgoFull
+	ScriptDetectAlgoHalf ScriptDetectAlgo = iota
+	ScriptDetectAlgoDistributed
+	ScriptDetectAlgoFull
 )
 
-type Detector struct {
-	algo DetectAlgo
+// ScriptDetector is a builtin detector of writing scripts.
+type ScriptDetector struct {
+	algo ScriptDetectAlgo
 }
 
-func NewDetector() Detector {
-	return Detector{algo: DetectAlgoFull}
+func NewScriptDetector() ScriptDetector {
+	return ScriptDetector{algo: ScriptDetectAlgoFull}
 }
 
-func NewDetectorWithAlgo(algo DetectAlgo) Detector {
-	return Detector{algo: algo}
+func NewScriptDetectorWithAlgo(algo ScriptDetectAlgo) ScriptDetector {
+	return ScriptDetector{algo: algo}
 }
 
-func (d Detector) Detect(ctx *nlp.Ctx) (nlp.Script, error) {
+func (d ScriptDetector) Detect(ctx *Ctx) (Script, error) {
 	return d.DetectString(ctx)
 }
 
-func (d Detector) DetectProba(ctx *nlp.Ctx) (nlp.ScriptProba, error) {
+func (d ScriptDetector) DetectProba(ctx *Ctx) (ScriptProba, error) {
 	return d.DetectProbaString(ctx)
 }
 
-func (d Detector) DetectString(ctx *nlp.Ctx) (nlp.Script, error) {
+func (d ScriptDetector) DetectString(ctx *Ctx) (Script, error) {
 	if err := d.dsProba(ctx); err != nil {
 		return 0, err
 	}
@@ -51,7 +50,7 @@ func (d Detector) DetectString(ctx *nlp.Ctx) (nlp.Script, error) {
 	return ctx.BufSP[mi].Script, nil
 }
 
-func (d Detector) DetectProbaString(ctx *nlp.Ctx) (nlp.ScriptProba, error) {
+func (d ScriptDetector) DetectProbaString(ctx *Ctx) (ScriptProba, error) {
 	if err := d.dsProba(ctx); err != nil {
 		return nil, err
 	}
@@ -59,18 +58,18 @@ func (d Detector) DetectProbaString(ctx *nlp.Ctx) (nlp.ScriptProba, error) {
 	return ctx.BufSP, nil
 }
 
-func (d Detector) dsProba(ctx *nlp.Ctx) error {
+func (d ScriptDetector) dsProba(ctx *Ctx) error {
 	runes := ctx.GetRunes()
 	l := len(runes)
 	if l == 0 {
-		return nlp.ErrEmptyInput
+		return ErrEmptyInput
 	}
 
 	s := 1
-	if d.algo == DetectAlgoHalf {
+	if d.algo == ScriptDetectAlgoHalf {
 		l /= 2
 	}
-	if d.algo == DetectAlgoDistributed {
+	if d.algo == ScriptDetectAlgoDistributed {
 		s = distStep(l)
 	}
 
@@ -82,7 +81,7 @@ func (d Detector) dsProba(ctx *nlp.Ctx) error {
 	ctx.BufSP = ctx.BufSP[:0]
 	_ = scripts[sl-1]
 	for i := 0; i < len(scripts); i++ {
-		ctx.BufSP = append(ctx.BufSP, nlp.ScriptScore{Script: scripts[i]})
+		ctx.BufSP = append(ctx.BufSP, ScriptScore{Script: scripts[i]})
 	}
 	_ = runes[l-1]
 	for i := 0; i < len(runes); i += s {
