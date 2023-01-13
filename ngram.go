@@ -1,15 +1,15 @@
 package nlp
 
-type unigram uint16
+type Unigram uint16
 
-type bigram uint32
+type Bigram uint32
 
-type trigram struct {
-	a, b, c unigram
+type Trigram struct {
+	a, b, c Unigram
 }
 
-type quadrigram uint64
+type Quadrigram uint64
 
-type fivegram struct {
-	a, b, c, d, e unigram
+type Fivegram struct {
+	a, b, c, d, e Unigram
 }
