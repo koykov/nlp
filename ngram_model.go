@@ -4,8 +4,10 @@ import (
 	"encoding/binary"
 	"io"
 	"sync"
+	"unicode"
 
 	"github.com/koykov/bytealg"
+	"github.com/koykov/fastconv"
 )
 
 const (
@@ -25,7 +27,60 @@ type NgramModel struct {
 
 	ul, bl, tl, ql, fl uint64
 
-	buf []byte
+	buf  []byte
+	bufR []rune
+}
+
+func (m *NgramModel) Parse(text []byte) *NgramModel {
+	return m.ParseString(fastconv.B2S(text))
+}
+
+func (m *NgramModel) ParseString(text string) *NgramModel {
+	if len(text) == 0 {
+		return m
+	}
+	m.o.Do(m.init)
+	m.bufR = fastconv.AppendS2R(m.bufR[:0], text)
+	l := len(m.bufR)
+	_ = m.bufR[l-1]
+	for i := 0; i < l; i++ {
+		m.bufR[i] = unicode.ToLower(m.bufR[i])
+		m.AddUnigram(Unigram(m.bufR[i]))
+	}
+	for i := 0; i < l-1; i++ {
+		u0, u1 := Unigram(m.bufR[i]), Unigram(m.bufR[i+1])
+		var b Bigram
+		b = Bigram(u0) << 16
+		b = b | Bigram(u1)
+		m.AddBigram(b)
+	}
+	for i := 0; i < l-2; i++ {
+		m.AddTrigram(Trigram{
+			a: Unigram(m.bufR[i]),
+			b: Unigram(m.bufR[i+1]),
+			c: Unigram(m.bufR[i+2]),
+		})
+	}
+	for i := 0; i < l-3; i++ {
+		u0, u1, u2, u3 := Unigram(m.bufR[i]), Unigram(m.bufR[i+1]), Unigram(m.bufR[i+2]), Unigram(m.bufR[i+3])
+		var q Quadrigram
+		q = Quadrigram(u0) << 48
+		q = q | Quadrigram(u1)<<32
+		q = q | Quadrigram(u2)<<16
+		q = q | Quadrigram(u3)
+		m.AddQuadrigram(q)
+	}
+	for i := 0; i < l-4; i++ {
+		m.AddFivegram(Fivegram{
+			a: Unigram(m.bufR[i]),
+			b: Unigram(m.bufR[i+1]),
+			c: Unigram(m.bufR[i+2]),
+			d: Unigram(m.bufR[i+3]),
+			e: Unigram(m.bufR[i+4]),
+		})
+	}
+
+	return m
 }
 
 func (m *NgramModel) AddUnigram(ng Unigram) *NgramModel {
