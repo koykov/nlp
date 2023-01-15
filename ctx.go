@@ -16,6 +16,8 @@ type Ctx struct {
 	BufSP ScriptProba
 
 	BufLP LanguageProba
+
+	BufT Tokens
 }
 
 func NewCtx() *Ctx {
@@ -72,5 +74,6 @@ func (ctx *Ctx) Reset() *Ctx {
 	ctx.bufR = ctx.bufR[:0]
 	ctx.BufSP = ctx.BufSP[:0]
 	ctx.BufLP = ctx.BufLP[:0]
+	ctx.BufT = ctx.BufT[:0]
 	return ctx
 }
