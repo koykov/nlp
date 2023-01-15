@@ -5,16 +5,32 @@ type TokenizerInterface interface {
 	TokenizeString(ctx *Ctx, s string) Tokens
 }
 
-type Tokens []int
+const tknSep = " \n\t"
 
-func (t Tokens) Each(i int, fn func(p []byte)) {
-	// ...
+type Tokenizer struct {
+	sep string
+	bl  bool
+	eof bool
 }
 
-func (t Tokens) EachString(i int, fn func(p string)) {
-	// ...
+func NewTokenizer() Tokenizer {
+	return Tokenizer{sep: tknSep}
 }
 
-func (t Tokens) EachSpan(i int, fn func(a, b int)) {
+func NewTokenizerWithOptions(sep string, keepBlank bool, discardEOF bool) Tokenizer {
+	return Tokenizer{
+		sep: sep,
+		bl:  keepBlank,
+		eof: discardEOF,
+	}
+}
+
+func (t Tokenizer) Tokenize(ctx *Ctx, p []byte) Tokens {
 	//
+	return ctx.BufT
+}
+
+func (t Tokenizer) TokenizeString(ctx *Ctx, s string) Tokens {
+	//
+	return ctx.BufT
 }
