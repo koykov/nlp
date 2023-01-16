@@ -74,6 +74,6 @@ func (ctx *Ctx) Reset() *Ctx {
 	ctx.bufR = ctx.bufR[:0]
 	ctx.BufSP = ctx.BufSP[:0]
 	ctx.BufLP = ctx.BufLP[:0]
-	ctx.BufT = ctx.BufT[:0]
+	ctx.BufT.Reset()
 	return ctx
 }
