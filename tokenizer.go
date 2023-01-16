@@ -1,8 +1,8 @@
 package nlp
 
 type TokenizerInterface interface {
-	Tokenize(ctx *Ctx, p []byte) Tokens
-	TokenizeString(ctx *Ctx, s string) Tokens
+	Tokenize(ctx *Ctx, p []byte) *Tokens
+	TokenizeString(ctx *Ctx, s string) *Tokens
 }
 
 const tknSep = " \n\t"
@@ -25,12 +25,17 @@ func NewTokenizerWithOptions(sep string, keepBlank bool, discardEOF bool) Tokeni
 	}
 }
 
-func (t Tokenizer) Tokenize(ctx *Ctx, p []byte) Tokens {
-	//
-	return ctx.BufT
+func (t Tokenizer) Tokenize(ctx *Ctx, p []byte) *Tokens {
+	ctx.BufT.SetSource(p)
+	return t.tokenize(&ctx.BufT)
 }
 
-func (t Tokenizer) TokenizeString(ctx *Ctx, s string) Tokens {
-	//
-	return ctx.BufT
+func (t Tokenizer) TokenizeString(ctx *Ctx, s string) *Tokens {
+	ctx.BufT.SetSourceString(s)
+	return t.tokenize(&ctx.BufT)
+}
+
+func (t Tokenizer) tokenize(buf *Tokens) *Tokens {
+	// ...
+	return buf
 }
