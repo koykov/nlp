@@ -56,3 +56,5 @@ func (t Tokenizer) TokenizeString(dst Tokens, s string) Tokens {
 	}
 	return dst
 }
+
+var _ = NewTokenizer()
