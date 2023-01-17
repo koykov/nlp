@@ -11,13 +11,14 @@ type Ctx struct {
 
 	bufR []rune
 
+	tkn  TokenizerInterface
+	bufT Tokens
+
 	sd    ScriptDetectorInterface
 	bufSC []Script
 	BufSP ScriptProba
 
 	BufLP LanguageProba
-
-	BufT Tokens
 }
 
 func NewCtx() *Ctx {
@@ -74,6 +75,6 @@ func (ctx *Ctx) Reset() *Ctx {
 	ctx.bufR = ctx.bufR[:0]
 	ctx.BufSP = ctx.BufSP[:0]
 	ctx.BufLP = ctx.BufLP[:0]
-	ctx.BufT.Reset()
+	ctx.bufT.Reset()
 	return ctx
 }
