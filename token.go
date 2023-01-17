@@ -1,55 +1,96 @@
 package nlp
 
-import "github.com/koykov/fastconv"
+import (
+	"reflect"
+	"unsafe"
+)
 
-type Tokens struct {
-	buf  []byte
-	span []int
+type Token struct {
+	h   reflect.SliceHeader
+	off int
 }
 
-func (t *Tokens) SetSource(p []byte) {
-	t.buf = append(t.buf, p...)
+func (t Token) Bytes() []byte {
+	return *(*[]byte)(unsafe.Pointer(&t.h))
 }
 
-func (t *Tokens) SetSourceString(s string) {
-	t.buf = append(t.buf, s...)
-}
-
-func (t *Tokens) AddSpan(lo, hi int) {
-	if l := len(t.buf); lo < 0 || lo >= l || hi < 0 || hi >= l {
-		return
+func (t Token) String() string {
+	h := reflect.StringHeader{
+		Data: t.h.Data,
+		Len:  t.h.Len,
 	}
-	t.span = append(t.span, lo, hi)
+	return *(*string)(unsafe.Pointer(&h))
 }
 
-func (t Tokens) Each(fn func(i int, p []byte)) {
-	var c int
-	for i := 0; i < len(t.span); i += 2 {
-		lo, hi := t.span[i], t.span[i+1]
-		fn(c, t.buf[lo:hi])
-		c++
-	}
+func (t Token) Span() (lo, hi int) {
+	return t.off, t.off + t.h.Len
 }
 
-func (t Tokens) EachString(fn func(i int, p string)) {
-	var c int
-	for i := 0; i < len(t.span); i += 2 {
-		lo, hi := t.span[i], t.span[i+1]
-		fn(c, fastconv.B2S(t.buf[lo:hi]))
-		c++
+type Tokens []Token
+
+func (t Tokens) Each(fn func(i int, t Token)) {
+	for i := 0; i < len(t); i++ {
+		fn(i, t[i])
 	}
 }
 
-func (t Tokens) EachSpan(fn func(i int, lo, hi int)) {
-	var c int
-	for i := 0; i < len(t.span); i += 2 {
-		lo, hi := t.span[i], t.span[i+1]
-		fn(c, lo, hi)
-		c++
+func (t Tokens) Equal(e Tokens) bool {
+	lt, le := len(t), len(e)
+	if lt != le {
+		return false
 	}
+	if lt == 0 {
+		return true
+	}
+	for i := 0; i < lt; i++ {
+		if t[i].String() != e[i].String() {
+			return false
+		}
+	}
+	return true
 }
 
 func (t *Tokens) Reset() {
-	t.buf = t.buf[:0]
-	t.span = t.span[:0]
+	*t = (*t)[:0]
+}
+
+func ParseToken[T ~string | ~[]byte](s T, lo, hi int) Token {
+	switch any(s).(type) {
+	case string:
+		return s2t(string(s), lo, hi)
+	case []byte:
+		return b2t([]byte(s), lo, hi)
+	}
+	return Token{}
+}
+
+func b2t(p []byte, lo, hi int) Token {
+	if l := len(p); l == 0 || lo < 0 || lo >= hi || hi < 0 || hi > l || hi < lo {
+		return Token{}
+	}
+	h := *(*reflect.SliceHeader)(unsafe.Pointer(&p))
+	h.Data += uintptr(lo)
+	h.Len = hi - lo
+	h.Cap = h.Len
+	return Token{
+		h:   h,
+		off: lo,
+	}
+}
+
+func s2t(s string, lo, hi int) Token {
+	if l := len(s); l == 0 || lo < 0 || lo >= hi || hi < 0 || hi > l || hi < lo {
+		return Token{}
+	}
+	h := *(*reflect.StringHeader)(unsafe.Pointer(&s))
+	h.Data += uintptr(lo)
+	h.Len = hi - lo
+	return Token{
+		h: reflect.SliceHeader{
+			Data: h.Data,
+			Len:  h.Len,
+			Cap:  h.Len,
+		},
+		off: lo,
+	}
 }
