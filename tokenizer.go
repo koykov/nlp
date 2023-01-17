@@ -1,11 +1,16 @@
 package nlp
 
-type TokenizerInterface interface {
-	Tokenize(ctx *Ctx, p []byte) *Tokens
-	TokenizeString(ctx *Ctx, s string) *Tokens
-}
+import (
+	"github.com/koykov/bytealg"
+	"github.com/koykov/fastconv"
+)
 
-const tknSep = " \n\t"
+const DefaultTokenSeparator = " \n\t"
+
+type TokenizerInterface interface {
+	Tokenize(dst Tokens, p []byte) Tokens
+	TokenizeString(dst Tokens, s string) Tokens
+}
 
 type Tokenizer struct {
 	sep string
@@ -14,7 +19,7 @@ type Tokenizer struct {
 }
 
 func NewTokenizer() Tokenizer {
-	return Tokenizer{sep: tknSep}
+	return NewTokenizerWithOptions(DefaultTokenSeparator, true, false)
 }
 
 func NewTokenizerWithOptions(sep string, keepBlank bool, discardEOF bool) Tokenizer {
@@ -25,17 +30,29 @@ func NewTokenizerWithOptions(sep string, keepBlank bool, discardEOF bool) Tokeni
 	}
 }
 
-func (t Tokenizer) Tokenize(ctx *Ctx, p []byte) *Tokens {
-	ctx.BufT.SetSource(p)
-	return t.tokenize(&ctx.BufT)
+func (t Tokenizer) Tokenize(dst Tokens, p []byte) Tokens {
+	return t.TokenizeString(dst, fastconv.B2S(p))
 }
 
-func (t Tokenizer) TokenizeString(ctx *Ctx, s string) *Tokens {
-	ctx.BufT.SetSourceString(s)
-	return t.tokenize(&ctx.BufT)
-}
-
-func (t Tokenizer) tokenize(buf *Tokens) *Tokens {
-	// ...
-	return buf
+func (t Tokenizer) TokenizeString(dst Tokens, s string) Tokens {
+	lo, hi := 0, 0
+	for {
+		p := bytealg.IndexAnyAtStr(s, t.sep, lo)
+		if p == -1 {
+			hi = len(s)
+			if hi == lo && t.eof {
+				break
+			}
+			dst = append(dst, ParseToken(s, lo, hi))
+			break
+		}
+		hi = p
+		if hi == lo && !t.bl {
+			lo = hi + 1
+			continue
+		}
+		dst = append(dst, ParseToken(s, lo, hi))
+		lo = hi + 1
+	}
+	return dst
 }
