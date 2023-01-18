@@ -12,17 +12,10 @@ func (ctx *Ctx) DetectScript(text []byte) (Script, error) {
 }
 
 func (ctx *Ctx) DetectScriptString(text string) (Script, error) {
-	sd := ctx.sd
-	if sd == nil {
-		sd = NewScriptDetector()
-	}
 	if len(text) > 0 {
 		ctx.SetTextString(text)
 	}
-	if len(ctx.bufSC) == 0 {
-		ctx.LimitScripts(ScriptsSupported())
-	}
-	return sd.Detect(ctx)
+	return ctx.chkSD().Detect(ctx)
 }
 
 func (ctx *Ctx) DetectScriptProba(text []byte) (ScriptProba, error) {
@@ -30,15 +23,18 @@ func (ctx *Ctx) DetectScriptProba(text []byte) (ScriptProba, error) {
 }
 
 func (ctx *Ctx) DetectScriptStringProba(text string) (ScriptProba, error) {
-	sd := ctx.sd
-	if sd == nil {
-		sd = NewScriptDetector()
-	}
 	if len(text) > 0 {
 		ctx.SetTextString(text)
+	}
+	return ctx.chkSD().DetectProba(ctx)
+}
+
+func (ctx *Ctx) chkSD() ScriptDetectorInterface {
+	if ctx.sd == nil {
+		ctx.sd = NewScriptDetector()
 	}
 	if len(ctx.bufSC) == 0 {
 		ctx.LimitScripts(ScriptsSupported())
 	}
-	return sd.DetectProba(ctx)
+	return ctx.sd
 }
