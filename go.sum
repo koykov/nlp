@@ -1,3 +1,5 @@
+github.com/koykov/bitset v1.0.0 h1:2mEbAhKelhpdWqnpa+mR3HRhdMsto5od7ACOi6MIAmk=
+github.com/koykov/bitset v1.0.0/go.mod h1:DVR3bH49c1oOcNtD38h+aQq7lp1ZY91cXmjOldlTk8A=
 github.com/koykov/bytealg v1.0.1 h1:WlD9/4PMThmfQuIRVpVCujzM/3AVTEwlgvaYrErO9Nk=
 github.com/koykov/bytealg v1.0.1/go.mod h1:kMvejxwPkAt7YfHpB1PQ/utMwKpHSY54u1rCxna6Wvg=
 github.com/koykov/entry v1.0.1 h1:XurTLzqcbluBKMJqBB23HoKrkd1tdp5nH8RrbSE9Jl0=

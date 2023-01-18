@@ -1,14 +1,18 @@
 package nlp
 
 import (
-	"unicode"
-
+	"github.com/koykov/bitset"
 	"github.com/koykov/fastconv"
 )
 
+const flagClean = 0
+
 type Ctx struct {
+	bitset.Bitset
 	t string
 
+	cln  CleanerInterface
+	bufC []byte
 	bufR []rune
 
 	tkn  TokenizerInterface
@@ -35,14 +39,8 @@ func (ctx Ctx) GetText() []byte {
 }
 
 func (ctx *Ctx) SetTextString(text string) *Ctx {
+	ctx.SetBit(flagClean, false)
 	ctx.t = text
-	ctx.bufR = ctx.bufR[:0]
-	for _, r := range text {
-		if !mustSkip(r) {
-			r = unicode.ToLower(r)
-			ctx.bufR = append(ctx.bufR, r)
-		}
-	}
 	return ctx
 }
 
@@ -71,7 +69,9 @@ func (ctx *Ctx) GetScripts() []Script {
 }
 
 func (ctx *Ctx) Reset() *Ctx {
+	ctx.Bitset.Reset()
 	ctx.t = ""
+	ctx.bufC = ctx.bufC[:0]
 	ctx.bufR = ctx.bufR[:0]
 	ctx.BufSP = ctx.BufSP[:0]
 	ctx.BufLP = ctx.BufLP[:0]
