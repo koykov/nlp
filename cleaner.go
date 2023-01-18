@@ -29,7 +29,7 @@ type Cleaner struct {
 }
 
 func NewCleaner() Cleaner {
-	return NewCleanerWithMask(CleanSymbol | CleanSpace | CleanPunct | CleanDigit)
+	return NewCleanerWithMask(CleanControl | CleanMark | CleanSymbol | CleanNumber | CleanPunct)
 }
 
 func NewCleanerWithMask(m uint32) Cleaner {

@@ -7,6 +7,7 @@ import (
 )
 
 const clnTestSource = "control \u009f print ´ graphic ï mark \u035f punct { space \u00a0 digit 5 number ² symbol = letter ì"
+const clnTestSourceCyr = "контроль \u009f печатные ´ графические ï маркировка \u035f пунктуация { пробел \u00a0 цифра 5 число ² символ = буква Я"
 
 var clnStages = []struct {
 	key  string
@@ -76,6 +77,72 @@ var clnStages = []struct {
 	{
 		key:  "graphic",
 		src:  clnTestSource,
+		mask: CleanGraphic,
+		exp:  "\u009F",
+	},
+	// cyrillic
+	{
+		key: "no clean cyrillic",
+		src: clnTestSourceCyr,
+		exp: clnTestSourceCyr,
+	},
+	{
+		key:  "control cyrillic",
+		src:  clnTestSourceCyr,
+		mask: CleanControl,
+		exp:  "контроль  печатные ´ графические ï маркировка \u035f пунктуация { пробел \u00a0 цифра 5 число ² символ = буква Я",
+	},
+	{
+		key:  "mark cyrillic",
+		src:  clnTestSourceCyr,
+		mask: CleanMark,
+		exp:  "контроль \u009f печатные ´ графические ï маркировка  пунктуация { пробел \u00a0 цифра 5 число ² символ = буква Я",
+	},
+	{
+		key:  "punct cyrillic",
+		src:  clnTestSourceCyr,
+		mask: CleanPunct,
+		exp:  "контроль \u009f печатные ´ графические ï маркировка \u035f пунктуация  пробел \u00a0 цифра 5 число ² символ = буква Я",
+	},
+	{
+		key:  "space cyrillic",
+		src:  clnTestSourceCyr,
+		mask: CleanSpace,
+		exp:  "контроль\u009fпечатные´графическиеïмаркировка\u035fпунктуация{пробелцифра5число²символ=букваЯ",
+	},
+	{
+		key:  "digit cyrillic",
+		src:  clnTestSourceCyr,
+		mask: CleanDigit,
+		exp:  "контроль \u009f печатные ´ графические ï маркировка \u035f пунктуация { пробел \u00a0 цифра  число ² символ = буква Я",
+	},
+	{
+		key:  "number cyrillic",
+		src:  clnTestSourceCyr,
+		mask: CleanNumber,
+		exp:  "контроль \u009f печатные ´ графические ï маркировка \u035f пунктуация { пробел \u00a0 цифра  число  символ = буква Я",
+	},
+	{
+		key:  "symbol cyrillic",
+		src:  clnTestSourceCyr,
+		mask: CleanSymbol,
+		exp:  "контроль \u009f печатные  графические ï маркировка \u035f пунктуация { пробел \u00a0 цифра 5 число ² символ  буква Я",
+	},
+	{
+		key:  "letter cyrillic",
+		src:  clnTestSourceCyr,
+		mask: CleanLetter,
+		exp:  " \u009f  ´    \u035f  {  \u00a0  5  ²  =  ",
+	},
+	{
+		key:  "print cyrillic",
+		src:  clnTestSourceCyr,
+		mask: CleanPrint,
+		exp:  "\u009F\u00a0",
+	},
+	{
+		key:  "graphic cyrillic",
+		src:  clnTestSourceCyr,
 		mask: CleanGraphic,
 		exp:  "\u009F",
 	},
