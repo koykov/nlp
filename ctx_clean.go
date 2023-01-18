@@ -4,6 +4,7 @@ import "github.com/koykov/fastconv"
 
 func (ctx *Ctx) WithCleaner(cln CleanerInterface) *Ctx {
 	ctx.cln = cln
+	ctx.SetBit(flagClean, false)
 	return ctx
 }
 

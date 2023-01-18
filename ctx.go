@@ -41,6 +41,7 @@ func (ctx Ctx) GetText() []byte {
 func (ctx *Ctx) SetTextString(text string) *Ctx {
 	ctx.SetBit(flagClean, false)
 	ctx.t = text
+	ctx.CleanString(text)
 	return ctx
 }
 
