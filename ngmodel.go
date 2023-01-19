@@ -15,7 +15,7 @@ const (
 	ngmBufSize   = 16384
 )
 
-type NgramModel struct {
+type NGModel struct {
 	v uint64
 
 	o sync.Once
@@ -31,11 +31,11 @@ type NgramModel struct {
 	bufR []rune
 }
 
-func (m *NgramModel) Parse(text []byte) *NgramModel {
+func (m *NGModel) Parse(text []byte) *NGModel {
 	return m.ParseString(fastconv.B2S(text))
 }
 
-func (m *NgramModel) ParseString(text string) *NgramModel {
+func (m *NGModel) ParseString(text string) *NGModel {
 	if len(text) == 0 {
 		return m
 	}
@@ -83,7 +83,7 @@ func (m *NgramModel) ParseString(text string) *NgramModel {
 	return m
 }
 
-func (m *NgramModel) AddUnigram(ng Unigram) *NgramModel {
+func (m *NGModel) AddUnigram(ng Unigram) *NGModel {
 	m.o.Do(m.init)
 	if _, ok := m.u[ng]; ok {
 		return m
@@ -92,7 +92,7 @@ func (m *NgramModel) AddUnigram(ng Unigram) *NgramModel {
 	return m
 }
 
-func (m *NgramModel) AddBigram(ng Bigram) *NgramModel {
+func (m *NGModel) AddBigram(ng Bigram) *NGModel {
 	m.o.Do(m.init)
 	if _, ok := m.b[ng]; ok {
 		return m
@@ -101,7 +101,7 @@ func (m *NgramModel) AddBigram(ng Bigram) *NgramModel {
 	return m
 }
 
-func (m *NgramModel) AddTrigram(ng Trigram) *NgramModel {
+func (m *NGModel) AddTrigram(ng Trigram) *NGModel {
 	m.o.Do(m.init)
 	if _, ok := m.t[ng]; ok {
 		return m
@@ -110,7 +110,7 @@ func (m *NgramModel) AddTrigram(ng Trigram) *NgramModel {
 	return m
 }
 
-func (m *NgramModel) AddQuadrigram(ng Quadrigram) *NgramModel {
+func (m *NGModel) AddQuadrigram(ng Quadrigram) *NGModel {
 	m.o.Do(m.init)
 	if _, ok := m.q[ng]; ok {
 		return m
@@ -119,7 +119,7 @@ func (m *NgramModel) AddQuadrigram(ng Quadrigram) *NgramModel {
 	return m
 }
 
-func (m *NgramModel) AddFivegram(ng Fivegram) *NgramModel {
+func (m *NGModel) AddFivegram(ng Fivegram) *NGModel {
 	m.o.Do(m.init)
 	if _, ok := m.f[ng]; ok {
 		return m
@@ -128,12 +128,12 @@ func (m *NgramModel) AddFivegram(ng Fivegram) *NgramModel {
 	return m
 }
 
-func (m *NgramModel) LoadFile(path string) error {
+func (m *NGModel) LoadFile(path string) error {
 	_ = path
 	return nil
 }
 
-func (m *NgramModel) Write(w io.Writer) (int, error) {
+func (m *NGModel) Write(w io.Writer) (int, error) {
 	w64 := func(dst []byte, v uint64) []byte {
 		off := len(dst)
 		dst = bytealg.GrowDelta(dst, 8)
@@ -155,11 +155,11 @@ func (m *NgramModel) Write(w io.Writer) (int, error) {
 	return 0, nil
 }
 
-func (m *NgramModel) Flush() error {
+func (m *NGModel) Flush() error {
 	return nil
 }
 
-func (m *NgramModel) writeNG(w io.Writer, ng Unigram) (err error) {
+func (m *NGModel) writeNG(w io.Writer, ng Unigram) (err error) {
 	off := len(m.buf)
 	m.buf = bytealg.GrowDelta(m.buf, 2)
 	binary.LittleEndian.PutUint16(m.buf[off:], uint16(ng))
@@ -169,7 +169,7 @@ func (m *NgramModel) writeNG(w io.Writer, ng Unigram) (err error) {
 	return
 }
 
-func (m *NgramModel) flushBuf(w io.Writer) (err error) {
+func (m *NGModel) flushBuf(w io.Writer) (err error) {
 	p := m.buf
 	if len(p) == 0 {
 		return
@@ -189,7 +189,7 @@ func (m *NgramModel) flushBuf(w io.Writer) (err error) {
 	return
 }
 
-func (m *NgramModel) init() {
+func (m *NGModel) init() {
 	m.u = make(map[Unigram]struct{}, m.ul)
 	m.b = make(map[Bigram]struct{}, m.bl)
 	m.t = make(map[Trigram]struct{}, m.tl)
