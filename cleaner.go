@@ -20,7 +20,7 @@ const (
 )
 
 type CleanerInterface interface {
-	Clean(dst []rune, p []byte) []rune
+	CleanBytes(dst []rune, p []byte) []rune
 	CleanString(dst []rune, s string) []rune
 }
 
@@ -36,7 +36,7 @@ func NewCleanerWithMask(m uint32) Cleaner {
 	return Cleaner{m: m}
 }
 
-func (c Cleaner) Clean(dst []rune, p []byte) []rune {
+func (c Cleaner) CleanBytes(dst []rune, p []byte) []rune {
 	return c.CleanString(dst, fastconv.B2S(p))
 }
 

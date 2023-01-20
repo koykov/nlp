@@ -5,11 +5,14 @@ import (
 	"github.com/koykov/fastconv"
 )
 
-const flagClean = 0
+const (
+	flagClean = 0
+	flagToken = 1
+)
 
 type Ctx struct {
 	bitset.Bitset
-	t string
+	src string
 
 	cln  CleanerInterface
 	bufC []byte
@@ -35,21 +38,24 @@ func (ctx *Ctx) SetText(text []byte) *Ctx {
 }
 
 func (ctx Ctx) GetText() []byte {
-	return fastconv.S2B(ctx.t)
+	return fastconv.S2B(ctx.src)
 }
 
 func (ctx *Ctx) SetTextString(text string) *Ctx {
 	ctx.SetBit(flagClean, false)
-	ctx.t = text
-	ctx.CleanString(text)
+	ctx.SetBit(flagToken, false)
+	ctx.src = text
 	return ctx
 }
 
 func (ctx Ctx) GetTextString() string {
-	return ctx.t
+	return ctx.src
 }
 
 func (ctx Ctx) GetRunes() []rune {
+	if len(ctx.bufR) == 0 {
+		ctx.bufR = fastconv.AppendStringToRunes(ctx.bufR, ctx.src)
+	}
 	return ctx.bufR
 }
 
@@ -71,7 +77,7 @@ func (ctx *Ctx) GetScripts() []Script {
 
 func (ctx *Ctx) Reset() *Ctx {
 	ctx.Bitset.Reset()
-	ctx.t = ""
+	ctx.src = ""
 	ctx.bufC = ctx.bufC[:0]
 	ctx.bufR = ctx.bufR[:0]
 	ctx.BufSP = ctx.BufSP[:0]

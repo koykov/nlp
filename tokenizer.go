@@ -8,7 +8,7 @@ import (
 const DefaultTokenSeparator = " \n\t"
 
 type TokenizerInterface interface {
-	Tokenize(dst Tokens, p []byte) Tokens
+	TokenizeBytes(dst Tokens, p []byte) Tokens
 	TokenizeString(dst Tokens, s string) Tokens
 }
 
@@ -30,7 +30,7 @@ func NewTokenizerWithOptions(sep string, keepBlank bool, discardEOF bool) Tokeni
 	}
 }
 
-func (t Tokenizer) Tokenize(dst Tokens, p []byte) Tokens {
+func (t Tokenizer) TokenizeBytes(dst Tokens, p []byte) Tokens {
 	return t.TokenizeString(dst, fastconv.B2S(p))
 }
 
