@@ -2,8 +2,6 @@ package nlp
 
 import (
 	"unicode"
-
-	"github.com/koykov/fastconv"
 )
 
 const (
@@ -19,28 +17,25 @@ const (
 	CleanGraphic
 )
 
-type CleanerInterface interface {
-	Clean(dst []rune, p []byte) []rune
-	CleanString(dst []rune, s string) []rune
+type CleanerInterface[T Byteseq] interface {
+	Clean(dst []rune, x T) []rune
 }
 
-type Cleaner struct {
+type Cleaner[T Byteseq] struct {
 	m uint32
 }
 
-func NewCleaner() Cleaner {
-	return NewCleanerWithMask(CleanControl | CleanMark | CleanSymbol | CleanNumber | CleanPunct)
+func NewCleaner[T Byteseq]() Cleaner[T] {
+	cln := NewCleanerWithMask[T](CleanControl | CleanMark | CleanSymbol | CleanNumber | CleanPunct)
+	return cln
 }
 
-func NewCleanerWithMask(m uint32) Cleaner {
-	return Cleaner{m: m}
+func NewCleanerWithMask[T Byteseq](m uint32) Cleaner[T] {
+	return Cleaner[T]{m: m}
 }
 
-func (c Cleaner) Clean(dst []rune, p []byte) []rune {
-	return c.CleanString(dst, fastconv.B2S(p))
-}
-
-func (c Cleaner) CleanString(dst []rune, s string) []rune {
+func (c Cleaner[T]) Clean(dst []rune, x T) []rune {
+	s := q2s(x)
 	for _, r := range s {
 		if c.m > 0 {
 			if c.m&CleanControl > 0 {

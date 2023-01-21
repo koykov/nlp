@@ -2,31 +2,43 @@ package nlp
 
 import "sync"
 
-type CtxPool struct {
-	p sync.Pool
-}
+// type CtxPool struct {
+// 	p sync.Pool
+// 	s sync.Pool
+// }
+//
+// var (
+// 	cp CtxPool
+// )
+//
+// func (p *CtxPool) Get() *Ctx {
+// 	v := p.p.Get()
+// 	if v != nil {
+// 		if c, ok := v.(*Ctx[T]); ok {
+// 			return c
+// 		}
+// 	}
+// 	return NewCtx[T]()
+// }
+//
+// func (p *CtxPool[T]) Put(ctx *Ctx[T]) {
+// 	ctx.Reset()
+// 	p.p.Put(ctx)
+// }
 
-var CP CtxPool
+var cp sync.Pool
 
-func (p *CtxPool) Get() *Ctx {
-	v := p.p.Get()
+func AcquireCtx[T Byteseq]() *Ctx[T] {
+	v := cp.Get()
 	if v != nil {
-		if c, ok := v.(*Ctx); ok {
-			return c
+		if ctx, ok := v.(*Ctx[T]); ok {
+			return ctx
 		}
 	}
-	return NewCtx()
+	return NewCtx[T]()
 }
 
-func (p *CtxPool) Put(ctx *Ctx) {
+func ReleaseCtx[T Byteseq](ctx *Ctx[T]) {
 	ctx.Reset()
-	p.p.Put(ctx)
-}
-
-func AcquireCtx() *Ctx {
-	return CP.Get()
-}
-
-func ReleaseCtx(ctx *Ctx) {
-	CP.Put(ctx)
+	cp.Put(ctx)
 }

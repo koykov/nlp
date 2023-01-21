@@ -2,11 +2,6 @@ package nlp
 
 import "unicode"
 
-type ScriptDetectorInterface interface {
-	Detect(ctx *Ctx) (Script, error)
-	DetectProba(ctx *Ctx) (ScriptProba, error)
-}
-
 type Script uint
 
 type ScriptScore struct {

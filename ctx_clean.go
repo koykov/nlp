@@ -2,29 +2,38 @@ package nlp
 
 import "github.com/koykov/fastconv"
 
-func (ctx *Ctx) WithCleaner(cln CleanerInterface) *Ctx {
+func (ctx *Ctx[T]) WithCleaner(cln CleanerInterface[T]) *Ctx[T] {
 	ctx.cln = cln
 	ctx.SetBit(flagClean, false)
 	return ctx
 }
 
-func (ctx *Ctx) Clean(p []byte) []byte {
-	return fastconv.S2B(ctx.CleanString(fastconv.B2S(p)))
-}
-
-func (ctx *Ctx) CleanString(s string) string {
+func (ctx *Ctx[T]) Clean() *Ctx[T] {
 	if ctx.CheckBit(flagClean) {
-		return fastconv.B2S(ctx.bufC)
+		return ctx
 	}
 	defer ctx.SetBit(flagClean, true)
-	ctx.bufR = ctx.chkCln().CleanString(ctx.bufR[:0], s)
+
+	ctx.bufR = ctx.chkCln().Clean(ctx.bufR[:0], ctx.src)
 	ctx.bufC = fastconv.AppendR2B(ctx.bufC[:0], ctx.bufR)
-	return fastconv.B2S(ctx.bufC)
+
+	return ctx
 }
 
-func (ctx *Ctx) chkCln() CleanerInterface {
+func (ctx *Ctx[T]) CleanString(x T) T {
+	return ctx.SetText(x).
+		Clean().
+		GetClean()
+}
+
+func (ctx Ctx[T]) GetClean() T {
+	return T(ctx.bufC)
+}
+
+func (ctx *Ctx[T]) chkCln() CleanerInterface[T] {
 	if ctx.cln == nil {
-		ctx.cln = NewCleaner()
+		cln := NewCleaner[T]()
+		ctx.cln = cln
 	}
 	return ctx.cln
 }

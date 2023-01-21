@@ -1,37 +1,27 @@
 package nlp
 
-import "github.com/koykov/fastconv"
-
-func (ctx *Ctx) WithScriptDetector(ds ScriptDetectorInterface) *Ctx {
+func (ctx *Ctx[T]) WithScriptDetector(ds ScriptDetectorInterface[T]) *Ctx[T] {
 	ctx.sd = ds
 	return ctx
 }
 
-func (ctx *Ctx) DetectScript(text []byte) (Script, error) {
-	return ctx.DetectScriptString(fastconv.B2S(text))
-}
-
-func (ctx *Ctx) DetectScriptString(text string) (Script, error) {
+func (ctx *Ctx[T]) DetectScript(text T) (Script, error) {
 	if len(text) > 0 {
-		ctx.SetTextString(text)
+		ctx.SetText(text)
 	}
 	return ctx.chkSD().Detect(ctx)
 }
 
-func (ctx *Ctx) DetectScriptProba(text []byte) (ScriptProba, error) {
-	return ctx.DetectScriptStringProba(fastconv.B2S(text))
-}
-
-func (ctx *Ctx) DetectScriptStringProba(text string) (ScriptProba, error) {
+func (ctx *Ctx[T]) DetectScriptProba(text T) (ScriptProba, error) {
 	if len(text) > 0 {
-		ctx.SetTextString(text)
+		ctx.SetText(text)
 	}
 	return ctx.chkSD().DetectProba(ctx)
 }
 
-func (ctx *Ctx) chkSD() ScriptDetectorInterface {
+func (ctx *Ctx[T]) chkSD() ScriptDetectorInterface[T] {
 	if ctx.sd == nil {
-		ctx.sd = NewScriptDetector()
+		ctx.sd = NewScriptDetector[T]()
 	}
 	if len(ctx.bufSC) == 0 {
 		ctx.LimitScripts(ScriptsSupported())

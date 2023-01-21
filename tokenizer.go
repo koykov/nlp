@@ -2,39 +2,34 @@ package nlp
 
 import (
 	"github.com/koykov/bytealg"
-	"github.com/koykov/fastconv"
 )
 
 const DefaultTokenSeparator = " \n\t"
 
-type TokenizerInterface interface {
-	Tokenize(dst Tokens, p []byte) Tokens
-	TokenizeString(dst Tokens, s string) Tokens
+type TokenizerInterface[T Byteseq] interface {
+	Tokenize(dst Tokens, x T) Tokens
 }
 
-type Tokenizer struct {
+type Tokenizer[T Byteseq] struct {
 	sep string
 	bl  bool
 	eof bool
 }
 
-func NewTokenizer() Tokenizer {
-	return NewTokenizerWithOptions(DefaultTokenSeparator, true, false)
+func NewTokenizer[T Byteseq]() Tokenizer[T] {
+	return NewTokenizerWithOptions[T](DefaultTokenSeparator, true, false)
 }
 
-func NewTokenizerWithOptions(sep string, keepBlank bool, discardEOF bool) Tokenizer {
-	return Tokenizer{
+func NewTokenizerWithOptions[T Byteseq](sep string, keepBlank bool, discardEOF bool) Tokenizer[T] {
+	return Tokenizer[T]{
 		sep: sep,
 		bl:  keepBlank,
 		eof: discardEOF,
 	}
 }
 
-func (t Tokenizer) Tokenize(dst Tokens, p []byte) Tokens {
-	return t.TokenizeString(dst, fastconv.B2S(p))
-}
-
-func (t Tokenizer) TokenizeString(dst Tokens, s string) Tokens {
+func (t Tokenizer[T]) Tokenize(dst Tokens, x T) Tokens {
+	s := q2s(x)
 	lo, hi := 0, 0
 	for {
 		p := bytealg.IndexAnyAtStr(s, t.sep, lo)
@@ -56,5 +51,3 @@ func (t Tokenizer) TokenizeString(dst Tokens, s string) Tokens {
 	}
 	return dst
 }
-
-var _ = NewTokenizer()
