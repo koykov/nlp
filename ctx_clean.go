@@ -2,47 +2,38 @@ package nlp
 
 import "github.com/koykov/fastconv"
 
-func (ctx *Ctx) WithCleaner(cln CleanerInterface) *Ctx {
+func (ctx *Ctx[T]) WithCleaner(cln CleanerInterface[T]) *Ctx[T] {
 	ctx.cln = cln
 	ctx.SetBit(flagClean, false)
 	return ctx
 }
 
-func (ctx *Ctx) Clean() *Ctx {
+func (ctx *Ctx[T]) Clean() *Ctx[T] {
 	if ctx.CheckBit(flagClean) {
 		return ctx
 	}
 	defer ctx.SetBit(flagClean, true)
 
-	ctx.bufR = ctx.chkCln().CleanString(ctx.bufR[:0], ctx.src)
+	ctx.bufR = ctx.chkCln().Clean(ctx.bufR[:0], ctx.src)
 	ctx.bufC = fastconv.AppendR2B(ctx.bufC[:0], ctx.bufR)
 
 	return ctx
 }
 
-func (ctx *Ctx) CleanBytes(p []byte) []byte {
-	return ctx.SetText(p).
+func (ctx *Ctx[T]) CleanString(x T) T {
+	return ctx.SetText(x).
 		Clean().
 		GetClean()
 }
 
-func (ctx *Ctx) CleanString(s string) string {
-	return ctx.SetTextString(s).
-		Clean().
-		GetTextString()
+func (ctx Ctx[T]) GetClean() T {
+	return T(ctx.bufC)
 }
 
-func (ctx Ctx) GetClean() []byte {
-	return ctx.bufC
-}
-
-func (ctx Ctx) GetCleanString() string {
-	return fastconv.B2S(ctx.bufC)
-}
-
-func (ctx *Ctx) chkCln() CleanerInterface {
+func (ctx *Ctx[T]) chkCln() CleanerInterface[T] {
 	if ctx.cln == nil {
-		ctx.cln = NewCleaner()
+		cln := NewCleaner[T]()
+		ctx.cln = cln
 	}
 	return ctx.cln
 }
