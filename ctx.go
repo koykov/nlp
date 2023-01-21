@@ -46,7 +46,7 @@ func (ctx Ctx[T]) GetText() T {
 	return ctx.src
 }
 
-func (ctx Ctx[T]) GetRunes() []rune {
+func (ctx *Ctx[T]) GetRunes() []rune {
 	if len(ctx.bufR) == 0 {
 		ctx.bufR = fastconv.AppendB2R(ctx.bufR[:0], ctx.srcB)
 	}
