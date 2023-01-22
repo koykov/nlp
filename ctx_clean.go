@@ -20,8 +20,8 @@ func (ctx *Ctx[T]) Clean() *Ctx[T] {
 	return ctx
 }
 
-func (ctx *Ctx[T]) CleanString(x T) T {
-	return ctx.SetText(x).
+func (ctx *Ctx[T]) CleanT(t T) T {
+	return ctx.SetText(t).
 		Clean().
 		GetClean()
 }

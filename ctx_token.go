@@ -15,8 +15,8 @@ func (ctx *Ctx[T]) Tokenize() *Ctx[T] {
 	return ctx
 }
 
-func (ctx *Ctx[T]) TokenizeT(x T) Tokens {
-	return ctx.SetText(x).
+func (ctx *Ctx[T]) TokenizeT(t T) Tokens {
+	return ctx.SetText(t).
 		Tokenize().
 		GetTokens()
 }
