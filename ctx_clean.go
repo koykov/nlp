@@ -9,6 +9,9 @@ func (ctx *Ctx[T]) WithCleaner(cln CleanerInterface[T]) *Ctx[T] {
 }
 
 func (ctx *Ctx[T]) Clean() *Ctx[T] {
+	if ctx.chkSrcErr() {
+		return ctx
+	}
 	if ctx.CheckBit(flagClean) {
 		return ctx
 	}

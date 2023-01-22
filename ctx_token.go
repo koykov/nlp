@@ -7,6 +7,9 @@ func (ctx *Ctx[T]) WithTokenizer(tkn TokenizerInterface[T]) *Ctx[T] {
 }
 
 func (ctx *Ctx[T]) Tokenize() *Ctx[T] {
+	if ctx.chkSrcErr() {
+		return ctx
+	}
 	if ctx.CheckBit(flagToken) {
 		return ctx
 	}

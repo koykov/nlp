@@ -26,6 +26,8 @@ type Ctx[T Byteseq] struct {
 	BufSP ScriptProba
 
 	// BufLP LanguageProba
+
+	err error
 }
 
 func NewCtx[T Byteseq]() *Ctx[T] {
@@ -68,6 +70,10 @@ func (ctx *Ctx[T]) GetScripts() []Script {
 	return ctx.bufSC
 }
 
+func (ctx *Ctx[T]) GetError() error {
+	return ctx.err
+}
+
 func (ctx *Ctx[T]) Reset() *Ctx[T] {
 	ctx.Bitset.Reset()
 	ctx.src = ctx.src[:0]
@@ -76,5 +82,14 @@ func (ctx *Ctx[T]) Reset() *Ctx[T] {
 	ctx.BufSP = ctx.BufSP[:0]
 	// ctx.BufLP = ctx.BufLP[:0]
 	ctx.bufT.Reset()
+	ctx.err = nil
 	return ctx
+}
+
+func (ctx *Ctx[T]) chkSrcErr() bool {
+	if len(ctx.buf) == 0 {
+		ctx.err = ErrEmptyInput
+		return true
+	}
+	return false
 }
