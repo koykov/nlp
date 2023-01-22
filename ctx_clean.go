@@ -15,7 +15,7 @@ func (ctx *Ctx[T]) Clean() *Ctx[T] {
 	defer ctx.SetBit(flagClean, true)
 
 	ctx.bufR = ctx.chkCln().Clean(ctx.bufR[:0], ctx.src)
-	ctx.bufC = fastconv.AppendR2B(ctx.bufC[:0], ctx.bufR)
+	ctx.buf = fastconv.AppendR2B(ctx.buf[:0], ctx.bufR)
 
 	return ctx
 }
@@ -27,7 +27,7 @@ func (ctx *Ctx[T]) CleanString(x T) T {
 }
 
 func (ctx Ctx[T]) GetClean() T {
-	return T(ctx.bufC)
+	return T(ctx.buf)
 }
 
 func (ctx *Ctx[T]) chkCln() CleanerInterface[T] {

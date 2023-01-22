@@ -13,11 +13,10 @@ const (
 type Ctx[T Byteseq] struct {
 	bitset.Bitset
 	src  T
-	srcB []byte
-
-	cln  CleanerInterface[T]
-	bufC []byte
+	buf  []byte
 	bufR []rune
+
+	cln CleanerInterface[T]
 
 	tkn  TokenizerInterface[T]
 	bufT Tokens
@@ -38,7 +37,7 @@ func (ctx *Ctx[T]) SetText(text T) *Ctx[T] {
 	ctx.SetBit(flagClean, false)
 	ctx.SetBit(flagToken, false)
 	ctx.src = text
-	ctx.srcB = append(ctx.srcB[:0], q2b(ctx.src)...)
+	ctx.buf = append(ctx.buf[:0], ctx.src...)
 	return ctx
 }
 
@@ -48,7 +47,7 @@ func (ctx Ctx[T]) GetText() T {
 
 func (ctx *Ctx[T]) GetRunes() []rune {
 	if len(ctx.bufR) == 0 {
-		ctx.bufR = fastconv.AppendB2R(ctx.bufR[:0], ctx.srcB)
+		ctx.bufR = fastconv.AppendB2R(ctx.bufR[:0], ctx.buf)
 	}
 	return ctx.bufR
 }
@@ -72,7 +71,7 @@ func (ctx *Ctx[T]) GetScripts() []Script {
 func (ctx *Ctx[T]) Reset() *Ctx[T] {
 	ctx.Bitset.Reset()
 	ctx.src = ctx.src[:0]
-	ctx.bufC = ctx.bufC[:0]
+	ctx.buf = ctx.buf[:0]
 	ctx.bufR = ctx.bufR[:0]
 	ctx.BufSP = ctx.BufSP[:0]
 	// ctx.BufLP = ctx.BufLP[:0]

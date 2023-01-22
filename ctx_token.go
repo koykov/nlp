@@ -11,7 +11,7 @@ func (ctx *Ctx[T]) Tokenize() *Ctx[T] {
 		return ctx
 	}
 	defer ctx.SetBit(flagToken, true)
-	ctx.bufT = ctx.chkTkn().Tokenize(ctx.bufT, T(ctx.bufC))
+	ctx.bufT = ctx.chkTkn().Tokenize(ctx.bufT, T(ctx.buf))
 	return ctx
 }
 
