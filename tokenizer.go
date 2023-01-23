@@ -30,6 +30,9 @@ func NewTokenizerWithOptions[T Byteseq](sep string, keepBlank bool, discardEOF b
 
 func (t Tokenizer[T]) Tokenize(dst Tokens, x T) Tokens {
 	s := q2s(x)
+	if len(s) == 0 {
+		return dst
+	}
 	lo, hi := 0, 0
 	for {
 		p := bytealg.IndexAnyAtStr(s, t.sep, lo)
