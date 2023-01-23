@@ -19,8 +19,8 @@ var stages = []stage[string]{
 	},
 	{
 		key: "no tokens",
-		src: "no tokens",
-		exp: []string{"no tokens"},
+		src: "no-tokens",
+		exp: []string{"no-tokens"},
 	},
 }
 

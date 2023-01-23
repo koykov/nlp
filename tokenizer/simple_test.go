@@ -5,9 +5,9 @@ import (
 )
 
 func TestSimple(t *testing.T) {
-	testInstance[string](t, Simple[string]{})
+	testInstance[string](t, NewSimple[string]())
 }
 
 func BenchmarkSimple(b *testing.B) {
-	benchInstance[string](b, Simple[string]{})
+	benchInstance[string](b, NewSimple[string]())
 }
