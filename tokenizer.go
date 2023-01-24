@@ -1,51 +1,64 @@
 package nlp
 
 import (
+	"github.com/koykov/bitset"
 	"github.com/koykov/bytealg"
 )
 
-const DefaultTokenSeparator = " \n\t"
+const (
+	DefaultTokenSeparator = " \n\t"
 
-type TokenizerInterface[T Byteseq] interface {
+	tknFlagInit           = 0
+	tknFlagKeepBlankLines = 1
+	tknFlagDiscardEOF     = 2
+)
+
+type Tokenizer[T Byteseq] interface {
 	Tokenize(dst Tokens, x T) Tokens
 }
 
-type Tokenizer[T Byteseq] struct {
+type StringTokenizer[T Byteseq] struct {
+	bs  bitset.Bitset8
 	sep string
-	bl  bool
-	eof bool
 }
 
-func NewTokenizer[T Byteseq]() Tokenizer[T] {
-	return NewTokenizerWithOptions[T](DefaultTokenSeparator, true, false)
-}
-
-func NewTokenizerWithOptions[T Byteseq](sep string, keepBlank bool, discardEOF bool) Tokenizer[T] {
-	return Tokenizer[T]{
+func NewStringTokenizer[T Byteseq](sep string, keepBlank bool, discardEOF bool) StringTokenizer[T] {
+	var bs bitset.Bitset8
+	bs.SetBit(tknFlagInit, true)
+	bs.SetBit(tknFlagKeepBlankLines, keepBlank)
+	bs.SetBit(tknFlagDiscardEOF, discardEOF)
+	return StringTokenizer[T]{
 		sep: sep,
-		bl:  keepBlank,
-		eof: discardEOF,
+		bs:  bs,
 	}
 }
 
-func (t Tokenizer[T]) Tokenize(dst Tokens, x T) Tokens {
+func (t StringTokenizer[T]) Tokenize(dst Tokens, x T) Tokens {
 	s := q2s(x)
 	if len(s) == 0 {
 		return dst
 	}
+
+	if !t.bs.CheckBit(tknFlagInit) {
+		t.sep = DefaultTokenSeparator
+		t.bs.SetBit(tknFlagInit, true)
+		t.bs.SetBit(tknFlagKeepBlankLines, true)
+		t.bs.SetBit(tknFlagDiscardEOF, true)
+	}
+
 	lo, hi := 0, 0
 	for {
 		p := bytealg.IndexAnyAtStr(s, t.sep, lo)
 		if p == -1 {
 			hi = len(s)
-			if hi == lo && t.eof {
+			if hi == lo && t.bs.CheckBit(tknFlagDiscardEOF) {
 				break
 			}
 			dst = append(dst, ParseToken(s, lo, hi))
 			break
 		}
 		hi = p
-		if hi == lo && !t.bl {
+		if hi == lo && !t.bs.CheckBit(tknFlagKeepBlankLines) {
 			lo = hi + 1
 			continue
 		}

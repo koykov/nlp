@@ -3,7 +3,7 @@ package tokenizer
 import "github.com/koykov/nlp"
 
 type Simple[T nlp.Byteseq] struct {
-	nlp.Tokenizer[T]
+	nlp.StringTokenizer[T]
 }
 
 func NewSimple[T nlp.Byteseq]() Simple[T] {
@@ -11,11 +11,11 @@ func NewSimple[T nlp.Byteseq]() Simple[T] {
 }
 
 func NewSimpleWithOptions[T nlp.Byteseq](sep string, keepBlank bool, discardEOF bool) Simple[T] {
-	tkn := nlp.NewTokenizerWithOptions[T](sep, keepBlank, discardEOF)
+	tkn := nlp.NewStringTokenizer[T](sep, keepBlank, discardEOF)
 	return Simple[T]{tkn}
 }
 
 func (t Simple[T]) Tokenize(dst nlp.Tokens, x T) nlp.Tokens {
-	dst = t.Tokenizer.Tokenize(dst, x)
+	dst = t.StringTokenizer.Tokenize(dst, x)
 	return dst
 }

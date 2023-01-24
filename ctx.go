@@ -18,7 +18,7 @@ type Ctx[T Byteseq] struct {
 
 	cln Cleaner[T]
 
-	tkn  TokenizerInterface[T]
+	tkn  Tokenizer[T]
 	bufT Tokens
 
 	sd    ScriptDetectorInterface[T]

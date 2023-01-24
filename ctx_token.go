@@ -1,6 +1,6 @@
 package nlp
 
-func (ctx *Ctx[T]) WithTokenizer(tkn TokenizerInterface[T]) *Ctx[T] {
+func (ctx *Ctx[T]) WithTokenizer(tkn Tokenizer[T]) *Ctx[T] {
 	ctx.tkn = tkn
 	ctx.SetBit(flagToken, false)
 	return ctx
@@ -28,9 +28,9 @@ func (ctx Ctx[T]) GetTokens() Tokens {
 	return ctx.bufT
 }
 
-func (ctx *Ctx[T]) chkTkn() TokenizerInterface[T] {
+func (ctx *Ctx[T]) chkTkn() Tokenizer[T] {
 	if ctx.tkn == nil {
-		tkn := NewTokenizer[T]()
+		tkn := NewStringTokenizer[T](DefaultTokenSeparator, false, true)
 		ctx.tkn = tkn
 	}
 	return ctx.tkn
