@@ -16,7 +16,7 @@ type Ctx[T Byteseq] struct {
 	buf  []byte
 	bufR []rune
 
-	cln CleanerInterface[T]
+	cln Cleaner[T]
 
 	tkn  TokenizerInterface[T]
 	bufT Tokens

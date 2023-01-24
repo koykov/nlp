@@ -15,75 +15,77 @@ const (
 	CleanLetter
 	CleanPrint
 	CleanGraphic
+
+	DefaultCleanMask = CleanControl | CleanMark | CleanSymbol | CleanNumber | CleanPunct
 )
 
-type CleanerInterface[T Byteseq] interface {
+type Cleaner[T Byteseq] interface {
 	Clean(dst []rune, x T) []rune
 }
 
-type Cleaner[T Byteseq] struct {
-	m uint32
+type UnicodeCleaner[T Byteseq] struct {
+	mask uint32
+	init bool
 }
 
-func NewCleaner[T Byteseq]() Cleaner[T] {
-	cln := NewCleanerWithMask[T](CleanControl | CleanMark | CleanSymbol | CleanNumber | CleanPunct)
-	return cln
+func NewUnicodeCleaner[T Byteseq](m uint32) UnicodeCleaner[T] {
+	return UnicodeCleaner[T]{mask: m, init: true}
 }
 
-func NewCleanerWithMask[T Byteseq](m uint32) Cleaner[T] {
-	return Cleaner[T]{m: m}
-}
-
-func (c Cleaner[T]) Clean(dst []rune, x T) []rune {
+func (c UnicodeCleaner[T]) Clean(dst []rune, x T) []rune {
 	s := q2s(x)
+	mask := c.mask
+	if !c.init && mask == 0 {
+		mask = DefaultCleanMask
+	}
 	for _, r := range s {
-		if c.m > 0 {
-			if c.m&CleanControl > 0 {
+		if mask > 0 {
+			if mask&CleanControl > 0 {
 				if unicode.IsControl(r) {
 					continue
 				}
 			}
-			if c.m&CleanPrint > 0 {
+			if mask&CleanPrint > 0 {
 				if unicode.IsPrint(r) {
 					continue
 				}
 			}
-			if c.m&CleanGraphic > 0 {
+			if mask&CleanGraphic > 0 {
 				if unicode.IsGraphic(r) {
 					continue
 				}
 			}
-			if c.m&CleanMark > 0 {
+			if mask&CleanMark > 0 {
 				if unicode.IsMark(r) {
 					continue
 				}
 			}
-			if c.m&CleanPunct > 0 {
+			if mask&CleanPunct > 0 {
 				if unicode.IsPunct(r) {
 					continue
 				}
 			}
-			if c.m&CleanSpace > 0 {
+			if mask&CleanSpace > 0 {
 				if unicode.IsSpace(r) {
 					continue
 				}
 			}
-			if c.m&CleanDigit > 0 {
+			if mask&CleanDigit > 0 {
 				if unicode.IsDigit(r) {
 					continue
 				}
 			}
-			if c.m&CleanNumber > 0 {
+			if mask&CleanNumber > 0 {
 				if unicode.IsNumber(r) {
 					continue
 				}
 			}
-			if c.m&CleanSymbol > 0 {
+			if mask&CleanSymbol > 0 {
 				if unicode.IsSymbol(r) {
 					continue
 				}
 			}
-			if c.m&CleanLetter > 0 {
+			if mask&CleanLetter > 0 {
 				if unicode.IsLetter(r) {
 					continue
 				}

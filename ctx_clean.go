@@ -2,7 +2,7 @@ package nlp
 
 import "github.com/koykov/fastconv"
 
-func (ctx *Ctx[T]) WithCleaner(cln CleanerInterface[T]) *Ctx[T] {
+func (ctx *Ctx[T]) WithCleaner(cln Cleaner[T]) *Ctx[T] {
 	ctx.cln = cln
 	ctx.SetBit(flagClean, false)
 	return ctx
@@ -33,9 +33,9 @@ func (ctx Ctx[T]) GetClean() T {
 	return T(ctx.buf)
 }
 
-func (ctx *Ctx[T]) chkCln() CleanerInterface[T] {
+func (ctx *Ctx[T]) chkCln() Cleaner[T] {
 	if ctx.cln == nil {
-		cln := NewCleaner[T]()
+		cln := NewUnicodeCleaner[T](DefaultCleanMask)
 		ctx.cln = cln
 	}
 	return ctx.cln

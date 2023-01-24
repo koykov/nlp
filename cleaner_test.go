@@ -80,6 +80,12 @@ var clnStages = []struct {
 		mask: CleanGraphic,
 		exp:  "\u009F",
 	},
+	{
+		key:  "default mask",
+		src:  clnTestSource,
+		mask: DefaultCleanMask,
+		exp:  "control  print  graphic ï mark  punct  space \u00a0 digit  number  symbol  letter ì",
+	},
 	// cyrillic
 	{
 		key: "no clean cyrillic",
@@ -146,12 +152,18 @@ var clnStages = []struct {
 		mask: CleanGraphic,
 		exp:  "\u009F",
 	},
+	{
+		key:  "default mask cyrillic",
+		src:  clnTestSourceCyr,
+		mask: DefaultCleanMask,
+		exp:  "контроль  печатные  графические ï маркировка  пунктуация  пробел \u00a0 цифра  число  символ  буква Я",
+	},
 }
 
 func TestCleaner(t *testing.T) {
 	for _, stage := range clnStages {
 		t.Run(stage.key, func(t *testing.T) {
-			cln := NewCleanerWithMask[string](stage.mask)
+			cln := NewUnicodeCleaner[string](stage.mask)
 			r := cln.Clean(nil, stage.src)
 			_, s := fastconv.AppendR2S(nil, r)
 			if s != stage.exp {
@@ -165,7 +177,7 @@ func BenchmarkCleaner(b *testing.B) {
 	for _, stage := range clnStages {
 		b.Run(stage.key, func(b *testing.B) {
 			b.ReportAllocs()
-			cln := NewCleanerWithMask[string](stage.mask)
+			cln := NewUnicodeCleaner[string](stage.mask)
 			var buf []rune
 			for i := 0; i < b.N; i++ {
 				buf = cln.Clean(buf[:0], stage.src)
