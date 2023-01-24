@@ -163,7 +163,7 @@ var clnStages = []struct {
 func TestCleaner(t *testing.T) {
 	for _, stage := range clnStages {
 		t.Run(stage.key, func(t *testing.T) {
-			cln := NewUnicodeCleaner[string](stage.mask)
+			cln := UnicodeCleaner[string]{Mask: stage.mask}
 			r := cln.Clean(nil, stage.src)
 			_, s := fastconv.AppendR2S(nil, r)
 			if s != stage.exp {
@@ -177,7 +177,7 @@ func BenchmarkCleaner(b *testing.B) {
 	for _, stage := range clnStages {
 		b.Run(stage.key, func(b *testing.B) {
 			b.ReportAllocs()
-			cln := NewUnicodeCleaner[string](stage.mask)
+			cln := UnicodeCleaner[string]{Mask: stage.mask}
 			var buf []rune
 			for i := 0; i < b.N; i++ {
 				buf = cln.Clean(buf[:0], stage.src)
