@@ -6,10 +6,11 @@ import (
 	"github.com/koykov/nlp"
 )
 
-type stage[T nlp.Byteseq] struct {
-	key string
-	src T
-	exp []string
+type stage
+[T nlp.byteseq.Byteseq] struct {
+key string
+src T
+exp []string
 }
 
 var stages = []stage[string]{
@@ -24,7 +25,7 @@ var stages = []stage[string]{
 	},
 }
 
-func testInstance[T nlp.Byteseq](t *testing.T, tkn nlp.Tokenizer[T]) {
+func testInstance[T nlp.byteseq.Byteseq](t *testing.T, tkn nlp.Tokenizer[T]) {
 	for _, stg := range stages {
 		t.Run(stg.key, func(t *testing.T) {
 			var buf nlp.Tokens
@@ -36,7 +37,7 @@ func testInstance[T nlp.Byteseq](t *testing.T, tkn nlp.Tokenizer[T]) {
 	}
 }
 
-func benchInstance[T nlp.Byteseq](b *testing.B, tkn nlp.Tokenizer[T]) {
+func benchInstance[T nlp.byteseq.Byteseq](b *testing.B, tkn nlp.Tokenizer[T]) {
 	for _, stg := range stages {
 		b.Run(stg.key, func(b *testing.B) {
 			b.ReportAllocs()

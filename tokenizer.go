@@ -2,6 +2,7 @@ package nlp
 
 import (
 	"github.com/koykov/bytealg"
+	"github.com/koykov/byteseq"
 )
 
 type TokenizerBlankLines int
@@ -14,12 +15,12 @@ const (
 	DefaultTokenSeparator = " \n\t"
 )
 
-type Tokenizer[T Byteseq] interface {
+type Tokenizer[T byteseq.Byteseq] interface {
 	Tokenize(x T) Tokens
 	AppendTokenize(dst Tokens, x T) Tokens
 }
 
-type StringTokenizer[T Byteseq] struct {
+type StringTokenizer[T byteseq.Byteseq] struct {
 	Separator  string
 	BlankLines TokenizerBlankLines
 
@@ -28,7 +29,7 @@ type StringTokenizer[T Byteseq] struct {
 	bl  TokenizerBlankLines
 }
 
-func NewStringTokenizer[T Byteseq](sep string, blankLines TokenizerBlankLines) StringTokenizer[T] {
+func NewStringTokenizer[T byteseq.Byteseq](sep string, blankLines TokenizerBlankLines) StringTokenizer[T] {
 	return StringTokenizer[T]{
 		Separator:  sep,
 		BlankLines: blankLines,
@@ -40,7 +41,7 @@ func (t *StringTokenizer[T]) Tokenize(x T) Tokens {
 }
 
 func (t *StringTokenizer[T]) AppendTokenize(dst Tokens, x T) Tokens {
-	s := q2s(x)
+	s := byteseq.Q2S(x)
 	if len(s) == 0 {
 		return dst
 	}

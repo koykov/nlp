@@ -2,6 +2,8 @@ package nlp
 
 import (
 	"sort"
+
+	"github.com/koykov/byteseq"
 )
 
 type ScriptDetectAlgo uint
@@ -12,21 +14,21 @@ const (
 	ScriptDetectAlgoFull
 )
 
-type ScriptDetectorInterface[T Byteseq] interface {
+type ScriptDetectorInterface[T byteseq.Byteseq] interface {
 	Detect(ctx *Ctx[T]) (Script, error)
 	DetectProba(ctx *Ctx[T]) (ScriptProba, error)
 }
 
 // ScriptDetector is a builtin detector of writing scripts.
-type ScriptDetector[T Byteseq] struct {
+type ScriptDetector[T byteseq.Byteseq] struct {
 	algo ScriptDetectAlgo
 }
 
-func NewScriptDetector[T Byteseq]() ScriptDetector[T] {
+func NewScriptDetector[T byteseq.Byteseq]() ScriptDetector[T] {
 	return ScriptDetector[T]{algo: ScriptDetectAlgoFull}
 }
 
-func NewScriptDetectorWithAlgo[T Byteseq](algo ScriptDetectAlgo) ScriptDetector[T] {
+func NewScriptDetectorWithAlgo[T byteseq.Byteseq](algo ScriptDetectAlgo) ScriptDetector[T] {
 	return ScriptDetector[T]{algo: algo}
 }
 

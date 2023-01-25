@@ -2,6 +2,7 @@ package nlp
 
 import (
 	"github.com/koykov/bitset"
+	"github.com/koykov/byteseq"
 	"github.com/koykov/fastconv"
 )
 
@@ -10,7 +11,7 @@ const (
 	flagToken = 1
 )
 
-type Ctx[T Byteseq] struct {
+type Ctx[T byteseq.Byteseq] struct {
 	bitset.Bitset
 	src  T
 	buf  []byte
@@ -30,7 +31,7 @@ type Ctx[T Byteseq] struct {
 	err error
 }
 
-func NewCtx[T Byteseq]() *Ctx[T] {
+func NewCtx[T byteseq.Byteseq]() *Ctx[T] {
 	ctx := Ctx[T]{}
 	return &ctx
 }

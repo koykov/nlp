@@ -1,6 +1,10 @@
 package nlp
 
-import "sync"
+import (
+	"sync"
+
+	"github.com/koykov/byteseq"
+)
 
 // type CtxPool struct {
 // 	p sync.Pool
@@ -28,7 +32,7 @@ import "sync"
 
 var cp sync.Pool
 
-func AcquireCtx[T Byteseq]() *Ctx[T] {
+func AcquireCtx[T byteseq.Byteseq]() *Ctx[T] {
 	v := cp.Get()
 	if v != nil {
 		if ctx, ok := v.(*Ctx[T]); ok {
@@ -38,7 +42,7 @@ func AcquireCtx[T Byteseq]() *Ctx[T] {
 	return NewCtx[T]()
 }
 
-func ReleaseCtx[T Byteseq](ctx *Ctx[T]) {
+func ReleaseCtx[T byteseq.Byteseq](ctx *Ctx[T]) {
 	ctx.Reset()
 	cp.Put(ctx)
 }

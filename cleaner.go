@@ -2,6 +2,8 @@ package nlp
 
 import (
 	"unicode"
+
+	"github.com/koykov/byteseq"
 )
 
 const (
@@ -19,19 +21,19 @@ const (
 	DefaultCleanMask = CleanControl | CleanMark | CleanSymbol | CleanNumber | CleanPunct
 )
 
-type Cleaner[T Byteseq] interface {
+type Cleaner[T byteseq.Byteseq] interface {
 	Clean(x T) []rune
 	AppendClean(dst []rune, x T) []rune
 }
 
-type UnicodeCleaner[T Byteseq] struct {
+type UnicodeCleaner[T byteseq.Byteseq] struct {
 	Mask uint32
 
 	o bool
 	m uint32
 }
 
-func NewUnicodeCleaner[T Byteseq](mask uint32) *UnicodeCleaner[T] {
+func NewUnicodeCleaner[T byteseq.Byteseq](mask uint32) *UnicodeCleaner[T] {
 	return &UnicodeCleaner[T]{Mask: mask}
 }
 
@@ -40,7 +42,7 @@ func (c *UnicodeCleaner[T]) Clean(x T) []rune {
 }
 
 func (c *UnicodeCleaner[T]) AppendClean(dst []rune, x T) []rune {
-	s := q2s(x)
+	s := byteseq.Q2S(x)
 	if !c.o {
 		c.m = c.Mask
 		c.o = true
