@@ -17,7 +17,7 @@ func (ctx *Ctx[T]) Clean() *Ctx[T] {
 	}
 	defer ctx.SetBit(flagClean, true)
 
-	ctx.bufR = ctx.chkCln().Clean(ctx.bufR[:0], ctx.src)
+	ctx.bufR = ctx.chkCln().AppendClean(ctx.bufR[:0], ctx.src)
 	ctx.buf = fastconv.AppendR2B(ctx.buf[:0], ctx.bufR)
 
 	return ctx

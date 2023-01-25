@@ -164,7 +164,7 @@ func TestCleaner(t *testing.T) {
 	for _, stage := range clnStages {
 		t.Run(stage.key, func(t *testing.T) {
 			cln := UnicodeCleaner[string]{Mask: stage.mask}
-			r := cln.Clean(nil, stage.src)
+			r := cln.Clean(stage.src)
 			_, s := fastconv.AppendR2S(nil, r)
 			if s != stage.exp {
 				t.FailNow()
@@ -180,7 +180,7 @@ func BenchmarkCleaner(b *testing.B) {
 			cln := UnicodeCleaner[string]{Mask: stage.mask}
 			var buf []rune
 			for i := 0; i < b.N; i++ {
-				buf = cln.Clean(buf[:0], stage.src)
+				buf = cln.AppendClean(buf[:0], stage.src)
 			}
 			_ = buf
 		})
