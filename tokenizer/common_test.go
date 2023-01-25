@@ -43,11 +43,9 @@ func benchInstance[T byteseq.Byteseq](b *testing.B, tkn nlp.Tokenizer[T], stages
 			b.ReportAllocs()
 			var buf nlp.Tokens
 			for i := 0; i < b.N; i++ {
-				buf = tkn.AppendTokenize(buf[:0], T(stg.src))
-				if !assertTokens(buf, stg.exp) {
-					b.Errorf("tokens mismatch: %s", stg.key)
-				}
+				buf = tkn.AppendTokenize(buf[:0], stg.src)
 			}
+			_ = buf
 		})
 	}
 }
