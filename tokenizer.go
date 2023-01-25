@@ -57,7 +57,7 @@ func (t *StringTokenizer[T]) AppendTokenize(dst Tokens, x T) Tokens {
 		p := bytealg.IndexAnyAtStr(s, t.sep, lo)
 		if p == -1 {
 			hi = len(s)
-			if hi == lo && t.bl == TokenizerBlankLinesDiscardEOF || t.bl == TokenizerBlankLinesDiscard {
+			if hi == lo && (t.bl == TokenizerBlankLinesDiscardEOF || t.bl == TokenizerBlankLinesDiscard) {
 				break
 			}
 			dst = append(dst, ParseToken(s, lo, hi))

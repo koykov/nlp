@@ -3,17 +3,17 @@ package tokenizer
 import (
 	"testing"
 
+	"github.com/koykov/byteseq"
 	"github.com/koykov/nlp"
 )
 
-type stage
-[T nlp.byteseq.Byteseq] struct {
-key string
-src T
-exp []string
+type stage[T byteseq.Byteseq] struct {
+	key string
+	src T
+	exp []string
 }
 
-var stages = []stage[string]{
+var stagesCommon = []stage[string]{
 	{
 		key: "empty input",
 		exp: nil,
@@ -25,11 +25,11 @@ var stages = []stage[string]{
 	},
 }
 
-func testInstance[T nlp.byteseq.Byteseq](t *testing.T, tkn nlp.Tokenizer[T]) {
+func testInstance[T byteseq.Byteseq](t *testing.T, tkn nlp.Tokenizer[T], stages []stage[T]) {
 	for _, stg := range stages {
 		t.Run(stg.key, func(t *testing.T) {
 			var buf nlp.Tokens
-			buf = tkn.Tokenize(buf[:0], T(stg.src))
+			buf = tkn.AppendTokenize(buf[:0], stg.src)
 			if !assertTokens(buf, stg.exp) {
 				t.Errorf("tokens mismatch: %s", stg.key)
 			}
@@ -37,13 +37,13 @@ func testInstance[T nlp.byteseq.Byteseq](t *testing.T, tkn nlp.Tokenizer[T]) {
 	}
 }
 
-func benchInstance[T nlp.byteseq.Byteseq](b *testing.B, tkn nlp.Tokenizer[T]) {
+func benchInstance[T byteseq.Byteseq](b *testing.B, tkn nlp.Tokenizer[T], stages []stage[T]) {
 	for _, stg := range stages {
 		b.Run(stg.key, func(b *testing.B) {
 			b.ReportAllocs()
 			var buf nlp.Tokens
 			for i := 0; i < b.N; i++ {
-				buf = tkn.Tokenize(buf[:0], T(stg.src))
+				buf = tkn.AppendTokenize(buf[:0], T(stg.src))
 				if !assertTokens(buf, stg.exp) {
 					b.Errorf("tokens mismatch: %s", stg.key)
 				}

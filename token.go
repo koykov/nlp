@@ -3,6 +3,8 @@ package nlp
 import (
 	"reflect"
 	"unsafe"
+
+	"github.com/koykov/byteseq"
 )
 
 type Token struct {
@@ -54,7 +56,7 @@ func (t *Tokens) Reset() {
 	*t = (*t)[:0]
 }
 
-func ParseToken[T ~string | ~[]byte](s T, lo, hi int) Token {
+func ParseToken[T byteseq.Byteseq](s T, lo, hi int) Token {
 	switch any(s).(type) {
 	case string:
 		return s2t(string(s), lo, hi)
