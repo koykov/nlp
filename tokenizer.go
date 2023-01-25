@@ -1,49 +1,54 @@
 package nlp
 
 import (
-	"github.com/koykov/bitset"
 	"github.com/koykov/bytealg"
 )
 
-const (
-	DefaultTokenSeparator = " \n\t"
+type TokenizerBlankLines int
 
-	tknFlagInit           = 0
-	tknFlagKeepBlankLines = 1
-	tknFlagDiscardEOF     = 2
+const (
+	TokenizerBlankLinesDiscard TokenizerBlankLines = iota
+	TokenizerBlankLinesKeep
+	TokenizerBlankLinesDiscardEOF
+
+	DefaultTokenSeparator = " \n\t"
 )
 
 type Tokenizer[T Byteseq] interface {
-	Tokenize(dst Tokens, x T) Tokens
+	Tokenize(x T) Tokens
+	AppendTokenize(dst Tokens, x T) Tokens
 }
 
 type StringTokenizer[T Byteseq] struct {
-	bs  bitset.Bitset8
+	Separator  string
+	BlankLines TokenizerBlankLines
+
+	o   bool
 	sep string
+	bl  TokenizerBlankLines
 }
 
-func NewStringTokenizer[T Byteseq](sep string, keepBlank bool, discardEOF bool) StringTokenizer[T] {
-	var bs bitset.Bitset8
-	bs.SetBit(tknFlagInit, true)
-	bs.SetBit(tknFlagKeepBlankLines, keepBlank)
-	bs.SetBit(tknFlagDiscardEOF, discardEOF)
+func NewStringTokenizer[T Byteseq](sep string, blankLines TokenizerBlankLines) StringTokenizer[T] {
 	return StringTokenizer[T]{
-		sep: sep,
-		bs:  bs,
+		Separator:  sep,
+		BlankLines: blankLines,
 	}
 }
 
-func (t StringTokenizer[T]) Tokenize(dst Tokens, x T) Tokens {
+func (t *StringTokenizer[T]) Tokenize(x T) Tokens {
+	return t.AppendTokenize(nil, x)
+}
+
+func (t *StringTokenizer[T]) AppendTokenize(dst Tokens, x T) Tokens {
 	s := q2s(x)
 	if len(s) == 0 {
 		return dst
 	}
 
-	if !t.bs.CheckBit(tknFlagInit) {
-		t.sep = DefaultTokenSeparator
-		t.bs.SetBit(tknFlagInit, true)
-		t.bs.SetBit(tknFlagKeepBlankLines, true)
-		t.bs.SetBit(tknFlagDiscardEOF, true)
+	if !t.o {
+		t.sep = t.Separator
+		t.bl = t.BlankLines
+		t.o = true
 	}
 
 	lo, hi := 0, 0
@@ -51,14 +56,14 @@ func (t StringTokenizer[T]) Tokenize(dst Tokens, x T) Tokens {
 		p := bytealg.IndexAnyAtStr(s, t.sep, lo)
 		if p == -1 {
 			hi = len(s)
-			if hi == lo && t.bs.CheckBit(tknFlagDiscardEOF) {
+			if hi == lo && t.bl == TokenizerBlankLinesDiscardEOF || t.bl == TokenizerBlankLinesDiscard {
 				break
 			}
 			dst = append(dst, ParseToken(s, lo, hi))
 			break
 		}
 		hi = p
-		if hi == lo && !t.bs.CheckBit(tknFlagKeepBlankLines) {
+		if hi == lo && t.bl == TokenizerBlankLinesDiscard {
 			lo = hi + 1
 			continue
 		}

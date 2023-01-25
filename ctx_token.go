@@ -14,7 +14,7 @@ func (ctx *Ctx[T]) Tokenize() *Ctx[T] {
 		return ctx
 	}
 	defer ctx.SetBit(flagToken, true)
-	ctx.bufT = ctx.chkTkn().Tokenize(ctx.bufT, T(ctx.buf))
+	ctx.bufT = ctx.chkTkn().AppendTokenize(ctx.bufT, T(ctx.buf))
 	return ctx
 }
 
@@ -30,8 +30,8 @@ func (ctx Ctx[T]) GetTokens() Tokens {
 
 func (ctx *Ctx[T]) chkTkn() Tokenizer[T] {
 	if ctx.tkn == nil {
-		tkn := NewStringTokenizer[T](DefaultTokenSeparator, false, true)
-		ctx.tkn = tkn
+		tkn := NewStringTokenizer[T](DefaultTokenSeparator, TokenizerBlankLinesDiscard)
+		ctx.WithTokenizer(&tkn)
 	}
 	return ctx.tkn
 }

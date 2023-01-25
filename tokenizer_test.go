@@ -13,20 +13,22 @@ var tokenizerStages = []struct {
 	sep    string
 	keepBL bool
 	disEOF bool
+	bl     TokenizerBlankLines
 	tok    []string
 }{
 	{
-		key:    "default",
+		key:    "keep blank lines",
 		src:    tknzSrc,
 		sep:    tknzSep,
 		keepBL: true,
+		bl:     TokenizerBlankLinesKeep,
 		tok:    []string{"Good", "muffins", "cost", "$3.88", "in", "New", "York.", "", "Please", "buy", "me", "two", "of", "them.", "", "Thanks.", "", "", ""},
 	},
 	{
-		key: "remove blank lines",
+		key: "discard blank lines",
 		src: tknzSrc,
 		sep: tknzSep,
-		tok: []string{"Good", "muffins", "cost", "$3.88", "in", "New", "York.", "Please", "buy", "me", "two", "of", "them.", "Thanks.", ""},
+		tok: []string{"Good", "muffins", "cost", "$3.88", "in", "New", "York.", "Please", "buy", "me", "two", "of", "them.", "Thanks."},
 	},
 	{
 		key:    "discard EOF",
@@ -34,23 +36,16 @@ var tokenizerStages = []struct {
 		sep:    tknzSep,
 		keepBL: true,
 		disEOF: true,
+		bl:     TokenizerBlankLinesDiscardEOF,
 		tok:    []string{"Good", "muffins", "cost", "$3.88", "in", "New", "York.", "", "Please", "buy", "me", "two", "of", "them.", "", "Thanks.", "", ""},
-	},
-	{
-		key:    "mixed",
-		src:    tknzSrc,
-		sep:    tknzSep,
-		keepBL: false,
-		disEOF: true,
-		tok:    []string{"Good", "muffins", "cost", "$3.88", "in", "New", "York.", "Please", "buy", "me", "two", "of", "them.", "Thanks."},
 	},
 }
 
 func TestTokenizer(t *testing.T) {
 	for _, stage := range tokenizerStages {
 		t.Run(stage.key, func(t *testing.T) {
-			tkn := NewStringTokenizer[string](stage.sep, stage.keepBL, stage.disEOF)
-			tkn.Tokenize(nil, stage.src).Each(func(i int, tok Token) {
+			tkn := NewStringTokenizer[string](stage.sep, stage.bl)
+			tkn.AppendTokenize(nil, stage.src).Each(func(i int, tok Token) {
 				if tok.String() != stage.tok[i] {
 					t.FailNow()
 				}
@@ -65,8 +60,8 @@ func BenchmarkTokenizer(b *testing.B) {
 			var buf Tokens
 			b.ReportAllocs()
 			for i := 0; i < b.N; i++ {
-				tkn := NewStringTokenizer[string](stage.sep, stage.keepBL, stage.disEOF)
-				buf = tkn.Tokenize(buf[:0], stage.src)
+				tkn := NewStringTokenizer[string](stage.sep, stage.bl)
+				buf = tkn.AppendTokenize(buf[:0], stage.src)
 			}
 			_ = buf
 		})
