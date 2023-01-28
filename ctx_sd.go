@@ -1,6 +1,6 @@
 package nlp
 
-func (ctx *Ctx[T]) WithScriptDetector(ds ScriptDetectorInterface[T]) *Ctx[T] {
+func (ctx *Ctx[T]) WithScriptDetector(ds ScriptDetector[T]) *Ctx[T] {
 	ctx.sd = ds
 	return ctx
 }
@@ -19,9 +19,9 @@ func (ctx *Ctx[T]) DetectScriptProba(text T) (ScriptProba, error) {
 	return ctx.chkSD().DetectProba(ctx)
 }
 
-func (ctx *Ctx[T]) chkSD() ScriptDetectorInterface[T] {
+func (ctx *Ctx[T]) chkSD() ScriptDetector[T] {
 	if ctx.sd == nil {
-		ctx.sd = NewScriptDetector[T]()
+		ctx.sd = NewUnicodeScriptDetector[T]()
 	}
 	if len(ctx.bufSC) == 0 {
 		ctx.LimitScripts(ScriptsSupported())

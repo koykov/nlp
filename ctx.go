@@ -22,7 +22,7 @@ type Ctx[T byteseq.Byteseq] struct {
 	tkn  Tokenizer[T]
 	bufT Tokens
 
-	sd    ScriptDetectorInterface[T]
+	sd    ScriptDetector[T]
 	bufSC []Script
 	BufSP ScriptProba
 

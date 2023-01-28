@@ -14,25 +14,25 @@ const (
 	ScriptDetectAlgoFull
 )
 
-type ScriptDetectorInterface[T byteseq.Byteseq] interface {
+type ScriptDetector[T byteseq.Byteseq] interface {
 	Detect(ctx *Ctx[T]) (Script, error)
 	DetectProba(ctx *Ctx[T]) (ScriptProba, error)
 }
 
-// ScriptDetector is a builtin detector of writing scripts.
-type ScriptDetector[T byteseq.Byteseq] struct {
+// UnicodeScriptDetector is a builtin detector of writing scripts.
+type UnicodeScriptDetector[T byteseq.Byteseq] struct {
 	algo ScriptDetectAlgo
 }
 
-func NewScriptDetector[T byteseq.Byteseq]() ScriptDetector[T] {
-	return ScriptDetector[T]{algo: ScriptDetectAlgoFull}
+func NewUnicodeScriptDetector[T byteseq.Byteseq]() UnicodeScriptDetector[T] {
+	return UnicodeScriptDetector[T]{algo: ScriptDetectAlgoFull}
 }
 
-func NewScriptDetectorWithAlgo[T byteseq.Byteseq](algo ScriptDetectAlgo) ScriptDetector[T] {
-	return ScriptDetector[T]{algo: algo}
+func NewUnicodeScriptDetectorWithAlgo[T byteseq.Byteseq](algo ScriptDetectAlgo) UnicodeScriptDetector[T] {
+	return UnicodeScriptDetector[T]{algo: algo}
 }
 
-func (d ScriptDetector[T]) Detect(ctx *Ctx[T]) (Script, error) {
+func (d UnicodeScriptDetector[T]) Detect(ctx *Ctx[T]) (Script, error) {
 	if err := d.dsProba(ctx); err != nil {
 		return 0, err
 	}
@@ -49,7 +49,7 @@ func (d ScriptDetector[T]) Detect(ctx *Ctx[T]) (Script, error) {
 	return ctx.BufSP[mi].Script, nil
 }
 
-func (d ScriptDetector[T]) DetectProba(ctx *Ctx[T]) (ScriptProba, error) {
+func (d UnicodeScriptDetector[T]) DetectProba(ctx *Ctx[T]) (ScriptProba, error) {
 	if err := d.dsProba(ctx); err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (d ScriptDetector[T]) DetectProba(ctx *Ctx[T]) (ScriptProba, error) {
 	return ctx.BufSP, nil
 }
 
-func (d ScriptDetector[T]) dsProba(ctx *Ctx[T]) error {
+func (d UnicodeScriptDetector[T]) dsProba(ctx *Ctx[T]) error {
 	runes := ctx.GetRunes()
 	l := len(runes)
 	if l == 0 {

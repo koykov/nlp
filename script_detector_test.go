@@ -29,7 +29,7 @@ var (
 func TestDetectScript(t *testing.T) {
 	for _, stage := range dsStages {
 		t.Run(stage.key, func(t *testing.T) {
-			ctx := NewCtx[string]().WithScriptDetector(NewScriptDetector[string]())
+			ctx := NewCtx[string]().WithScriptDetector(NewUnicodeScriptDetector[string]())
 			script, err := ctx.DetectScript(stage.text)
 			if err != nil {
 				if err != stage.err {
@@ -69,7 +69,7 @@ func BenchmarkDetectScriptProba(b *testing.B) {
 		b.Run(stage.key, func(b *testing.B) {
 			b.ReportAllocs()
 			for i := 0; i < b.N; i++ {
-				ctx := AcquireCtx[string]().WithScriptDetector(NewScriptDetectorWithAlgo[string](ScriptDetectAlgoDistributed))
+				ctx := AcquireCtx[string]().WithScriptDetector(NewUnicodeScriptDetectorWithAlgo[string](ScriptDetectAlgoDistributed))
 				proba, err := ctx.DetectScriptProba(stage.text)
 				if err != nil {
 					if err != stage.err {
