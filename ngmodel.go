@@ -7,6 +7,7 @@ import (
 	"unicode"
 
 	"github.com/koykov/bytealg"
+	"github.com/koykov/byteseq"
 	"github.com/koykov/fastconv"
 )
 
@@ -15,7 +16,7 @@ const (
 	ngmBufSize   = 16384
 )
 
-type NGModel struct {
+type NGModel[T byteseq.Byteseq] struct {
 	v uint64
 
 	o sync.Once
@@ -31,16 +32,13 @@ type NGModel struct {
 	bufR []rune
 }
 
-func (m *NGModel) Parse(text []byte) *NGModel {
-	return m.ParseString(fastconv.B2S(text))
-}
-
-func (m *NGModel) ParseString(text string) *NGModel {
+func (m *NGModel[T]) Parse(text T) *NGModel[T] {
+	s := byteseq.Q2S(text)
 	if len(text) == 0 {
 		return m
 	}
 	m.o.Do(m.init)
-	m.bufR = fastconv.AppendS2R(m.bufR[:0], text)
+	m.bufR = fastconv.AppendS2R(m.bufR[:0], s)
 	l := len(m.bufR)
 	_ = m.bufR[l-1]
 	for i := 0; i < l; i++ {
@@ -83,7 +81,7 @@ func (m *NGModel) ParseString(text string) *NGModel {
 	return m
 }
 
-func (m *NGModel) AddUnigram(ng Unigram) *NGModel {
+func (m *NGModel[T]) AddUnigram(ng Unigram) *NGModel[T] {
 	m.o.Do(m.init)
 	if _, ok := m.u[ng]; ok {
 		return m
@@ -92,7 +90,7 @@ func (m *NGModel) AddUnigram(ng Unigram) *NGModel {
 	return m
 }
 
-func (m *NGModel) AddBigram(ng Bigram) *NGModel {
+func (m *NGModel[T]) AddBigram(ng Bigram) *NGModel[T] {
 	m.o.Do(m.init)
 	if _, ok := m.b[ng]; ok {
 		return m
@@ -101,7 +99,7 @@ func (m *NGModel) AddBigram(ng Bigram) *NGModel {
 	return m
 }
 
-func (m *NGModel) AddTrigram(ng Trigram) *NGModel {
+func (m *NGModel[T]) AddTrigram(ng Trigram) *NGModel[T] {
 	m.o.Do(m.init)
 	if _, ok := m.t[ng]; ok {
 		return m
@@ -110,7 +108,7 @@ func (m *NGModel) AddTrigram(ng Trigram) *NGModel {
 	return m
 }
 
-func (m *NGModel) AddQuadrigram(ng Quadrigram) *NGModel {
+func (m *NGModel[T]) AddQuadrigram(ng Quadrigram) *NGModel[T] {
 	m.o.Do(m.init)
 	if _, ok := m.q[ng]; ok {
 		return m
@@ -119,7 +117,7 @@ func (m *NGModel) AddQuadrigram(ng Quadrigram) *NGModel {
 	return m
 }
 
-func (m *NGModel) AddFivegram(ng Fivegram) *NGModel {
+func (m *NGModel[T]) AddFivegram(ng Fivegram) *NGModel[T] {
 	m.o.Do(m.init)
 	if _, ok := m.f[ng]; ok {
 		return m
@@ -128,12 +126,12 @@ func (m *NGModel) AddFivegram(ng Fivegram) *NGModel {
 	return m
 }
 
-func (m *NGModel) LoadFile(path string) error {
+func (m *NGModel[T]) LoadFile(path string) error {
 	_ = path
 	return nil
 }
 
-func (m *NGModel) Write(w io.Writer) (int, error) {
+func (m *NGModel[T]) Write(w io.Writer) (int, error) {
 	w64 := func(dst []byte, v uint64) []byte {
 		off := len(dst)
 		dst = bytealg.GrowDelta(dst, 8)
@@ -155,11 +153,11 @@ func (m *NGModel) Write(w io.Writer) (int, error) {
 	return 0, nil
 }
 
-func (m *NGModel) Flush() error {
+func (m *NGModel[T]) Flush() error {
 	return nil
 }
 
-func (m *NGModel) writeNG(w io.Writer, ng Unigram) (err error) {
+func (m *NGModel[T]) writeNG(w io.Writer, ng Unigram) (err error) {
 	off := len(m.buf)
 	m.buf = bytealg.GrowDelta(m.buf, 2)
 	binary.LittleEndian.PutUint16(m.buf[off:], uint16(ng))
@@ -169,7 +167,7 @@ func (m *NGModel) writeNG(w io.Writer, ng Unigram) (err error) {
 	return
 }
 
-func (m *NGModel) flushBuf(w io.Writer) (err error) {
+func (m *NGModel[T]) flushBuf(w io.Writer) (err error) {
 	p := m.buf
 	if len(p) == 0 {
 		return
@@ -189,7 +187,7 @@ func (m *NGModel) flushBuf(w io.Writer) (err error) {
 	return
 }
 
-func (m *NGModel) init() {
+func (m *NGModel[T]) init() {
 	m.u = make(map[Unigram]struct{}, m.ul)
 	m.b = make(map[Bigram]struct{}, m.bl)
 	m.t = make(map[Trigram]struct{}, m.tl)
