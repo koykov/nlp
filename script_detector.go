@@ -14,11 +14,6 @@ const (
 	ScriptDetectAlgoFull
 )
 
-type ScriptDetector[T byteseq.Byteseq] interface {
-	Detect(ctx *Ctx[T]) (Script, error)
-	DetectProba(ctx *Ctx[T]) (ScriptProba, error)
-}
-
 // UnicodeScriptDetector is a builtin detector of writing scripts.
 type UnicodeScriptDetector[T byteseq.Byteseq] struct {
 	algo ScriptDetectAlgo

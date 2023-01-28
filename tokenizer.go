@@ -15,11 +15,6 @@ const (
 	DefaultTokenSeparator = " \n\t"
 )
 
-type Tokenizer[T byteseq.Byteseq] interface {
-	Tokenize(x T) Tokens
-	AppendTokenize(dst Tokens, x T) Tokens
-}
-
 type StringTokenizer[T byteseq.Byteseq] struct {
 	Separator  string
 	BlankLines TokenizerBlankLines

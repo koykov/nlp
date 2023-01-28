@@ -21,11 +21,6 @@ const (
 	DefaultCleanMask = CleanControl | CleanMark | CleanSymbol | CleanNumber | CleanPunct
 )
 
-type Cleaner[T byteseq.Byteseq] interface {
-	Clean(x T) []rune
-	AppendClean(dst []rune, x T) []rune
-}
-
 type UnicodeCleaner[T byteseq.Byteseq] struct {
 	Mask uint32
 
