@@ -47,11 +47,11 @@ func (m *NGModel[T]) Parse(text T) *NGModel[T] {
 	for {
 		p := strings.IndexAny(s[off:], m.ws)
 		if p == -1 {
-			p = len(s)
+			p = len(s) - off
 		}
-		w := s[off:p]
+		w := s[off : off+p]
 		m.parseWord(w)
-		if off = p + 1; off >= len(s) {
+		if off = off + p + 1; off >= len(s) {
 			break
 		}
 	}
@@ -157,6 +157,7 @@ func (m *NGModel[T]) LoadFile(path string) error {
 }
 
 func (m *NGModel[T]) Write(w io.Writer) (int, error) {
+	m.o.Do(m.init)
 	w64 := func(dst []byte, v uint64) []byte {
 		off := len(dst)
 		dst = bytealg.GrowDelta(dst, 8)
@@ -174,6 +175,20 @@ func (m *NGModel[T]) Write(w io.Writer) (int, error) {
 	m.buf = w64(m.buf, m.ql)
 	m.buf = w64(m.buf, m.fl)
 
+	bufU := make([]Unigram, 0, m.ul)
+	for u := range m.u {
+		bufU = append(bufU, u)
+	}
+	sort.Slice(bufU, func(i, j int) bool {
+		return bufU[i] < bufU[j]
+	})
+	for i := 0; i < len(bufU); i++ {
+		m.buf = m.writeU(m.buf, bufU[i])
+		if len(m.buf) > ngmBufSize {
+			_ = m.flushBuf(w)
+		}
+	}
+
 	_ = w
 	return 0, nil
 }
@@ -182,14 +197,45 @@ func (m *NGModel[T]) Flush() error {
 	return nil
 }
 
-func (m *NGModel[T]) writeNG(w io.Writer, ng Unigram) (err error) {
-	off := len(m.buf)
-	m.buf = bytealg.GrowDelta(m.buf, 2)
-	binary.LittleEndian.PutUint16(m.buf[off:], uint16(ng))
-	if len(m.buf) > ngmBufSize {
-		err = m.flushBuf(w)
-	}
-	return
+func (m *NGModel[T]) writeU(dst []byte, ng Unigram) []byte {
+	off := len(dst)
+	dst = bytealg.GrowDelta(dst, 2)
+	binary.LittleEndian.PutUint16(dst[off:], uint16(ng))
+	return dst
+}
+
+func (m *NGModel[T]) writeB(dst []byte, ng Bigram) []byte {
+	off := len(dst)
+	dst = bytealg.GrowDelta(dst, 4)
+	binary.LittleEndian.PutUint32(dst[off:], uint32(ng))
+	return dst
+}
+
+func (m *NGModel[T]) writeT(dst []byte, ng Trigram) []byte {
+	off := len(dst)
+	dst = bytealg.GrowDelta(dst, 6)
+	binary.LittleEndian.PutUint16(dst[off:], uint16(ng.a))
+	binary.LittleEndian.PutUint16(dst[off+2:], uint16(ng.b))
+	binary.LittleEndian.PutUint16(dst[off+4:], uint16(ng.c))
+	return dst
+}
+
+func (m *NGModel[T]) writeQ(dst []byte, ng Quadrigram) []byte {
+	off := len(dst)
+	dst = bytealg.GrowDelta(dst, 8)
+	binary.LittleEndian.PutUint64(dst[off:], uint64(ng))
+	return dst
+}
+
+func (m *NGModel[T]) writeF(dst []byte, ng Fivegram) []byte {
+	off := len(dst)
+	dst = bytealg.GrowDelta(dst, 10)
+	binary.LittleEndian.PutUint16(dst[off:], uint16(ng.a))
+	binary.LittleEndian.PutUint16(dst[off+2:], uint16(ng.b))
+	binary.LittleEndian.PutUint16(dst[off+4:], uint16(ng.c))
+	binary.LittleEndian.PutUint16(dst[off+6:], uint16(ng.d))
+	binary.LittleEndian.PutUint16(dst[off+8:], uint16(ng.e))
+	return dst
 }
 
 func (m *NGModel[T]) flushBuf(w io.Writer) (err error) {
