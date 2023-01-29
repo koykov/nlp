@@ -3,6 +3,7 @@ package nlp
 import (
 	"encoding/binary"
 	"io"
+	"strings"
 	"sync"
 	"unicode"
 
@@ -12,19 +13,23 @@ import (
 )
 
 const (
+	ngmWordSep   = " \n\t"
 	ngmBlockSize = 4096
 	ngmBufSize   = 16384
 )
 
 type NGModel[T byteseq.Byteseq] struct {
+	WordSeparators string
+
 	v uint64
 
-	o sync.Once
-	u map[Unigram]struct{}
-	b map[Bigram]struct{}
-	t map[Trigram]struct{}
-	q map[Quadrigram]struct{}
-	f map[Fivegram]struct{}
+	o  sync.Once
+	ws string
+	u  map[Unigram]struct{}
+	b  map[Bigram]struct{}
+	t  map[Trigram]struct{}
+	q  map[Quadrigram]struct{}
+	f  map[Fivegram]struct{}
 
 	ul, bl, tl, ql, fl uint64
 
@@ -33,11 +38,28 @@ type NGModel[T byteseq.Byteseq] struct {
 }
 
 func (m *NGModel[T]) Parse(text T) *NGModel[T] {
-	s := byteseq.Q2S(text)
 	if len(text) == 0 {
 		return m
 	}
 	m.o.Do(m.init)
+	s := byteseq.Q2S(text)
+	off := 0
+	for {
+		p := strings.IndexAny(s[off:], m.ws)
+		if p == -1 {
+			p = len(s)
+		}
+		w := s[off:p]
+		m.parseWord(w)
+		if off = p + 1; off >= len(s) {
+			break
+		}
+	}
+
+	return m
+}
+
+func (m *NGModel[T]) parseWord(s string) {
 	m.bufR = fastconv.AppendS2R(m.bufR[:0], s)
 	l := len(m.bufR)
 	_ = m.bufR[l-1]
@@ -77,8 +99,6 @@ func (m *NGModel[T]) Parse(text T) *NGModel[T] {
 			e: Unigram(m.bufR[i+4]),
 		})
 	}
-
-	return m
 }
 
 func (m *NGModel[T]) AddUnigram(ng Unigram) *NGModel[T] {
@@ -124,6 +144,11 @@ func (m *NGModel[T]) AddFivegram(ng Fivegram) *NGModel[T] {
 	}
 	m.f[ng] = struct{}{}
 	return m
+}
+
+func (m *NGModel[T]) Stat() (int, int, int, int, int) {
+	m.o.Do(m.init)
+	return len(m.u), len(m.b), len(m.t), len(m.q), len(m.f)
 }
 
 func (m *NGModel[T]) LoadFile(path string) error {
@@ -188,6 +213,11 @@ func (m *NGModel[T]) flushBuf(w io.Writer) (err error) {
 }
 
 func (m *NGModel[T]) init() {
+	if len(m.WordSeparators) == 0 {
+		m.WordSeparators = ngmWordSep
+	}
+	m.ws = m.WordSeparators
+
 	m.u = make(map[Unigram]struct{}, m.ul)
 	m.b = make(map[Bigram]struct{}, m.bl)
 	m.t = make(map[Trigram]struct{}, m.tl)
