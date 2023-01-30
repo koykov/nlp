@@ -3,6 +3,7 @@ package nlp
 import (
 	"encoding/binary"
 	"io"
+	"sort"
 	"strings"
 	"sync"
 	"unicode"
