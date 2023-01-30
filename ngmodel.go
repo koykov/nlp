@@ -65,19 +65,19 @@ func (m *NGModel[T]) parseWord(s string) {
 	_ = m.bufR[l-1]
 	for i := 0; i < l; i++ {
 		m.bufR[i] = unicode.ToLower(m.bufR[i])
-		m.AddUnigram(ToUnigram(m.bufR[i]))
+		m.AddUnigram(NewUnigram(m.bufR[i]))
 	}
 	for i := 0; i < l-1; i++ {
-		m.AddBigram(ToBigram(m.bufR[i], m.bufR[i+1]))
+		m.AddBigram(NewBigram(m.bufR[i], m.bufR[i+1]))
 	}
 	for i := 0; i < l-2; i++ {
-		m.AddTrigram(ToTrigram(m.bufR[i], m.bufR[i+1], m.bufR[i+2]))
+		m.AddTrigram(NewTrigram(m.bufR[i], m.bufR[i+1], m.bufR[i+2]))
 	}
 	for i := 0; i < l-3; i++ {
-		m.AddQuadrigram(ToQuadrigram(m.bufR[i], m.bufR[i+1], m.bufR[i+2], m.bufR[i+3]))
+		m.AddQuadrigram(NewQuadrigram(m.bufR[i], m.bufR[i+1], m.bufR[i+2], m.bufR[i+3]))
 	}
 	for i := 0; i < l-4; i++ {
-		m.AddFivegram(ToFivegram(m.bufR[i], m.bufR[i+1], m.bufR[i+2], m.bufR[i+3], m.bufR[i+4]))
+		m.AddFivegram(NewFivegram(m.bufR[i], m.bufR[i+1], m.bufR[i+2], m.bufR[i+3], m.bufR[i+4]))
 	}
 }
 
