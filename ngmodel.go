@@ -66,39 +66,19 @@ func (m *NGModel[T]) parseWord(s string) {
 	_ = m.bufR[l-1]
 	for i := 0; i < l; i++ {
 		m.bufR[i] = unicode.ToLower(m.bufR[i])
-		m.AddUnigram(Unigram(m.bufR[i]))
+		m.AddUnigram(ToUnigram(m.bufR[i]))
 	}
 	for i := 0; i < l-1; i++ {
-		u0, u1 := Unigram(m.bufR[i]), Unigram(m.bufR[i+1])
-		var b Bigram
-		b = Bigram(u0) << 16
-		b = b | Bigram(u1)
-		m.AddBigram(b)
+		m.AddBigram(ToBigram(m.bufR[i], m.bufR[i+1]))
 	}
 	for i := 0; i < l-2; i++ {
-		m.AddTrigram(Trigram{
-			a: Unigram(m.bufR[i]),
-			b: Unigram(m.bufR[i+1]),
-			c: Unigram(m.bufR[i+2]),
-		})
+		m.AddTrigram(ToTrigram(m.bufR[i], m.bufR[i+1], m.bufR[i+2]))
 	}
 	for i := 0; i < l-3; i++ {
-		u0, u1, u2, u3 := Unigram(m.bufR[i]), Unigram(m.bufR[i+1]), Unigram(m.bufR[i+2]), Unigram(m.bufR[i+3])
-		var q Quadrigram
-		q = Quadrigram(u0) << 48
-		q = q | Quadrigram(u1)<<32
-		q = q | Quadrigram(u2)<<16
-		q = q | Quadrigram(u3)
-		m.AddQuadrigram(q)
+		m.AddQuadrigram(ToQuadrigram(m.bufR[i], m.bufR[i+1], m.bufR[i+2], m.bufR[i+3]))
 	}
 	for i := 0; i < l-4; i++ {
-		m.AddFivegram(Fivegram{
-			a: Unigram(m.bufR[i]),
-			b: Unigram(m.bufR[i+1]),
-			c: Unigram(m.bufR[i+2]),
-			d: Unigram(m.bufR[i+3]),
-			e: Unigram(m.bufR[i+4]),
-		})
+		m.AddFivegram(ToFivegram(m.bufR[i], m.bufR[i+1], m.bufR[i+2], m.bufR[i+3], m.bufR[i+4]))
 	}
 }
 

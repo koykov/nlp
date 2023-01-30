@@ -22,17 +22,41 @@ func TestNgram(t *testing.T) {
 	t.Run("string/unigram", func(t *testing.T) {
 		s := "村"
 		r := fastconv.AppendS2R(nil, s)
-		u := Unigram(r[0])
-		if u.String() != s {
+		n := ToUnigram(r[0])
+		if n.String() != s {
 			t.FailNow()
 		}
 	})
-	// t.Run("string/bigram", func(t *testing.T) {
-	// 	s := "村変"
-	// 	r := fastconv.AppendS2R(nil, s)
-	// 	u := Bigram(r[0])
-	// 	if u.String() != s {
-	// 		t.FailNow()
-	// 	}
-	// })
+	t.Run("string/bigram", func(t *testing.T) {
+		s := "村変"
+		r := fastconv.AppendS2R(nil, s)
+		n := ToBigram(r[0], r[1])
+		if n.String() != s {
+			t.FailNow()
+		}
+	})
+	t.Run("string/trigram", func(t *testing.T) {
+		s := "村変界"
+		r := fastconv.AppendS2R(nil, s)
+		n := ToTrigram(r[0], r[1], r[2])
+		if n.String() != s {
+			t.FailNow()
+		}
+	})
+	t.Run("string/quadrigram", func(t *testing.T) {
+		s := "村変界広"
+		r := fastconv.AppendS2R(nil, s)
+		n := ToQuadrigram(r[0], r[1], r[2], r[3])
+		if n.String() != s {
+			t.FailNow()
+		}
+	})
+	t.Run("string/fivegram", func(t *testing.T) {
+		s := "村変界広共"
+		r := fastconv.AppendS2R(nil, s)
+		n := ToFivegram(r[0], r[1], r[2], r[3], r[4])
+		if n.String() != s {
+			t.FailNow()
+		}
+	})
 }
