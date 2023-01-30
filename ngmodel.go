@@ -20,9 +20,8 @@ const (
 )
 
 type NGModel[T byteseq.Byteseq] struct {
+	Version        uint64
 	WordSeparators string
-
-	v uint64
 
 	o  sync.Once
 	ws string
@@ -149,20 +148,15 @@ func (m *NGModel[T]) Write(w io.Writer) (int, error) {
 	m.ul, m.bl, m.tl, m.ql, m.fl = uint64(len(m.u)), uint64(len(m.b)), uint64(len(m.t)), uint64(len(m.q)), uint64(len(m.f))
 
 	m.buf = m.buf[:0]
-	m.buf = w64(m.buf, m.v)
+	m.buf = w64(m.buf, m.Version)
 	m.buf = w64(m.buf, m.ul)
 	m.buf = w64(m.buf, m.bl)
 	m.buf = w64(m.buf, m.tl)
 	m.buf = w64(m.buf, m.ql)
 	m.buf = w64(m.buf, m.fl)
 
-	bufU := make([]Unigram, 0, m.ul)
-	for u := range m.u {
-		bufU = append(bufU, u)
-	}
-	sort.Slice(bufU, func(i, j int) bool {
-		return bufU[i] < bufU[j]
-	})
+	bufU := toUnisort(m.u)
+	sort.Sort(&bufU)
 	for i := 0; i < len(bufU); i++ {
 		m.buf = m.writeU(m.buf, bufU[i])
 		if len(m.buf) > ngmBufSize {
@@ -170,7 +164,42 @@ func (m *NGModel[T]) Write(w io.Writer) (int, error) {
 		}
 	}
 
-	_ = w
+	bufB := toBisort(m.b)
+	sort.Sort(&bufB)
+	for i := 0; i < len(bufB); i++ {
+		m.buf = m.writeB(m.buf, bufB[i])
+		if len(m.buf) > ngmBufSize {
+			_ = m.flushBuf(w)
+		}
+	}
+
+	bufT := toTrisort(m.t)
+	sort.Sort(&bufT)
+	for i := 0; i < len(bufT); i++ {
+		m.buf = m.writeT(m.buf, bufT[i])
+		if len(m.buf) > ngmBufSize {
+			_ = m.flushBuf(w)
+		}
+	}
+
+	bufQ := toQuadsort(m.q)
+	sort.Sort(&bufQ)
+	for i := 0; i < len(bufQ); i++ {
+		m.buf = m.writeQ(m.buf, bufQ[i])
+		if len(m.buf) > ngmBufSize {
+			_ = m.flushBuf(w)
+		}
+	}
+
+	bufF := toFivesort(m.f)
+	sort.Sort(&bufF)
+	for i := 0; i < len(bufF); i++ {
+		m.buf = m.writeF(m.buf, bufF[i])
+		if len(m.buf) > ngmBufSize {
+			_ = m.flushBuf(w)
+		}
+	}
+
 	return 0, nil
 }
 
