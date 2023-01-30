@@ -2,12 +2,11 @@ package nlp
 
 type unisort []Unigram
 
-func toUnisort(m map[Unigram]struct{}) unisort {
-	b := make(unisort, 0, len(m))
+func appendUnisort(dst unisort, m map[Unigram]struct{}) unisort {
 	for n := range m {
-		b = append(b, n)
+		dst = append(dst, n)
 	}
-	return b
+	return dst
 }
 
 func (b unisort) Len() int {
@@ -24,12 +23,11 @@ func (b *unisort) Swap(i, j int) {
 
 type bisort []Bigram
 
-func toBisort(m map[Bigram]struct{}) bisort {
-	b := make(bisort, 0, len(m))
+func appendBisort(dst bisort, m map[Bigram]struct{}) bisort {
 	for n := range m {
-		b = append(b, n)
+		dst = append(dst, n)
 	}
-	return b
+	return dst
 }
 
 func (b bisort) Len() int {
@@ -46,12 +44,11 @@ func (b *bisort) Swap(i, j int) {
 
 type trisort []Trigram
 
-func toTrisort(m map[Trigram]struct{}) trisort {
-	b := make(trisort, 0, len(m))
+func appendTrisort(dst trisort, m map[Trigram]struct{}) trisort {
 	for n := range m {
-		b = append(b, n)
+		dst = append(dst, n)
 	}
-	return b
+	return dst
 }
 
 func (b trisort) Len() int {
@@ -68,12 +65,11 @@ func (b *trisort) Swap(i, j int) {
 
 type quadsort []Quadrigram
 
-func toQuadsort(m map[Quadrigram]struct{}) quadsort {
-	b := make(quadsort, 0, len(m))
+func appendQuadsort(dst quadsort, m map[Quadrigram]struct{}) quadsort {
 	for n := range m {
-		b = append(b, n)
+		dst = append(dst, n)
 	}
-	return b
+	return dst
 }
 
 func (b quadsort) Len() int {
@@ -90,12 +86,11 @@ func (b *quadsort) Swap(i, j int) {
 
 type fivesort []Fivegram
 
-func toFivesort(m map[Fivegram]struct{}) fivesort {
-	b := make(fivesort, 0, len(m))
+func appendFivesort(dst fivesort, m map[Fivegram]struct{}) fivesort {
 	for n := range m {
-		b = append(b, n)
+		dst = append(dst, n)
 	}
-	return b
+	return dst
 }
 
 func (b fivesort) Len() int {

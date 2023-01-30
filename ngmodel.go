@@ -155,7 +155,7 @@ func (m *NGModel[T]) Write(w io.Writer) (n int, err error) {
 	m.buf = w64(m.buf, m.ql)
 	m.buf = w64(m.buf, m.fl)
 
-	bufU := toUnisort(m.u)
+	bufU := appendUnisort(nil, m.u)
 	sort.Sort(&bufU)
 	for i := 0; i < len(bufU); i++ {
 		m.buf = m.writeU(m.buf, bufU[i])
@@ -165,7 +165,7 @@ func (m *NGModel[T]) Write(w io.Writer) (n int, err error) {
 		}
 	}
 
-	bufB := toBisort(m.b)
+	bufB := appendBisort(nil, m.b)
 	sort.Sort(&bufB)
 	for i := 0; i < len(bufB); i++ {
 		m.buf = m.writeB(m.buf, bufB[i])
@@ -175,7 +175,7 @@ func (m *NGModel[T]) Write(w io.Writer) (n int, err error) {
 		}
 	}
 
-	bufT := toTrisort(m.t)
+	bufT := appendTrisort(nil, m.t)
 	sort.Sort(&bufT)
 	for i := 0; i < len(bufT); i++ {
 		m.buf = m.writeT(m.buf, bufT[i])
@@ -185,7 +185,7 @@ func (m *NGModel[T]) Write(w io.Writer) (n int, err error) {
 		}
 	}
 
-	bufQ := toQuadsort(m.q)
+	bufQ := appendQuadsort(nil, m.q)
 	sort.Sort(&bufQ)
 	for i := 0; i < len(bufQ); i++ {
 		m.buf = m.writeQ(m.buf, bufQ[i])
@@ -195,7 +195,7 @@ func (m *NGModel[T]) Write(w io.Writer) (n int, err error) {
 		}
 	}
 
-	bufF := toFivesort(m.f)
+	bufF := appendFivesort(nil, m.f)
 	sort.Sort(&bufF)
 	for i := 0; i < len(bufF); i++ {
 		m.buf = m.writeF(m.buf, bufF[i])
