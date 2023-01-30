@@ -2,6 +2,18 @@ package nlp
 
 type Unigram uint16
 
+type Bigram uint32
+
+type Trigram struct {
+	a, b, c Unigram
+}
+
+type Quadrigram uint64
+
+type Fivegram struct {
+	a, b, c, d, e Unigram
+}
+
 func ToUnigram(r rune) Unigram {
 	return Unigram(r)
 }
@@ -10,8 +22,6 @@ func (u Unigram) String() string {
 	r := [1]rune{rune(u)}
 	return string(r[:])
 }
-
-type Bigram uint32
 
 func ToBigram(a, b rune) (n Bigram) {
 	u0, u1 := Unigram(a), Unigram(b)
@@ -25,10 +35,6 @@ func (b Bigram) String() string {
 	return string(r[:])
 }
 
-type Trigram struct {
-	a, b, c Unigram
-}
-
 func ToTrigram(a, b, c rune) Trigram {
 	return Trigram{Unigram(a), Unigram(b), Unigram(c)}
 }
@@ -37,8 +43,6 @@ func (t Trigram) String() string {
 	r := [3]rune{rune(t.a), rune(t.b), rune(t.c)}
 	return string(r[:])
 }
-
-type Quadrigram uint64
 
 func ToQuadrigram(a, b, c, d rune) (n Quadrigram) {
 	u0, u1, u2, u3 := Unigram(a), Unigram(b), Unigram(c), Unigram(d)
@@ -52,10 +56,6 @@ func ToQuadrigram(a, b, c, d rune) (n Quadrigram) {
 func (q Quadrigram) String() string {
 	r := [4]rune{rune(uint16(q >> 48)), rune(uint16(q >> 32)), rune(uint16(q >> 16)), rune(uint16(q))}
 	return string(r[:])
-}
-
-type Fivegram struct {
-	a, b, c, d, e Unigram
 }
 
 func ToFivegram(a, b, c, d, e rune) Fivegram {
