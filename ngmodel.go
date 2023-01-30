@@ -136,7 +136,7 @@ func (m *NGModel[T]) LoadFile(path string) error {
 	return nil
 }
 
-func (m *NGModel[T]) Write(w io.Writer) (int, error) {
+func (m *NGModel[T]) Write(w io.Writer) (n int, err error) {
 	m.o.Do(m.init)
 	w64 := func(dst []byte, v uint64) []byte {
 		off := len(dst)
@@ -160,7 +160,8 @@ func (m *NGModel[T]) Write(w io.Writer) (int, error) {
 	for i := 0; i < len(bufU); i++ {
 		m.buf = m.writeU(m.buf, bufU[i])
 		if len(m.buf) > ngmBufSize {
-			_ = m.flushBuf(w)
+			n1, _ := m.flushBuf(w)
+			n += n1
 		}
 	}
 
@@ -169,7 +170,8 @@ func (m *NGModel[T]) Write(w io.Writer) (int, error) {
 	for i := 0; i < len(bufB); i++ {
 		m.buf = m.writeB(m.buf, bufB[i])
 		if len(m.buf) > ngmBufSize {
-			_ = m.flushBuf(w)
+			n1, _ := m.flushBuf(w)
+			n += n1
 		}
 	}
 
@@ -178,7 +180,8 @@ func (m *NGModel[T]) Write(w io.Writer) (int, error) {
 	for i := 0; i < len(bufT); i++ {
 		m.buf = m.writeT(m.buf, bufT[i])
 		if len(m.buf) > ngmBufSize {
-			_ = m.flushBuf(w)
+			n1, _ := m.flushBuf(w)
+			n += n1
 		}
 	}
 
@@ -187,7 +190,8 @@ func (m *NGModel[T]) Write(w io.Writer) (int, error) {
 	for i := 0; i < len(bufQ); i++ {
 		m.buf = m.writeQ(m.buf, bufQ[i])
 		if len(m.buf) > ngmBufSize {
-			_ = m.flushBuf(w)
+			n1, _ := m.flushBuf(w)
+			n += n1
 		}
 	}
 
@@ -196,11 +200,15 @@ func (m *NGModel[T]) Write(w io.Writer) (int, error) {
 	for i := 0; i < len(bufF); i++ {
 		m.buf = m.writeF(m.buf, bufF[i])
 		if len(m.buf) > ngmBufSize {
-			_ = m.flushBuf(w)
+			n1, _ := m.flushBuf(w)
+			n += n1
 		}
 	}
 
-	return 0, nil
+	n1, _ := m.flushBuf(w)
+	n += n1
+
+	return
 }
 
 func (m *NGModel[T]) Flush() error {
@@ -248,21 +256,24 @@ func (m *NGModel[T]) writeF(dst []byte, ng Fivegram) []byte {
 	return dst
 }
 
-func (m *NGModel[T]) flushBuf(w io.Writer) (err error) {
+func (m *NGModel[T]) flushBuf(w io.Writer) (n int, err error) {
 	p := m.buf
 	if len(p) == 0 {
 		return
 	}
+	var n1 int
 	for len(p) > ngmBlockSize {
-		if _, err = w.Write(p[:ngmBlockSize]); err != nil {
+		if n1, err = w.Write(p[:ngmBlockSize]); err != nil {
 			return
 		}
+		n += n1
 		p = p[ngmBlockSize:]
 	}
 	if len(p) > 0 {
-		if _, err = w.Write(p[:ngmBlockSize]); err != nil {
+		if n1, err = w.Write(p); err != nil {
 			return
 		}
+		n += n1
 	}
 	m.buf = m.buf[:0]
 	return
