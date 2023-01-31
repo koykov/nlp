@@ -155,57 +155,41 @@ func (m *NGModel[T]) Write(w io.Writer) (n int, err error) {
 	m.buf = w64(m.buf, m.ql)
 	m.buf = w64(m.buf, m.fl)
 
-	bufU := appendUnisort(nil, m.u)
-	sort.Sort(&bufU)
-	for i := 0; i < len(bufU); i++ {
-		m.buf = m.writeU(m.buf, bufU[i])
-		if len(m.buf) > ngmBufSize {
-			n1, _ := m.flushBuf(w)
-			n += n1
-		}
+	writeNG := func(w io.Writer, buf ngsort) (n int, err error) {
+		sort.Sort(buf)
+		var n1 int
+		buf.Each(func(i int, ng appenderTo) {
+			m.buf = ng.AppendTo(m.buf)
+			if len(m.buf) > ngmBufSize {
+				n1, err = m.flushBuf(w)
+				n += n1
+			}
+		})
+		return
 	}
+
+	var n1 int
+	bufU := appendUnisort(nil, m.u)
+	n1, err = writeNG(w, &bufU)
+	n += n1
 
 	bufB := appendBisort(nil, m.b)
-	sort.Sort(&bufB)
-	for i := 0; i < len(bufB); i++ {
-		m.buf = m.writeB(m.buf, bufB[i])
-		if len(m.buf) > ngmBufSize {
-			n1, _ := m.flushBuf(w)
-			n += n1
-		}
-	}
+	n1, err = writeNG(w, &bufB)
+	n += n1
 
 	bufT := appendTrisort(nil, m.t)
-	sort.Sort(&bufT)
-	for i := 0; i < len(bufT); i++ {
-		m.buf = m.writeT(m.buf, bufT[i])
-		if len(m.buf) > ngmBufSize {
-			n1, _ := m.flushBuf(w)
-			n += n1
-		}
-	}
+	n1, err = writeNG(w, &bufT)
+	n += n1
 
 	bufQ := appendQuadsort(nil, m.q)
-	sort.Sort(&bufQ)
-	for i := 0; i < len(bufQ); i++ {
-		m.buf = m.writeQ(m.buf, bufQ[i])
-		if len(m.buf) > ngmBufSize {
-			n1, _ := m.flushBuf(w)
-			n += n1
-		}
-	}
+	n1, err = writeNG(w, &bufQ)
+	n += n1
 
 	bufF := appendFivesort(nil, m.f)
-	sort.Sort(&bufF)
-	for i := 0; i < len(bufF); i++ {
-		m.buf = m.writeF(m.buf, bufF[i])
-		if len(m.buf) > ngmBufSize {
-			n1, _ := m.flushBuf(w)
-			n += n1
-		}
-	}
+	n1, err = writeNG(w, &bufF)
+	n += n1
 
-	n1, _ := m.flushBuf(w)
+	n1, _ = m.flushBuf(w)
 	n += n1
 
 	return
@@ -213,47 +197,6 @@ func (m *NGModel[T]) Write(w io.Writer) (n int, err error) {
 
 func (m *NGModel[T]) Flush() error {
 	return nil
-}
-
-func (m *NGModel[T]) writeU(dst []byte, ng Unigram) []byte {
-	off := len(dst)
-	dst = bytealg.GrowDelta(dst, 2)
-	binary.LittleEndian.PutUint16(dst[off:], uint16(ng))
-	return dst
-}
-
-func (m *NGModel[T]) writeB(dst []byte, ng Bigram) []byte {
-	off := len(dst)
-	dst = bytealg.GrowDelta(dst, 4)
-	binary.LittleEndian.PutUint32(dst[off:], uint32(ng))
-	return dst
-}
-
-func (m *NGModel[T]) writeT(dst []byte, ng Trigram) []byte {
-	off := len(dst)
-	dst = bytealg.GrowDelta(dst, 6)
-	binary.LittleEndian.PutUint16(dst[off:], uint16(ng.a))
-	binary.LittleEndian.PutUint16(dst[off+2:], uint16(ng.b))
-	binary.LittleEndian.PutUint16(dst[off+4:], uint16(ng.c))
-	return dst
-}
-
-func (m *NGModel[T]) writeQ(dst []byte, ng Quadrigram) []byte {
-	off := len(dst)
-	dst = bytealg.GrowDelta(dst, 8)
-	binary.LittleEndian.PutUint64(dst[off:], uint64(ng))
-	return dst
-}
-
-func (m *NGModel[T]) writeF(dst []byte, ng Fivegram) []byte {
-	off := len(dst)
-	dst = bytealg.GrowDelta(dst, 10)
-	binary.LittleEndian.PutUint16(dst[off:], uint16(ng.a))
-	binary.LittleEndian.PutUint16(dst[off+2:], uint16(ng.b))
-	binary.LittleEndian.PutUint16(dst[off+4:], uint16(ng.c))
-	binary.LittleEndian.PutUint16(dst[off+6:], uint16(ng.d))
-	binary.LittleEndian.PutUint16(dst[off+8:], uint16(ng.e))
-	return dst
 }
 
 func (m *NGModel[T]) flushBuf(w io.Writer) (n int, err error) {
