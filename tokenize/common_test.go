@@ -1,6 +1,7 @@
-package tokenizer
+package tokenize
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/koykov/byteseq"
@@ -26,8 +27,9 @@ var stagesCommon = []stage[string]{
 }
 
 func testInstance[T byteseq.Byteseq](t *testing.T, tkn nlp.Tokenizer[T], stages []stage[T]) {
+	name := fmt.Sprintf("%T", tkn)[9:]
 	for _, stg := range stages {
-		t.Run(stg.key, func(t *testing.T) {
+		t.Run(fmt.Sprintf("%s/%s", name, stg.key), func(t *testing.T) {
 			var buf nlp.Tokens
 			buf = tkn.AppendTokenize(buf[:0], stg.src)
 			if !assertTokens(buf, stg.exp) {
@@ -38,8 +40,9 @@ func testInstance[T byteseq.Byteseq](t *testing.T, tkn nlp.Tokenizer[T], stages 
 }
 
 func benchInstance[T byteseq.Byteseq](b *testing.B, tkn nlp.Tokenizer[T], stages []stage[T]) {
+	name := fmt.Sprintf("%T", tkn)[9:]
 	for _, stg := range stages {
-		b.Run(stg.key, func(b *testing.B) {
+		b.Run(fmt.Sprintf("%s/%s", name, stg.key), func(b *testing.B) {
 			b.ReportAllocs()
 			var buf nlp.Tokens
 			for i := 0; i < b.N; i++ {
