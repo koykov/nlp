@@ -1,0 +1,3 @@
+*.ngm
+*.tmp
+!example.ngm
