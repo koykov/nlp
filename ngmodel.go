@@ -136,6 +136,49 @@ func (m *NGModel[T]) LoadFile(path string) error {
 	return nil
 }
 
+func (m *NGModel[T]) Read(r io.Reader) (n int, err error) {
+	var n1 int
+	m.buf = bytealg.GrowDelta(m.buf[:0], 48)
+	if n1, err = io.ReadAtLeast(r, m.buf, 48); err != nil {
+		return
+	}
+	n += n1
+	header := m.buf[:48]
+	ver := binary.LittleEndian.Uint64(header[:8])
+	if ver != m.Version {
+		err = ErrBadVersion
+		return
+	}
+	m.ul = binary.LittleEndian.Uint64(header[8:16])
+	m.bl = binary.LittleEndian.Uint64(header[16:24])
+	m.tl = binary.LittleEndian.Uint64(header[24:32])
+	m.ql = binary.LittleEndian.Uint64(header[32:40])
+	m.fl = binary.LittleEndian.Uint64(header[40:48])
+
+	if n1, err = m.readU(r); err != nil {
+		return
+	}
+	n += n1
+	if n1, err = m.readB(r); err != nil {
+		return
+	}
+	n += n1
+	if n1, err = m.readT(r); err != nil {
+		return
+	}
+	n += n1
+	if n1, err = m.readQ(r); err != nil {
+		return
+	}
+	n += n1
+	if n1, err = m.readF(r); err != nil {
+		return
+	}
+	n += n1
+
+	return
+}
+
 func (m *NGModel[T]) Write(w io.Writer) (n int, err error) {
 	m.o.Do(m.init)
 	w64 := func(dst []byte, v uint64) []byte {
@@ -195,10 +238,6 @@ func (m *NGModel[T]) Write(w io.Writer) (n int, err error) {
 	return
 }
 
-func (m *NGModel[T]) Flush() error {
-	return nil
-}
-
 func (m *NGModel[T]) flushBuf(w io.Writer) (n int, err error) {
 	p := m.buf
 	if len(p) == 0 {
@@ -233,4 +272,179 @@ func (m *NGModel[T]) init() {
 	m.t = make(map[Trigram]struct{}, m.tl)
 	m.q = make(map[Quadrigram]struct{}, m.ql)
 	m.f = make(map[Fivegram]struct{}, m.fl)
+}
+
+func (m *NGModel[T]) readU(r io.Reader) (n int, err error) {
+	const c = 2
+	var (
+		off uint64
+		n1  int
+	)
+	if m.ul*c > ngmBlockSize {
+		for i := 0; i < int(m.ul/ngmBlockSize); i++ {
+			m.buf = bytealg.GrowDelta(m.buf[:0], ngmBlockSize)
+			if n1, err = io.ReadAtLeast(r, m.buf, ngmBlockSize); err != nil {
+				return
+			}
+			n += n1
+			off += ngmBlockSize
+			for j := 0; j < len(m.buf); j += c {
+				raw := binary.LittleEndian.Uint16(m.buf[j : j+1])
+				m.AddUnigram(NewUnigram(rune(raw)))
+			}
+		}
+	}
+	m.buf = bytealg.GrowDelta(m.buf[:0], int(m.ul*c-off))
+	if n1, err = io.ReadAtLeast(r, m.buf, int(m.ul*c-off)); err != nil {
+		return
+	}
+	n += n1
+	for j := 0; j < len(m.buf); j += c {
+		raw := binary.LittleEndian.Uint16(m.buf[j : j+c])
+		m.AddUnigram(NewUnigram(rune(raw)))
+	}
+	return
+}
+
+func (m *NGModel[T]) readB(r io.Reader) (n int, err error) {
+	const c = 4
+	var (
+		off uint64
+		n1  int
+	)
+	if m.bl*c > ngmBlockSize {
+		for i := 0; i < int(m.ul/ngmBlockSize); i++ {
+			m.buf = bytealg.GrowDelta(m.buf[:0], ngmBlockSize)
+			if n1, err = io.ReadAtLeast(r, m.buf, ngmBlockSize); err != nil {
+				return
+			}
+			n += n1
+			off += ngmBlockSize
+			for j := 0; j < len(m.buf); j += c {
+				raw := binary.LittleEndian.Uint32(m.buf[j : j+c])
+				m.AddBigram(Bigram(raw))
+			}
+		}
+	}
+	m.buf = bytealg.GrowDelta(m.buf[:0], int(m.bl*c-off))
+	if n1, err = io.ReadAtLeast(r, m.buf, int(m.bl*c-off)); err != nil {
+		return
+	}
+	n += n1
+	for j := 0; j < len(m.buf); j += c {
+		raw := binary.LittleEndian.Uint32(m.buf[j : j+c])
+		m.AddBigram(Bigram(raw))
+	}
+	return
+}
+
+func (m *NGModel[T]) readT(r io.Reader) (n int, err error) {
+	const c = 6
+	var (
+		off uint64
+		n1  int
+	)
+	if m.tl*c > ngmBlockSize {
+		size := uint64(ngmBlockSize - ngmBufSize%c)
+		for i := 0; i < int(m.ul/size); i++ {
+			m.buf = bytealg.GrowDelta(m.buf[:0], int(size))
+			if n1, err = io.ReadAtLeast(r, m.buf, int(size)); err != nil {
+				return
+			}
+			n += n1
+			off += size
+			for j := 0; j < len(m.buf); j += c {
+				raw0 := binary.LittleEndian.Uint16(m.buf[j : j+2])
+				raw1 := binary.LittleEndian.Uint16(m.buf[j+2 : j+4])
+				raw2 := binary.LittleEndian.Uint16(m.buf[j+4 : j+6])
+				m.AddTrigram(NewTrigram(rune(raw0), rune(raw1), rune(raw2)))
+			}
+		}
+	}
+	m.buf = bytealg.GrowDelta(m.buf[:0], int(m.tl*c-off))
+	if n1, err = io.ReadAtLeast(r, m.buf, int(m.tl*c-off)); err != nil {
+		return
+	}
+	n += n1
+	for j := 0; j < len(m.buf); j += c {
+		raw0 := binary.LittleEndian.Uint16(m.buf[j : j+2])
+		raw1 := binary.LittleEndian.Uint16(m.buf[j+2 : j+4])
+		raw2 := binary.LittleEndian.Uint16(m.buf[j+4 : j+6])
+		m.AddTrigram(NewTrigram(rune(raw0), rune(raw1), rune(raw2)))
+	}
+	return
+}
+
+func (m *NGModel[T]) readQ(r io.Reader) (n int, err error) {
+	const c = 8
+	var (
+		off uint64
+		n1  int
+	)
+	if m.tl*c > ngmBlockSize {
+		size := uint64(ngmBlockSize - ngmBufSize%c)
+		for i := 0; i < int(m.ul/size); i++ {
+			m.buf = bytealg.GrowDelta(m.buf[:0], int(size))
+			if n1, err = io.ReadAtLeast(r, m.buf, int(size)); err != nil {
+				return
+			}
+			n += n1
+			off += size
+			for j := 0; j < len(m.buf); j += c {
+				raw := binary.LittleEndian.Uint64(m.buf[j : j+c])
+				m.AddQuadrigram(Quadrigram(raw))
+			}
+		}
+	}
+	m.buf = bytealg.GrowDelta(m.buf[:0], int(m.ql*c-off))
+	if n1, err = io.ReadAtLeast(r, m.buf, int(m.ql*c-off)); err != nil {
+		return
+	}
+	n += n1
+	for j := 0; j < len(m.buf); j += c {
+		raw := binary.LittleEndian.Uint64(m.buf[j : j+c])
+		m.AddQuadrigram(Quadrigram(raw))
+	}
+	return
+}
+
+func (m *NGModel[T]) readF(r io.Reader) (n int, err error) {
+	const c = 10
+	var (
+		off uint64
+		n1  int
+	)
+	if m.tl*c > ngmBlockSize {
+		size := uint64(ngmBlockSize - ngmBufSize%c)
+		for i := 0; i < int(m.ul/size); i++ {
+			m.buf = bytealg.GrowDelta(m.buf[:0], int(size))
+			if n1, err = io.ReadAtLeast(r, m.buf, int(size)); err != nil {
+				return
+			}
+			n += n1
+			off += size
+			for j := 0; j < len(m.buf); j += c {
+				raw0 := binary.LittleEndian.Uint16(m.buf[j : j+2])
+				raw1 := binary.LittleEndian.Uint16(m.buf[j+2 : j+4])
+				raw2 := binary.LittleEndian.Uint16(m.buf[j+4 : j+6])
+				raw3 := binary.LittleEndian.Uint16(m.buf[j+6 : j+8])
+				raw4 := binary.LittleEndian.Uint16(m.buf[j+8 : j+10])
+				m.AddFivegram(NewFivegram(rune(raw0), rune(raw1), rune(raw2), rune(raw3), rune(raw4)))
+			}
+		}
+	}
+	m.buf = bytealg.GrowDelta(m.buf[:0], int(m.fl*c-off))
+	if n1, err = io.ReadAtLeast(r, m.buf, int(m.fl*c-off)); err != nil {
+		return
+	}
+	n += n1
+	for j := 0; j < len(m.buf); j += c {
+		raw0 := binary.LittleEndian.Uint16(m.buf[j : j+2])
+		raw1 := binary.LittleEndian.Uint16(m.buf[j+2 : j+4])
+		raw2 := binary.LittleEndian.Uint16(m.buf[j+4 : j+6])
+		raw3 := binary.LittleEndian.Uint16(m.buf[j+6 : j+8])
+		raw4 := binary.LittleEndian.Uint16(m.buf[j+8 : j+10])
+		m.AddFivegram(NewFivegram(rune(raw0), rune(raw1), rune(raw2), rune(raw3), rune(raw4)))
+	}
+	return
 }
