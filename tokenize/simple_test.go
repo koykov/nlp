@@ -2,6 +2,8 @@ package tokenize
 
 import (
 	"testing"
+
+	"github.com/koykov/nlp"
 )
 
 var (
@@ -36,27 +38,27 @@ var (
 )
 
 func TestSimple(t *testing.T) {
-	testInstance[string](t, SpaceTokenizer[string]{}, stagesCommon)
-	testInstance[string](t, SpaceTokenizer[string]{}, stagesSpace)
+	testInstance[string](t, NewSpaceTokenizer[string](), stagesCommon)
+	testInstance[string](t, NewSpaceTokenizer[string](), stagesSpace)
 
-	testInstance[string](t, TabTokenizer[string]{}, stagesCommon)
-	testInstance[string](t, TabTokenizer[string]{}, stagesTab)
+	testInstance[string](t, NewTabTokenizer[string](), stagesCommon)
+	testInstance[string](t, NewTabTokenizer[string](), stagesTab)
 
-	testInstance[string](t, CharTokenizer[string]{}, stagesChar)
+	testInstance[string](t, NewCharTokenizer[string](), stagesChar)
 
-	testInstance[string](t, LineTokenizer[string]{}, stagesCommon)
-	testInstance[string](t, LineTokenizer[string]{}, stagesLine)
+	testInstance[string](t, NewLineTokenizer[string](nlp.TokenizerBlankLinesDiscard), stagesCommon)
+	testInstance[string](t, NewLineTokenizer[string](nlp.TokenizerBlankLinesDiscard), stagesLine)
 }
 
 func BenchmarkSimple(b *testing.B) {
-	benchInstance[string](b, SpaceTokenizer[string]{}, stagesCommon)
-	benchInstance[string](b, SpaceTokenizer[string]{}, stagesSpace)
+	benchInstance[string](b, NewSpaceTokenizer[string](), stagesCommon)
+	benchInstance[string](b, NewSpaceTokenizer[string](), stagesSpace)
 
-	benchInstance[string](b, TabTokenizer[string]{}, stagesCommon)
-	benchInstance[string](b, TabTokenizer[string]{}, stagesTab)
+	benchInstance[string](b, NewTabTokenizer[string](), stagesCommon)
+	benchInstance[string](b, NewTabTokenizer[string](), stagesTab)
 
-	benchInstance[string](b, CharTokenizer[string]{}, stagesChar)
+	benchInstance[string](b, NewCharTokenizer[string](), stagesChar)
 
-	benchInstance[string](b, LineTokenizer[string]{}, stagesCommon)
-	benchInstance[string](b, LineTokenizer[string]{}, stagesLine)
+	benchInstance[string](b, NewLineTokenizer[string](nlp.TokenizerBlankLinesDiscard), stagesCommon)
+	benchInstance[string](b, NewLineTokenizer[string](nlp.TokenizerBlankLinesDiscard), stagesLine)
 }
