@@ -7,6 +7,11 @@ type Cleaner[T byteseq.Byteseq] interface {
 	AppendClean(dst []rune, x T) []rune
 }
 
+type Modifier[T byteseq.Byteseq] interface {
+	Modify(x T) T
+	AppendModify(dst []rune, x T) []rune
+}
+
 type Tokenizer[T byteseq.Byteseq] interface {
 	Tokenize(x T) Tokens
 	AppendTokenize(dst Tokens, x T) Tokens
