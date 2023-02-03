@@ -21,6 +21,7 @@ var (
 	mods = map[string]module{
 		"languages": languagesModule{},
 		"scripts":   scriptsModule{},
+		"ngmodels":  ngmodelsModule{},
 	}
 )
 
