@@ -5,6 +5,7 @@
     "iso639_3": "abq",
     "weight": 0,
     "scripts": [
+      "Cyrillic",
       "Latin"
     ]
   },
@@ -24,7 +25,9 @@
     "iso639_3": "abk",
     "weight": 0,
     "scripts": [
-      "Latin"
+      "Arabic",
+      "Latin",
+      "Georgian"
     ]
   },
   {
@@ -33,7 +36,9 @@
     "iso639_3": "ady",
     "weight": 0,
     "scripts": [
-      "Latin"
+      "Cyrillic",
+      "Latin",
+      "Arabic"
     ]
   },
   {
@@ -53,6 +58,7 @@
     "iso639_3": "afr",
     "weight": 0,
     "scripts": [
+      "Arabic",
       "Latin"
     ]
   },
@@ -62,6 +68,7 @@
     "iso639_3": "agx",
     "weight": 0,
     "scripts": [
+      "Cyrillic",
       "Latin"
     ]
   },
@@ -80,6 +87,7 @@
     "iso639_3": "ain",
     "weight": 0,
     "scripts": [
+      "Katakana",
       "Latin"
     ]
   },
@@ -120,15 +128,6 @@
     "weight": 0,
     "scripts": [
       "Arabic"
-    ]
-  },
-  {
-    "name": "Arin",
-    "native": "Arin",
-    "iso639_3": "xrn",
-    "weight": 0,
-    "scripts": [
-      "Latin"
     ]
   },
   {
@@ -190,16 +189,6 @@
     "scripts": [
       "Arabic",
       "Syriac"
-    ]
-  },
-  {
-    "name": "Armenian",
-    "native": "Հայերեն",
-    "iso639_1": "hy",
-    "iso639_3": "hye",
-    "weight": 0,
-    "scripts": [
-      "Armenian"
     ]
   },
   {
