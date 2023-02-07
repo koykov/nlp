@@ -92,16 +92,6 @@
     ]
   },
   {
-    "name": "Albanian",
-    "native": "Shqipja",
-    "iso639_1": "sq",
-    "iso639_3": "sqi",
-    "weight": 0,
-    "scripts": [
-      "Latin"
-    ]
-  },
-  {
     "name": "Alsatian",
     "native": "Elsässisch",
     "iso639_3": "gsw",
@@ -122,12 +112,13 @@
   },
   {
     "name": "Arabic",
-    "native": "اَلْعَرَبِيَّةُ",
+    "native": "العربية",
     "iso639_1": "ar",
     "iso639_3": "ara",
     "weight": 0,
     "scripts": [
-      "Arabic"
+      "Arabic",
+      "Syriac"
     ]
   },
   {
@@ -178,17 +169,6 @@
     "weight": 0,
     "scripts": [
       "Ethiopic"
-    ]
-  },
-  {
-    "name": "Arabic",
-    "native": "العربية",
-    "iso639_1": "ar",
-    "iso639_3": "ara",
-    "weight": 0,
-    "scripts": [
-      "Arabic",
-      "Syriac"
     ]
   },
   {
@@ -339,7 +319,8 @@
     "iso639_3": "mya",
     "weight": 0,
     "scripts": [
-      "Myanmar"
+      "Myanmar",
+      "Latin"
     ]
   },
   {
@@ -370,15 +351,6 @@
   },
   {
     "name": "Budukh",
-    "native": "budad mez",
-    "iso639_3": "bdk",
-    "weight": 0,
-    "scripts": [
-      "Latin"
-    ]
-  },
-  {
-    "name": "Burmese",
     "native": "budad mez",
     "iso639_3": "bdk",
     "weight": 0,
