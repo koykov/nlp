@@ -204,10 +204,78 @@
     ]
   },
   {
+    "name": "Balkar",
+    "native": "Karachay-Balkar",
+    "iso639_3": "krc",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Balochi",
+    "native": "بلۏچی",
+    "iso639_3": "bal",
+    "weight": 0,
+    "scripts": [
+      "Balochi"
+    ]
+  },
+  {
+    "name": "Bambara",
+    "native": "Bámánánkán",
+    "iso639_1": "bm",
+    "iso639_3": "bam",
+    "weight": 0,
+    "scripts": [
+      "Arabic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Bashkir",
+    "native": "Bashkir",
+    "iso639_1": "ba",
+    "iso639_3": "bak",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
     "name": "Basque",
     "native": "euskara, euskera",
     "iso639_1": "eu",
     "iso639_3": "eus",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Blackfoot",
+    "native": "Siksiká",
+    "iso639_3": "bla",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Bolivian Quechua",
+    "native": "Bolivian Quechua",
+    "iso639_3": "quh",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Bonan",
+    "native": "Bonan",
+    "iso639_3": "peh",
     "weight": 0,
     "scripts": [
       "Latin"
@@ -272,6 +340,60 @@
     "weight": 0,
     "scripts": [
       "Myanmar"
+    ]
+  },
+  {
+    "name": "Brazilian Portuguese",
+    "native": "português brasileiro",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Brazilian Veneto",
+    "native": "taliàn",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Breton",
+    "native": "brezhoneg",
+    "iso639_1": "br",
+    "iso639_3": "bre",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Budukh",
+    "native": "budad mez",
+    "iso639_3": "bdk",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Burmese",
+    "native": "budad mez",
+    "iso639_3": "bdk",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Buryat",
+    "native": "buryaad xelen",
+    "iso639_3": "bua",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
     ]
   },
   {
