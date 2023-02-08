@@ -369,10 +369,55 @@
     ]
   },
   {
+    "name": "Cantonese",
+    "native": "català",
+    "iso639_3": "yue",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
     "name": "Catalan",
     "native": "català",
     "iso639_1": "ca",
     "iso639_3": "cat",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Cebuano",
+    "native": "Sebwano",
+    "iso639_3": "ceb",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Ch'ti",
+    "native": "Ch'ti",
+    "iso639_3": "pcd",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Cherokee",
+    "native": "Tsalagi Gawonihisdi",
+    "iso639_3": "chr",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Cheyenne",
+    "native": "Tsėhésenėstsestȯtse",
+    "iso639_3": "chy",
     "weight": 0,
     "scripts": [
       "Latin"
@@ -389,6 +434,17 @@
     ]
   },
   {
+    "name": "Chichewa",
+    "native": "Nyanja",
+    "iso639_1": "ny",
+    "iso639_3": "nya",
+    "weight": 0,
+    "scripts": [
+      "Latin",
+      "Mwangwego"
+    ]
+  },
+  {
     "name": "Chinese",
     "native": "中文 (Zhōngwén), 汉语, 漢語",
     "iso639_1": "zh",
@@ -397,8 +453,56 @@
     "scripts": [
       "Bopomofo",
       "Phags Pa",
-      "Han",
       "Han"
+    ]
+  },
+  {
+    "name": "Choctaw",
+    "native": "Chata or Chata Anumpa",
+    "iso639_3": "cho",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Chulym",
+    "native": "Chulym",
+    "iso639_3": "clw",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Chuukese",
+    "native": "Chuuk",
+    "iso639_3": "chk",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Chuvash",
+    "native": "Çăvaşla",
+    "iso639_1": "cv",
+    "iso639_3": "chv",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Cornish",
+    "native": "Kernewek",
+    "iso639_1": "kw",
+    "iso639_3": "cor",
+    "weight": 0,
+    "scripts": [
+      "Latin"
     ]
   },
   {
