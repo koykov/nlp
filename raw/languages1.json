@@ -526,6 +526,15 @@
     ]
   },
   {
+    "name": "Dalmatian",
+    "native": "dalmato",
+    "iso639_3": "dlm",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
     "name": "Danish",
     "native": "dansk",
     "iso639_1": "da",
@@ -536,10 +545,47 @@
     ]
   },
   {
+    "name": "Daur",
+    "native": "Dagur",
+    "iso639_3": "dta",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Dolgan",
+    "native": "Dulğan",
+    "iso639_3": "dlg",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Dongxiang",
+    "native": "Santa",
+    "iso639_3": "sce",
+    "weight": 0,
+    "scripts": [
+      "Arabic",
+      "Latin"
+    ]
+  },
+  {
     "name": "Dutch",
     "native": "Nederlands, Vlaams",
     "iso639_1": "nl",
     "iso639_3": "nld",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Enets",
+    "native": "Onei baza",
+    "iso639_3": "enf",
     "weight": 0,
     "scripts": [
       "Latin"
@@ -578,6 +624,26 @@
     ]
   },
   {
+    "name": "Evenki",
+    "native": "Evedȳ turēn",
+    "iso639_3": "evn",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Faroese",
+    "native": "føroyskt mál",
+    "iso639_1": "fo",
+    "iso639_3": "fao",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
     "name": "Finnish",
     "native": "suomi, suomen kieli",
     "iso639_1": "fi",
@@ -595,6 +661,34 @@
     "weight": 0,
     "scripts": [
       "Duployan",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Fulfulde",
+    "native": "Fulfulde",
+    "iso639_1": "ff",
+    "iso639_3": "ful",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Gagauz",
+    "native": "Gagauz dili",
+    "iso639_3": "gag",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Gbari",
+    "native": "Gbari",
+    "iso639_3": "gbr",
+    "weight": 0,
+    "scripts": [
       "Latin"
     ]
   },
@@ -620,6 +714,25 @@
     ]
   },
   {
+    "name": "Gothic",
+    "native": "Gothic",
+    "iso639_3": "got",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Greenlandic",
+    "native": "kalaallisut",
+    "iso639_1": "kl",
+    "iso639_3": "kal",
+    "weight": 0,
+    "scripts": [
+      "Greek"
+    ]
+  },
+  {
     "name": "Greek",
     "native": "ελληνικά",
     "iso639_1": "el",
@@ -636,7 +749,26 @@
     "iso639_3": "guj",
     "weight": 0,
     "scripts": [
+      "Gujarati",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Gwich'in",
+    "native": "Dinjii Zhuʼ Ginjik",
+    "iso639_3": "gwi",
+    "weight": 0,
+    "scripts": [
       "Gujarati"
+    ]
+  },
+  {
+    "name": "Haida",
+    "native": "X̱aat Kíl",
+    "iso639_3": "hai",
+    "weight": 0,
+    "scripts": [
+      "Latin"
     ]
   },
   {
@@ -644,6 +776,24 @@
     "native": "Kreyòl ayisyen",
     "iso639_1": "ht",
     "iso639_3": "hat",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Han",
+    "native": "Häł gołanهَوُسَ",
+    "iso639_3": "haa",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Hausa",
+    "native": "ʻŌlelo Hawaiʻi",
+    "iso639_3": "haw",
     "weight": 0,
     "scripts": [
       "Latin"
@@ -667,7 +817,8 @@
     "iso639_3": "heb",
     "weight": 0,
     "scripts": [
-      "Hebrew"
+      "Hebrew",
+      "Latin"
     ]
   },
   {
@@ -680,6 +831,24 @@
       "Devanagari",
       "Latin",
       "Mahajani"
+    ]
+  },
+  {
+    "name": "Hmar",
+    "native": "Manmasi",
+    "iso639_3": "hmr",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Hmong",
+    "native": "Mong",
+    "iso639_3": "hmn",
+    "weight": 0,
+    "scripts": [
+      "Latin"
     ]
   },
   {
@@ -700,6 +869,16 @@
     "weight": 0,
     "scripts": [
       "Arabic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Inuit",
+    "native": "Inuktitut",
+    "iso639_1": "iu",
+    "iso639_3": "iku",
+    "weight": 0,
+    "scripts": [
       "Latin"
     ]
   },
@@ -761,6 +940,7 @@
     "iso639_3": "jpn",
     "weight": 0,
     "scripts": [
+      "Latin",
       "Hiragana",
       "Katakana"
     ]
@@ -774,6 +954,43 @@
     "scripts": [
       "Javanese",
       "Latin"
+    ]
+  },
+  {
+    "name": "Jerriais",
+    "native": "Jèrriais",
+    "iso639_3": "nrf",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Jingpho",
+    "native": "Jinghpaw",
+    "iso639_3": "kac",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Jurchen",
+    "native": "Jurchen",
+    "iso639_3": "juc",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kannada",
+    "native": "ಕನ್ನಡ",
+    "iso639_1": "kn",
+    "iso639_3": "kan",
+    "weight": 0,
+    "scripts": [
+      "Kannada"
     ]
   },
   {
