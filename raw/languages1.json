@@ -984,34 +984,147 @@
     ]
   },
   {
-    "name": "Kannada",
-    "native": "ಕನ್ನಡ",
-    "iso639_1": "kn",
-    "iso639_3": "kan",
+    "name": "Kabardian",
+    "native": "Kabardino-Cherkess",
+    "iso639_3": "kbd",
     "weight": 0,
     "scripts": [
-      "Kannada"
+      "Arabic",
+      "Cyrillic",
+      "Latin"
     ]
   },
   {
-    "name": "Kannada",
-    "native": "ಕನ್ನಡ",
-    "iso639_1": "kn",
-    "iso639_3": "kan",
+    "name": "Kabyle",
+    "native": "Kabylian",
+    "iso639_3": "kab",
     "weight": 0,
     "scripts": [
-      "Kannada"
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kalmyk",
+    "native": "Haľmg keln",
+    "iso639_3": "xal",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kamas",
+    "native": "Kaŋmažən šəkət",
+    "iso639_3": "xas",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Karaim",
+    "native": "karaj tili",
+    "iso639_3": "kdr",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Karakalpak",
+    "native": "Qaraqalpaq tili",
+    "iso639_3": "kaa",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Karakhanid",
+    "native": "Karakhanid",
+    "iso639_3": "xqa",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kashubian",
+    "native": "kaszëbsczi",
+    "iso639_3": "csb",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kaska",
+    "native": "Dene Zágéʼ",
+    "iso639_3": "kkz",
+    "weight": 0,
+    "scripts": [
+      "Latin"
     ]
   },
   {
     "name": "Kazakh",
-    "native": "қазақ тілі",
+    "native": "qazaqşa",
     "iso639_1": "kk",
     "iso639_3": "kaz",
     "weight": 0,
     "scripts": [
-      "Arabic",
-      "Cyrillic"
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kannada",
+    "native": "ಕನ್ನಡ",
+    "iso639_1": "kn",
+    "iso639_3": "kan",
+    "weight": 0,
+    "scripts": [
+      "Kannada"
+    ]
+  },
+  {
+    "name": "Ket",
+    "native": "Ket",
+    "iso639_3": "ket",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Khakas",
+    "native": "xakas tëlë",
+    "iso639_3": "kjh",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Khalaj",
+    "native": "خلج",
+    "iso639_3": "klj",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Khanty",
+    "native": "hantĭ jasaŋ",
+    "iso639_3": "kca",
+    "weight": 0,
+    "scripts": [
+      "Latin"
     ]
   },
   {
@@ -1025,6 +1138,25 @@
     ]
   },
   {
+    "name": "Khowar",
+    "native": "کھووار",
+    "iso639_3": "khw",
+    "weight": 0,
+    "scripts": [
+      "Khowar",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kiche",
+    "native": "Quiché",
+    "iso639_3": "quc",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
     "name": "Kinyarwanda",
     "native": "Ikinyarwanda",
     "iso639_1": "rw",
@@ -1035,7 +1167,66 @@
     ]
   },
   {
+    "name": "Kipsigis",
+    "native": "Kipsigis",
+    "iso639_3": "sgc",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kirghiz",
+    "native": "Kyrgyz",
+    "iso639_1": "ky",
+    "iso639_3": "kir",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kiribati",
+    "native": "Taetae ni kiribati",
+    "iso639_3": "gil",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Koine Greek",
+    "native": "ἡ κοινὴ διάλεκτος",
+    "iso639_3": "grc",
+    "weight": 0,
+    "scripts": [
+      "Greek"
+    ]
+  },
+  {
+    "name": "Komi",
+    "native": "komi kyv",
+    "iso639_1": "kv",
+    "iso639_3": "kpv",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
     "name": "Korean",
+    "native": "Korean",
+    "iso639_1": "ko",
+    "iso639_3": "kor",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Korean Hangul",
     "native": "한국어",
     "iso639_1": "ko",
     "iso639_3": "kor",
@@ -1053,6 +1244,62 @@
     "scripts": [
       "Arabic",
       "Cyrillic"
+    ]
+  },
+  {
+    "name": "Kosraean",
+    "native": "Kosraean",
+    "iso639_3": "kos",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kott",
+    "native": "Kott",
+    "iso639_3": "zko",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kryts",
+    "native": "ġrəċä mez",
+    "iso639_3": "kry",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kumyk",
+    "native": "qumuq til",
+    "iso639_3": "kum",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kurdish",
+    "native": "Kurdî",
+    "iso639_1": "ku",
+    "iso639_3": "kur",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Kutchi",
+    "native": "Kutchi",
+    "iso639_3": "kfr",
+    "weight": 0,
+    "scripts": [
+      "Latin"
     ]
   },
   {
