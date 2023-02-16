@@ -800,17 +800,6 @@
     ]
   },
   {
-    "name": "Hausa",
-    "native": "(Hausa) هَوُسَ",
-    "iso639_1": "ha",
-    "iso639_3": "hau",
-    "weight": 0,
-    "scripts": [
-      "Arabic",
-      "Latin"
-    ]
-  },
-  {
     "name": "Hebrew",
     "native": "עברית",
     "iso639_1": "he",
@@ -1233,17 +1222,6 @@
     "weight": 0,
     "scripts": [
       "Hangul"
-    ]
-  },
-  {
-    "name": "Kurdish",
-    "native": "Kurdî, كوردی‎",
-    "iso639_1": "ku",
-    "iso639_3": "kur",
-    "weight": 0,
-    "scripts": [
-      "Arabic",
-      "Cyrillic"
     ]
   },
   {
