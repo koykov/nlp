@@ -1281,10 +1281,109 @@
     ]
   },
   {
+    "name": "Lak",
+    "native": "lakːu maz",
+    "iso639_3": "lbe",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Lakota",
+    "native": "Lakȟótiyapi",
+    "iso639_3": "lkt",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Lao",
+    "native": "ພາສາລາວ",
+    "iso639_1": "lo",
+    "iso639_3": "lao",
+    "weight": 0,
+    "scripts": [
+      "Lao",
+      "Thai"
+    ]
+  },
+  {
     "name": "Latin",
     "native": "latine, lingua latina",
     "iso639_1": "la",
     "iso639_3": "lat",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Latvian",
+    "native": "latviešu valoda",
+    "iso639_1": "lv",
+    "iso639_3": "lav",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Laz",
+    "native": "Lazuri",
+    "iso639_3": "lzz",
+    "weight": 0,
+    "scripts": [
+      "Georgian",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Lepcha",
+    "native": "Róng ríng",
+    "iso639_3": "lep",
+    "weight": 0,
+    "scripts": [
+      "Lepcha",
+      "Tibetan",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Lezgi",
+    "native": "lezgi č’al",
+    "iso639_3": "lez",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Ligurian",
+    "native": "lìgure, zeneize",
+    "iso639_3": "lij",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Lingala",
+    "native": "Lingála",
+    "iso639_1": "ln",
+    "iso639_3": "lin",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Lithuanian",
+    "native": "lietuvių kalba",
+    "iso639_1": "lt",
+    "iso639_3": "lit",
     "weight": 0,
     "scripts": [
       "Latin"
