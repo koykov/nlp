@@ -684,6 +684,17 @@
     ]
   },
   {
+    "name": "Ganda",
+    "native": "Luganda",
+    "iso639_1": "lg",
+    "iso639_3": "lug",
+    "weight": 0,
+    "scripts": [
+      "Arabic",
+      "Latin"
+    ]
+  },
+  {
     "name": "Gbari",
     "native": "Gbari",
     "iso639_3": "gbr",
@@ -1390,17 +1401,6 @@
     ]
   },
   {
-    "name": "Ganda",
-    "native": "Luganda",
-    "iso639_1": "lg",
-    "iso639_3": "lug",
-    "weight": 0,
-    "scripts": [
-      "Arabic",
-      "Latin"
-    ]
-  },
-  {
     "name": "Lithuanian",
     "native": "lietuvių kalba",
     "iso639_1": "lt",
@@ -1427,7 +1427,8 @@
     "iso639_3": "mkd",
     "weight": 0,
     "scripts": [
-      "Cyrillic"
+      "Cyrillic",
+      "Latin"
     ]
   },
   {
