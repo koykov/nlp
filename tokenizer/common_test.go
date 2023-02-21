@@ -27,7 +27,7 @@ var stagesCommon = []stage[string]{
 }
 
 func testInstance[T byteseq.Byteseq](t *testing.T, tkn nlp.Tokenizer[T], stages []stage[T]) {
-	name := fmt.Sprintf("%T", tkn)[9:]
+	name := fmt.Sprintf("%T", tkn)[10:]
 	for _, stg := range stages {
 		t.Run(fmt.Sprintf("%s/%s", name, stg.key), func(t *testing.T) {
 			var buf nlp.Tokens
@@ -40,7 +40,7 @@ func testInstance[T byteseq.Byteseq](t *testing.T, tkn nlp.Tokenizer[T], stages 
 }
 
 func benchInstance[T byteseq.Byteseq](b *testing.B, tkn nlp.Tokenizer[T], stages []stage[T]) {
-	name := fmt.Sprintf("%T", tkn)[9:]
+	name := fmt.Sprintf("%T", tkn)[10:]
 	for _, stg := range stages {
 		b.Run(fmt.Sprintf("%s/%s", name, stg.key), func(b *testing.B) {
 			b.ReportAllocs()
