@@ -42,9 +42,7 @@ func (t *StringTokenizer[T]) AppendTokenize(dst Tokens, x T) Tokens {
 	}
 
 	if !t.o {
-		t.sep = t.Separator
-		t.bl = t.BlankLines
-		t.o = true
+		t.sep, t.bl, t.o = t.Separator, t.BlankLines, true
 	}
 
 	lo, hi := 0, 0

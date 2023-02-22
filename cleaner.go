@@ -39,8 +39,7 @@ func (c *UnicodeCleaner[T]) Clean(x T) []rune {
 func (c *UnicodeCleaner[T]) AppendClean(dst []rune, x T) []rune {
 	s := byteseq.Q2S(x)
 	if !c.o {
-		c.m = c.Mask
-		c.o = true
+		c.m, c.o = c.Mask, true
 	}
 	m := c.m
 	for _, r := range s {

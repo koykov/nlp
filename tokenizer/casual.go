@@ -11,7 +11,7 @@ type TweetTokenizer[T byteseq.Byteseq] struct {
 	StripHandles      bool
 	MatchPhoneNumbers bool
 
-	o bool
+	pc, rl, sh, mp, o bool
 }
 
 func NewTweetTokenizer[T byteseq.Byteseq](preserveCase, reduceLen, stripHandles, matchPhoneNumbers bool) TweetTokenizer[T] {
@@ -24,11 +24,14 @@ func NewTweetTokenizer[T byteseq.Byteseq](preserveCase, reduceLen, stripHandles,
 	}
 }
 
-func (t TweetTokenizer[T]) Tokenize(x T) nlp.Tokens {
+func (t *TweetTokenizer[T]) Tokenize(x T) nlp.Tokens {
 	return t.AppendTokenize(nil, x)
 }
 
-func (t TweetTokenizer[T]) AppendTokenize(dst nlp.Tokens, x T) nlp.Tokens {
+func (t *TweetTokenizer[T]) AppendTokenize(dst nlp.Tokens, x T) nlp.Tokens {
+	if !t.o {
+		t.pc, t.rl, t.sh, t.mp, t.o = t.PreserveCase, t.ReduceLen, t.StripHandles, t.MatchPhoneNumbers, true
+	}
 	_ = x
 	// todo: implement me
 	return dst

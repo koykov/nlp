@@ -28,9 +28,7 @@ func (t SpaceTokenizer[T]) Tokenize(x T) nlp.Tokens {
 
 func (t SpaceTokenizer[T]) AppendTokenize(dst nlp.Tokens, x T) nlp.Tokens {
 	if !t.o {
-		t.t.Separator = " "
-		t.t.BlankLines = nlp.TokenizerBlankLinesKeep
-		t.o = true
+		t.t.Separator, t.t.BlankLines, t.o = " ", nlp.TokenizerBlankLinesKeep, true
 	}
 	return t.t.AppendTokenize(dst, x)
 }
@@ -60,9 +58,7 @@ func (t TabTokenizer[T]) Tokenize(x T) nlp.Tokens {
 
 func (t TabTokenizer[T]) AppendTokenize(dst nlp.Tokens, x T) nlp.Tokens {
 	if !t.o {
-		t.t.Separator = "\t"
-		t.t.BlankLines = nlp.TokenizerBlankLinesKeep
-		t.o = true
+		t.t.Separator, t.t.BlankLines, t.o = "\t", nlp.TokenizerBlankLinesKeep, true
 	}
 	return t.t.AppendTokenize(dst, x)
 }
@@ -115,9 +111,7 @@ func (t LineTokenizer[T]) Tokenize(x T) nlp.Tokens {
 
 func (t LineTokenizer[T]) AppendTokenize(dst nlp.Tokens, x T) nlp.Tokens {
 	if !t.o {
-		t.t.Separator = "\n"
-		t.t.BlankLines = t.BlankLines
-		t.o = true
+		t.t.Separator, t.t.BlankLines, t.o = "\n", nlp.TokenizerBlankLinesKeep, true
 	}
 	return t.t.AppendTokenize(dst, x)
 }
