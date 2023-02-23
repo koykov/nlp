@@ -31,7 +31,7 @@ func init() {
 			flag.StringVar(v, names[i], value, usage)
 		}
 	}
-	rf(&fmod, []string{"module", "mod", "m"}, "", "Module to compile: [languages]")
+	rf(&fmod, []string{"module", "mod", "m"}, "", "Module to compile: [languages, scripts, ngmodels]")
 	rf(&fin, []string{"input", "in", "i"}, "", "Path to source data file")
 	rf(&ftrg, []string{"target", "t"}, "", "Target file or directory")
 	flag.Parse()
