@@ -24,7 +24,7 @@ func (ctx *Ctx[T]) TokenizeT(t T) Tokens {
 		GetTokens()
 }
 
-func (ctx Ctx[T]) GetTokens() Tokens {
+func (ctx *Ctx[T]) GetTokens() Tokens {
 	return ctx.bufT
 }
 

@@ -29,7 +29,7 @@ func (ctx *Ctx[T]) CleanT(t T) T {
 		GetClean()
 }
 
-func (ctx Ctx[T]) GetClean() T {
+func (ctx *Ctx[T]) GetClean() T {
 	return T(ctx.buf)
 }
 

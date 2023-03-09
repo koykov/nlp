@@ -44,7 +44,7 @@ func (ctx *Ctx[T]) SetText(text T) *Ctx[T] {
 	return ctx
 }
 
-func (ctx Ctx[T]) GetText() T {
+func (ctx *Ctx[T]) GetText() T {
 	return ctx.src
 }
 
