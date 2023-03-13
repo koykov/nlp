@@ -8,7 +8,8 @@ import (
 
 const (
 	flagClean = 0
-	flagToken = 1
+	flagMod   = 1
+	flagToken = 2
 )
 
 type Ctx[T byteseq.Byteseq] struct {
@@ -17,6 +18,7 @@ type Ctx[T byteseq.Byteseq] struct {
 	buf  []byte
 	bufR []rune
 
+	mod Modifier[T]
 	cln Cleaner[T]
 
 	tkn  Tokenizer[T]
