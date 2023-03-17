@@ -1401,26 +1401,6 @@
     ]
   },
   {
-    "name": "Lithuanian",
-    "native": "lietuvių kalba",
-    "iso639_1": "lt",
-    "iso639_3": "lit",
-    "weight": 0,
-    "scripts": [
-      "Latin"
-    ]
-  },
-  {
-    "name": "Latvian",
-    "native": "latviešu valoda",
-    "iso639_1": "lv",
-    "iso639_3": "lav",
-    "weight": 0,
-    "scripts": [
-      "Latin"
-    ]
-  },
-  {
     "name": "Macedonian",
     "native": "македонски јазик",
     "iso639_1": "mk",
