@@ -34,7 +34,6 @@ func init() {
 	rf(&fmod, []string{"module", "mod", "m"}, "", "Module to compile: [languages, scripts, ngmodels]")
 	rf(&fin, []string{"input", "in", "i"}, "", "Path to source data file")
 	rf(&ftrg, []string{"target", "t"}, "", "Target file or directory")
-	rf(&ftrg, []string{"source", "src", "s"}, "", "Data source")
 	flag.Parse()
 
 	if len(fmod) == 0 {
