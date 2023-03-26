@@ -23,6 +23,10 @@ func (c *Macros[T]) AppendClean(dst []rune, x T) []rune {
 		c.l, c.r = c.Left, c.Right
 	}
 	s := byteseq.Q2S(x)
+	if len(c.l) == 0 || len(c.r) == 0 {
+		dst = fastconv.AppendS2R(dst, s)
+		return dst
+	}
 	off := 0
 	for {
 		p := bytealg.IndexAtStr(s, c.l, off)
@@ -30,7 +34,7 @@ func (c *Macros[T]) AppendClean(dst []rune, x T) []rune {
 			dst = fastconv.AppendS2R(dst, s[off:])
 			return dst
 		}
-		dst = fastconv.AppendS2R(dst, s[:p-1])
+		dst = fastconv.AppendS2R(dst, s[:p])
 		off = p + len(c.l)
 		if p = bytealg.IndexAtStr(s, c.r, off); p == -1 {
 			dst = fastconv.AppendS2R(dst, s[off:])
