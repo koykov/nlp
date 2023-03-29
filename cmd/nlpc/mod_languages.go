@@ -53,8 +53,8 @@ func (m languagesModule) Compile(w moduleWriter, input, target string) (err erro
 			tuple.Native = tuple.Name
 		}
 		name := tuple.Name
-		name = strings.ReplaceAll(name, " ", "")
-		name = strings.ReplaceAll(name, "-", "")
+		name = strings.ReplaceAll(name, " ", "_")
+		name = strings.ReplaceAll(name, "-", "_")
 		name = strings.ReplaceAll(name, "'", "")
 		_, _ = w.WriteString("Language")
 		_, _ = w.WriteString(name)
