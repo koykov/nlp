@@ -165,7 +165,7 @@ func TestCleaner(t *testing.T) {
 		t.Run(stage.key, func(t *testing.T) {
 			ctx := NewCtx[string]()
 			r := ctx.SetText(stage.src).
-				WithCleaner(&UnicodeCleaner[string]{Mask: stage.mask}).
+				WithCleaner(UnicodeCleaner[string]{Mask: stage.mask}).
 				Clean().
 				GetRunes()
 			_, s := fastconv.AppendR2S(nil, r)
@@ -180,13 +180,12 @@ func BenchmarkCleaner(b *testing.B) {
 	for _, stage := range clnStages {
 		b.Run(stage.key, func(b *testing.B) {
 			b.ReportAllocs()
-			cln := UnicodeCleaner[string]{Mask: stage.mask}
 			ctx := NewCtx[string]()
 			var buf []rune
 			for i := 0; i < b.N; i++ {
 				buf = ctx.Reset().
 					SetText(stage.src).
-					WithCleaner(&cln).
+					WithCleaner(UnicodeCleaner[string]{Mask: stage.mask}).
 					Clean().
 					GetRunes()
 			}
