@@ -1,9 +1,12 @@
 package nlp
 
-import "github.com/koykov/fastconv"
+import (
+	"github.com/koykov/byteseq"
+	"github.com/koykov/fastconv"
+)
 
 func (ctx *Ctx[T]) WithCleaner(cln Cleaner[T]) *Ctx[T] {
-	ctx.cln = cln
+	ctx.cln = append(ctx.cln, cln)
 	ctx.SetBit(flagClean, false)
 	return ctx
 }
@@ -17,8 +20,13 @@ func (ctx *Ctx[T]) Clean() *Ctx[T] {
 	}
 	defer ctx.SetBit(flagClean, true)
 
-	ctx.bufR = ctx.chkCln().AppendClean(ctx.bufR[:0], ctx.src)
-	ctx.buf = fastconv.AppendR2B(ctx.buf[:0], ctx.bufR)
+	if len(ctx.cln) == 0 {
+		ctx.cln = append(ctx.cln, NewUnicodeCleaner[T](DefaultCleanMask))
+	}
+	for i := 0; i < len(ctx.cln); i++ {
+		ctx.bufR = ctx.cln[i].AppendClean(ctx.bufR[:0], byteseq.B2Q[T](ctx.buf))
+		ctx.buf = fastconv.AppendR2B(ctx.buf[:0], ctx.bufR)
+	}
 
 	return ctx
 }
@@ -26,17 +34,10 @@ func (ctx *Ctx[T]) Clean() *Ctx[T] {
 func (ctx *Ctx[T]) CleanT(t T) T {
 	return ctx.SetText(t).
 		Clean().
-		GetClean()
+		GetText()
 }
 
-func (ctx *Ctx[T]) GetClean() T {
-	return T(ctx.buf)
-}
-
-func (ctx *Ctx[T]) chkCln() Cleaner[T] {
-	if ctx.cln == nil {
-		cln := NewUnicodeCleaner[T](DefaultCleanMask)
-		ctx.cln = cln
-	}
-	return ctx.cln
+func (ctx *Ctx[T]) ResetCleaners() *Ctx[T] {
+	ctx.cln = ctx.cln[:0]
+	return ctx
 }

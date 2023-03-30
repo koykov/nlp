@@ -1,5 +1,7 @@
 package nlp
 
+import "github.com/koykov/byteseq"
+
 func (ctx *Ctx[T]) WithTokenizer(tkn Tokenizer[T]) *Ctx[T] {
 	ctx.tkn = tkn
 	ctx.SetBit(flagToken, false)
@@ -14,7 +16,7 @@ func (ctx *Ctx[T]) Tokenize() *Ctx[T] {
 		return ctx
 	}
 	defer ctx.SetBit(flagToken, true)
-	ctx.bufT = ctx.chkTkn().AppendTokenize(ctx.bufT, T(ctx.buf))
+	ctx.bufT = ctx.chkTkn().AppendTokenize(ctx.bufT, byteseq.B2Q[T](ctx.buf))
 	return ctx
 }
 

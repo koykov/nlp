@@ -163,8 +163,11 @@ var clnStages = []struct {
 func TestCleaner(t *testing.T) {
 	for _, stage := range clnStages {
 		t.Run(stage.key, func(t *testing.T) {
-			cln := UnicodeCleaner[string]{Mask: stage.mask}
-			r := cln.Clean(stage.src)
+			ctx := NewCtx[string]()
+			r := ctx.SetText(stage.src).
+				WithCleaner(&UnicodeCleaner[string]{Mask: stage.mask}).
+				Clean().
+				GetRunes()
 			_, s := fastconv.AppendR2S(nil, r)
 			if s != stage.exp {
 				t.FailNow()
@@ -178,9 +181,14 @@ func BenchmarkCleaner(b *testing.B) {
 		b.Run(stage.key, func(b *testing.B) {
 			b.ReportAllocs()
 			cln := UnicodeCleaner[string]{Mask: stage.mask}
+			ctx := NewCtx[string]()
 			var buf []rune
 			for i := 0; i < b.N; i++ {
-				buf = cln.AppendClean(buf[:0], stage.src)
+				buf = ctx.Reset().
+					SetText(stage.src).
+					WithCleaner(&cln).
+					Clean().
+					GetRunes()
 			}
 			_ = buf
 		})

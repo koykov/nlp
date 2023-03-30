@@ -11,7 +11,7 @@ type HTMLUnescaper[T byteseq.Byteseq] struct{}
 func (m HTMLUnescaper[T]) Modify(x T) T {
 	r := m.AppendModify(nil, x)
 	_, s := fastconv.AppendR2S(nil, r)
-	return T(s)
+	return byteseq.S2Q[T](s)
 }
 
 func (HTMLUnescaper[T]) AppendModify(dst []rune, x T) []rune {

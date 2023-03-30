@@ -18,8 +18,8 @@ type Ctx[T byteseq.Byteseq] struct {
 	buf  []byte
 	bufR []rune
 
-	mod Modifier[T]
-	cln Cleaner[T]
+	mod []Modifier[T]
+	cln []Cleaner[T]
 
 	tkn  Tokenizer[T]
 	bufT Tokens
@@ -46,8 +46,12 @@ func (ctx *Ctx[T]) SetText(text T) *Ctx[T] {
 	return ctx
 }
 
-func (ctx *Ctx[T]) GetText() T {
+func (ctx *Ctx[T]) GetOriginText() T {
 	return ctx.src
+}
+
+func (ctx *Ctx[T]) GetText() T {
+	return byteseq.B2Q[T](ctx.buf)
 }
 
 func (ctx *Ctx[T]) GetRunes() []rune {
@@ -85,6 +89,8 @@ func (ctx *Ctx[T]) Reset() *Ctx[T] {
 	ctx.BufSP = ctx.BufSP[:0]
 	// ctx.BufLP = ctx.BufLP[:0]
 	ctx.bufT.Reset()
+	ctx.ResetCleaners()
+	ctx.ResetModifiers()
 	ctx.err = nil
 	return ctx
 }
