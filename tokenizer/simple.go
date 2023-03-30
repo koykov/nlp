@@ -8,29 +8,25 @@ import (
 // group: SpaceTokenizer
 
 type SpaceTokenizer[T byteseq.Byteseq] struct {
-	o bool
-	t nlp.StringTokenizer[T]
+	nlp.StringTokenizer[T]
 }
 
 func NewSpaceTokenizer[T byteseq.Byteseq]() SpaceTokenizer[T] {
 	return SpaceTokenizer[T]{
-		t: nlp.StringTokenizer[T]{
+		StringTokenizer: nlp.StringTokenizer[T]{
 			Separator:  " ",
 			BlankLines: nlp.TokenizerBlankLinesKeep,
 		},
-		o: true,
 	}
 }
 
 func (t SpaceTokenizer[T]) Tokenize(x T) nlp.Tokens {
-	return t.t.AppendTokenize(nil, x)
+	return t.AppendTokenize(nil, x)
 }
 
 func (t SpaceTokenizer[T]) AppendTokenize(dst nlp.Tokens, x T) nlp.Tokens {
-	if !t.o {
-		t.t.Separator, t.t.BlankLines, t.o = " ", nlp.TokenizerBlankLinesKeep, true
-	}
-	return t.t.AppendTokenize(dst, x)
+	t.Separator, t.BlankLines = " ", nlp.TokenizerBlankLinesKeep
+	return t.StringTokenizer.AppendTokenize(dst, x)
 }
 
 // endgroup: SpaceTokenizer
@@ -38,29 +34,25 @@ func (t SpaceTokenizer[T]) AppendTokenize(dst nlp.Tokens, x T) nlp.Tokens {
 // group: TabTokenizer
 
 type TabTokenizer[T byteseq.Byteseq] struct {
-	o bool
-	t nlp.StringTokenizer[T]
+	nlp.StringTokenizer[T]
 }
 
 func NewTabTokenizer[T byteseq.Byteseq]() TabTokenizer[T] {
 	return TabTokenizer[T]{
-		t: nlp.StringTokenizer[T]{
+		StringTokenizer: nlp.StringTokenizer[T]{
 			Separator:  "\t",
 			BlankLines: nlp.TokenizerBlankLinesKeep,
 		},
-		o: true,
 	}
 }
 
 func (t TabTokenizer[T]) Tokenize(x T) nlp.Tokens {
-	return t.t.AppendTokenize(nil, x)
+	return t.AppendTokenize(nil, x)
 }
 
 func (t TabTokenizer[T]) AppendTokenize(dst nlp.Tokens, x T) nlp.Tokens {
-	if !t.o {
-		t.t.Separator, t.t.BlankLines, t.o = "\t", nlp.TokenizerBlankLinesKeep, true
-	}
-	return t.t.AppendTokenize(dst, x)
+	t.Separator, t.BlankLines = "\t", nlp.TokenizerBlankLinesKeep
+	return t.StringTokenizer.AppendTokenize(dst, x)
 }
 
 // endgroup: TabTokenizer
@@ -89,31 +81,26 @@ func (t CharTokenizer[T]) AppendTokenize(dst nlp.Tokens, x T) nlp.Tokens {
 // group: LineTokenizer
 
 type LineTokenizer[T byteseq.Byteseq] struct {
+	nlp.StringTokenizer[T]
 	BlankLines nlp.TokenizerBlankLines
-
-	o bool
-	t nlp.StringTokenizer[T]
 }
 
 func NewLineTokenizer[T byteseq.Byteseq](blankLines nlp.TokenizerBlankLines) LineTokenizer[T] {
 	return LineTokenizer[T]{
-		t: nlp.StringTokenizer[T]{
+		StringTokenizer: nlp.StringTokenizer[T]{
 			Separator:  "\n",
 			BlankLines: blankLines,
 		},
-		o: true,
 	}
 }
 
 func (t LineTokenizer[T]) Tokenize(x T) nlp.Tokens {
-	return t.t.AppendTokenize(nil, x)
+	return t.AppendTokenize(nil, x)
 }
 
 func (t LineTokenizer[T]) AppendTokenize(dst nlp.Tokens, x T) nlp.Tokens {
-	if !t.o {
-		t.t.Separator, t.t.BlankLines, t.o = "\n", nlp.TokenizerBlankLinesKeep, true
-	}
-	return t.t.AppendTokenize(dst, x)
+	t.Separator, t.BlankLines = "\n", nlp.TokenizerBlankLinesKeep
+	return t.StringTokenizer.AppendTokenize(dst, x)
 }
 
 // endgroup: LineTokenizer

@@ -23,25 +23,19 @@ const (
 
 type UnicodeCleaner[T byteseq.Byteseq] struct {
 	Mask uint32
-
-	o bool
-	m uint32
 }
 
-func NewUnicodeCleaner[T byteseq.Byteseq](mask uint32) *UnicodeCleaner[T] {
-	return &UnicodeCleaner[T]{Mask: mask}
+func NewUnicodeCleaner[T byteseq.Byteseq](mask uint32) UnicodeCleaner[T] {
+	return UnicodeCleaner[T]{Mask: mask}
 }
 
-func (c *UnicodeCleaner[T]) Clean(x T) []rune {
+func (c UnicodeCleaner[T]) Clean(x T) []rune {
 	return c.AppendClean(nil, x)
 }
 
-func (c *UnicodeCleaner[T]) AppendClean(dst []rune, x T) []rune {
+func (c UnicodeCleaner[T]) AppendClean(dst []rune, x T) []rune {
 	s := byteseq.Q2S(x)
-	if !c.o {
-		c.m, c.o = c.Mask, true
-	}
-	m := c.m
+	m := c.Mask
 	for _, r := range s {
 		if m > 0 {
 			if m&CleanControl > 0 {

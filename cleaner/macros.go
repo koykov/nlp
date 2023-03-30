@@ -8,38 +8,32 @@ import (
 
 type Macros[T byteseq.Byteseq] struct {
 	Left, Right string
-
-	o    bool
-	l, r string
 }
 
-func (c *Macros[T]) Clean(x T) []rune {
+func (c Macros[T]) Clean(x T) []rune {
 	return c.AppendClean(nil, x)
 }
 
-func (c *Macros[T]) AppendClean(dst []rune, x T) []rune {
-	if !c.o {
-		c.o = true
-		c.l, c.r = c.Left, c.Right
-	}
+func (c Macros[T]) AppendClean(dst []rune, x T) []rune {
+	l, r := c.Left, c.Right
 	s := byteseq.Q2S(x)
-	if len(c.l) == 0 || len(c.r) == 0 {
+	if len(l) == 0 || len(r) == 0 {
 		dst = fastconv.AppendS2R(dst, s)
 		return dst
 	}
 	off := 0
 	for {
-		p := bytealg.IndexAtStr(s, c.l, off)
+		p := bytealg.IndexAtStr(s, l, off)
 		if p == -1 {
 			dst = fastconv.AppendS2R(dst, s[off:])
 			return dst
 		}
 		dst = fastconv.AppendS2R(dst, s[:p])
-		off = p + len(c.l)
-		if p = bytealg.IndexAtStr(s, c.r, off); p == -1 {
+		off = p + len(l)
+		if p = bytealg.IndexAtStr(s, r, off); p == -1 {
 			dst = fastconv.AppendS2R(dst, s[off:])
 			return dst
 		}
-		off = p + len(c.r)
+		off = p + len(r)
 	}
 }

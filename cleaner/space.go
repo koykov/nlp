@@ -6,11 +6,11 @@ import (
 
 type Space[T byteseq.Byteseq] struct{}
 
-func (c *Space[T]) Clean(x T) []rune {
+func (c Space[T]) Clean(x T) []rune {
 	return c.AppendClean(nil, x)
 }
 
-func (c *Space[T]) AppendClean(dst []rune, x T) []rune {
+func (c Space[T]) AppendClean(dst []rune, x T) []rune {
 	p := byteseq.Q2B(x)
 	var ps bool
 	for i := 0; i < len(p); i++ {

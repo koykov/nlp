@@ -18,10 +18,6 @@ const (
 type StringTokenizer[T byteseq.Byteseq] struct {
 	Separator  string
 	BlankLines TokenizerBlankLines
-
-	o   bool
-	sep string
-	bl  TokenizerBlankLines
 }
 
 func NewStringTokenizer[T byteseq.Byteseq](sep string, blankLines TokenizerBlankLines) StringTokenizer[T] {
@@ -31,33 +27,30 @@ func NewStringTokenizer[T byteseq.Byteseq](sep string, blankLines TokenizerBlank
 	}
 }
 
-func (t *StringTokenizer[T]) Tokenize(x T) Tokens {
+func (t StringTokenizer[T]) Tokenize(x T) Tokens {
 	return t.AppendTokenize(nil, x)
 }
 
-func (t *StringTokenizer[T]) AppendTokenize(dst Tokens, x T) Tokens {
+func (t StringTokenizer[T]) AppendTokenize(dst Tokens, x T) Tokens {
 	s := byteseq.Q2S(x)
 	if len(s) == 0 {
 		return dst
 	}
 
-	if !t.o {
-		t.sep, t.bl, t.o = t.Separator, t.BlankLines, true
-	}
-
+	sep, bl := t.Separator, t.BlankLines
 	lo, hi := 0, 0
 	for {
-		p := bytealg.IndexAnyAtStr(s, t.sep, lo)
+		p := bytealg.IndexAnyAtStr(s, sep, lo)
 		if p == -1 {
 			hi = len(s)
-			if hi == lo && (t.bl == TokenizerBlankLinesDiscardEOF || t.bl == TokenizerBlankLinesDiscard) {
+			if hi == lo && (bl == TokenizerBlankLinesDiscardEOF || bl == TokenizerBlankLinesDiscard) {
 				break
 			}
 			dst = append(dst, ParseToken(s, lo, hi))
 			break
 		}
 		hi = p
-		if hi == lo && t.bl == TokenizerBlankLinesDiscard {
+		if hi == lo && bl == TokenizerBlankLinesDiscard {
 			lo = hi + 1
 			continue
 		}
