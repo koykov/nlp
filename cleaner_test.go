@@ -180,12 +180,12 @@ func BenchmarkCleaner(b *testing.B) {
 	for _, stage := range clnStages {
 		b.Run(stage.key, func(b *testing.B) {
 			b.ReportAllocs()
-			ctx := NewCtx[string]()
 			var buf []rune
+			ctx := NewCtx[string]().
+				WithCleaner(NewUnicodeCleaner[string](stage.mask))
 			for i := 0; i < b.N; i++ {
 				buf = ctx.Reset().
 					SetText(stage.src).
-					WithCleaner(UnicodeCleaner[string]{Mask: stage.mask}).
 					Clean().
 					GetRunes()
 			}

@@ -44,12 +44,16 @@ var tokenizerStages = []struct {
 func TestTokenizer(t *testing.T) {
 	for _, stage := range tokenizerStages {
 		t.Run(stage.key, func(t *testing.T) {
-			tkn := NewStringTokenizer[string](stage.sep, stage.bl)
-			tkn.AppendTokenize(nil, stage.src).Each(func(i int, tok Token) {
-				if tok.String() != stage.tok[i] {
-					t.FailNow()
-				}
-			})
+			ctx := NewCtx[string]()
+			ctx.SetText(stage.src).
+				WithTokenizer(NewStringTokenizer[string](stage.sep, stage.bl)).
+				Tokenize().
+				GetTokens().
+				Each(func(i int, tok Token) {
+					if tok.String() != stage.tok[i] {
+						t.FailNow()
+					}
+				})
 		})
 	}
 }
@@ -57,11 +61,15 @@ func TestTokenizer(t *testing.T) {
 func BenchmarkTokenizer(b *testing.B) {
 	for _, stage := range tokenizerStages {
 		b.Run(stage.key, func(b *testing.B) {
-			var buf Tokens
 			b.ReportAllocs()
+			var buf Tokens
+			ctx := NewCtx[string]().
+				WithTokenizer(NewStringTokenizer[string](stage.sep, stage.bl))
 			for i := 0; i < b.N; i++ {
-				tkn := NewStringTokenizer[string](stage.sep, stage.bl)
-				buf = tkn.AppendTokenize(buf[:0], stage.src)
+				buf = ctx.Reset().
+					SetText(stage.src).
+					Tokenize().
+					GetTokens()
 			}
 			_ = buf
 		})

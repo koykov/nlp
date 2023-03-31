@@ -30,10 +30,15 @@ func (ctx *Ctx[T]) GetTokens() Tokens {
 	return ctx.bufT
 }
 
+func (ctx *Ctx[T]) ResetTokenizer() *Ctx[T] {
+	ctx.tkn = nil
+	return ctx
+}
+
 func (ctx *Ctx[T]) chkTkn() Tokenizer[T] {
 	if ctx.tkn == nil {
 		tkn := NewStringTokenizer[T](DefaultTokenSeparator, TokenizerBlankLinesDiscard)
-		ctx.WithTokenizer(&tkn)
+		ctx.WithTokenizer(tkn)
 	}
 	return ctx.tkn
 }

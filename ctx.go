@@ -89,10 +89,15 @@ func (ctx *Ctx[T]) Reset() *Ctx[T] {
 	ctx.BufSP = ctx.BufSP[:0]
 	// ctx.BufLP = ctx.BufLP[:0]
 	ctx.bufT.Reset()
-	ctx.ResetCleaners()
-	ctx.ResetModifiers()
 	ctx.err = nil
 	return ctx
+}
+
+func (ctx *Ctx[T]) ResetAll() *Ctx[T] {
+	return ctx.Reset().
+		ResetCleaners().
+		ResetModifiers().
+		ResetTokenizer()
 }
 
 func (ctx *Ctx[T]) chkSrcErr() bool {
