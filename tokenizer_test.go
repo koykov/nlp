@@ -63,11 +63,14 @@ func BenchmarkTokenizer(b *testing.B) {
 		b.Run(stage.key, func(b *testing.B) {
 			b.ReportAllocs()
 			var buf Tokens
-			ctx := NewCtx[string]().
-				WithTokenizer(NewStringTokenizer[string](stage.sep, stage.bl))
+			ctx := NewCtx[string]()
+			// Declare tokenizer outside of loop due to redundant allocations.
+			// See https://github.com/koykov/lab/tree/master/generic_value_alloc BenchmarkGVAlloc/string/* cases.
+			tkn := StringTokenizer[string]{stage.sep, stage.bl}
 			for i := 0; i < b.N; i++ {
 				buf = ctx.Reset().
 					SetText(stage.src).
+					WithTokenizer(&tkn).
 					Tokenize().
 					GetTokens()
 			}

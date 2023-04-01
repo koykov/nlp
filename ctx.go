@@ -87,17 +87,14 @@ func (ctx *Ctx[T]) Reset() *Ctx[T] {
 	ctx.buf = ctx.buf[:0]
 	ctx.bufR = ctx.bufR[:0]
 	ctx.BufSP = ctx.BufSP[:0]
+	ctx.sd = nil
 	// ctx.BufLP = ctx.BufLP[:0]
 	ctx.bufT.Reset()
-	ctx.err = nil
-	return ctx
-}
-
-func (ctx *Ctx[T]) ResetAll() *Ctx[T] {
-	return ctx.Reset().
-		ResetCleaners().
+	ctx.ResetCleaners().
 		ResetModifiers().
 		ResetTokenizer()
+	ctx.err = nil
+	return ctx
 }
 
 func (ctx *Ctx[T]) chkSrcErr() bool {

@@ -181,10 +181,13 @@ func BenchmarkCleaner(b *testing.B) {
 		b.Run(stage.key, func(b *testing.B) {
 			b.ReportAllocs()
 			var buf []rune
-			ctx := NewCtx[string]().
-				WithCleaner(NewUnicodeCleaner[string](stage.mask))
+			ctx := NewCtx[string]()
+			// Declare cleaner outside of loop due to strange redundant allocations on mask values > 255.
+			// See https://github.com/koykov/lab/tree/master/generic_value_alloc BenchmarkGVAlloc/uint32/* cases.
+			cln := UnicodeCleaner[string]{stage.mask}
 			for i := 0; i < b.N; i++ {
 				buf = ctx.Reset().
+					WithCleaner(&cln).
 					SetText(stage.src).
 					Clean().
 					GetRunes()
