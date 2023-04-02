@@ -19,7 +19,7 @@ func (ctx *Ctx[T]) Modify() *Ctx[T] {
 		return ctx
 	}
 	defer ctx.SetBit(flagMod, true)
-	for i := 0; i < len(ctx.cln); i++ {
+	for i := 0; i < len(ctx.mod); i++ {
 		ctx.bufR = ctx.mod[i].AppendModify(ctx.bufR[:0], byteseq.B2Q[T](ctx.buf))
 		ctx.buf = fastconv.AppendR2B(ctx.buf[:0], ctx.bufR)
 	}
