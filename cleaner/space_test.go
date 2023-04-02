@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/koykov/fastconv"
+	"github.com/koykov/nlp"
 )
 
 var stagesSpace = []stage{
@@ -43,8 +44,11 @@ var stagesSpace = []stage{
 func TestSpace(t *testing.T) {
 	for _, stage := range stagesSpace {
 		t.Run(stage.key, func(t *testing.T) {
-			c := Space[string]{}
-			r := c.Clean(stage.src)
+			ctx := nlp.NewCtx[string]()
+			r := ctx.SetText(stage.src).
+				WithCleaner(Space[string]{}).
+				Clean().
+				GetRunes()
 			_, s := fastconv.AppendR2S(nil, r)
 			if s != stage.exp {
 				t.FailNow()
@@ -57,10 +61,15 @@ func BenchmarkSpace(b *testing.B) {
 	for _, stage := range stagesSpace {
 		b.Run(stage.key, func(b *testing.B) {
 			b.ReportAllocs()
+			ctx := nlp.NewCtx[string]()
+			cln := Space[string]{}
 			var r []rune
-			c := Space[string]{}
 			for i := 0; i < b.N; i++ {
-				r = c.AppendClean(r[:0], stage.src)
+				r = ctx.Reset().
+					SetText(stage.src).
+					WithCleaner(&cln).
+					Clean().
+					GetRunes()
 			}
 			_ = r
 		})

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/koykov/fastconv"
+	"github.com/koykov/nlp"
 )
 
 var stagesMacros = []stage{
@@ -31,8 +32,11 @@ var stagesMacros = []stage{
 func TestMacros(t *testing.T) {
 	for _, stage := range stagesMacros {
 		t.Run(stage.key, func(t *testing.T) {
-			c := Macros[string]{Left: stage.l, Right: stage.r}
-			r := c.Clean(stage.src)
+			ctx := nlp.NewCtx[string]()
+			r := ctx.SetText(stage.src).
+				WithCleaner(Macros[string]{Left: stage.l, Right: stage.r}).
+				Clean().
+				GetRunes()
 			_, s := fastconv.AppendR2S(nil, r)
 			if s != stage.exp {
 				t.FailNow()
@@ -43,12 +47,18 @@ func TestMacros(t *testing.T) {
 
 func BenchmarkMacros(b *testing.B) {
 	for _, stage := range stagesMacros {
+
 		b.Run(stage.key, func(b *testing.B) {
 			b.ReportAllocs()
+			ctx := nlp.NewCtx[string]()
+			cln := Macros[string]{Left: "[", Right: "]"}
 			var r []rune
-			c := Macros[string]{Left: "[", Right: "]"}
 			for i := 0; i < b.N; i++ {
-				r = c.AppendClean(r[:0], stage.src)
+				r = ctx.Reset().
+					SetText(stage.src).
+					WithCleaner(&cln).
+					Clean().
+					GetRunes()
 			}
 			_ = r
 		})
