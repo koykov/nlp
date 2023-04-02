@@ -2,6 +2,8 @@ package modifier
 
 import (
 	"testing"
+
+	"github.com/koykov/nlp"
 )
 
 var stagesHTMLU = []stage[string]{
@@ -25,8 +27,11 @@ var stagesHTMLU = []stage[string]{
 
 func TestHTMLUnescaper(t *testing.T) {
 	f := func(t *testing.T, s *stage[string]) {
-		m := HTMLUnescaper[string]{}
-		r := m.Modify(s.src)
+		ctx := nlp.NewCtx[string]()
+		r := ctx.SetText(s.src).
+			WithModifier(HTMLUnescaper[string]{}).
+			Modify().
+			GetText()
 		if r != s.exp {
 			t.FailNow()
 		}
@@ -38,11 +43,16 @@ func TestHTMLUnescaper(t *testing.T) {
 
 func BenchmarkHTMLUnescaper(b *testing.B) {
 	f := func(b *testing.B, s *stage[string]) {
-		m := HTMLUnescaper[string]{}
-		var buf []rune
 		b.ReportAllocs()
+		ctx := nlp.NewCtx[string]()
+		mod := HTMLUnescaper[string]{}
+		var buf []rune
 		for i := 0; i < b.N; i++ {
-			buf = m.AppendModify(buf[:0], s.src)
+			buf = ctx.Reset().
+				SetText(s.src).
+				WithModifier(&mod).
+				Modify().
+				GetRunes()
 		}
 		_ = buf
 	}
