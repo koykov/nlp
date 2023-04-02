@@ -44,9 +44,14 @@ func benchInstance[T byteseq.Byteseq](b *testing.B, tkn nlp.Tokenizer[T], stages
 	for _, stg := range stages {
 		b.Run(fmt.Sprintf("%s/%s", name, stg.key), func(b *testing.B) {
 			b.ReportAllocs()
+			ctx := nlp.NewCtx[T]()
 			var buf nlp.Tokens
 			for i := 0; i < b.N; i++ {
-				buf = tkn.AppendTokenize(buf[:0], stg.src)
+				buf = ctx.Reset().
+					SetText(stg.src).
+					WithTokenizer(tkn).
+					Tokenize().
+					GetTokens()
 			}
 			_ = buf
 		})
