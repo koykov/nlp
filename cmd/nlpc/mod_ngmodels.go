@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/koykov/fastconv"
 	"github.com/koykov/nlp"
@@ -25,7 +26,15 @@ func (m ngmodelsModule) Validate(input, target string) error {
 }
 
 func (m ngmodelsModule) Compile(w moduleWriter, input, target string) (err error) {
-	_, _ = w, target
+	_ = w
+	if strings.HasPrefix(target, "~") {
+		var home string
+		if home, err = os.UserHomeDir(); err != nil {
+			return
+		}
+		target = strings.Replace(target, "~", home, 1)
+	}
+
 	var resp *http.Response
 	if resp, err = http.Get(input); err != nil {
 		return
