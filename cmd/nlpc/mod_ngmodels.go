@@ -49,7 +49,6 @@ func (m ngmodelsModule) Compile(w moduleWriter, input, target string) (err error
 			Tokenize().
 			GetTokens().
 			Each(func(i int, t nlp.Token) {
-				println(t.String())
 				model.Parse(t.String())
 			})
 	}
