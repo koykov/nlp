@@ -1443,6 +1443,35 @@
     ]
   },
   {
+    "name": "Maldivian",
+    "native": "Dhivehi",
+    "iso639_1": "dv",
+    "iso639_3": "div",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Maliseet",
+    "native": "skicinuwatu",
+    "iso639_3": "pqm",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Maltese",
+    "native": "Malti",
+    "iso639_1": "mt",
+    "iso639_3": "mlt",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
     "name": "Maori",
     "native": "te reo Māori",
     "iso639_1": "mi",
@@ -1464,6 +1493,179 @@
     ]
   },
   {
+    "name": "Mam",
+    "native": "Qyool Mam",
+    "iso639_3": "mam",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Manchu",
+    "native": "Manju gisun",
+    "iso639_3": "mnc",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Mangarevan",
+    "native": "te reo magareva",
+    "iso639_3": "mrv",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Mangarevan",
+    "native": "Manipuri",
+    "iso639_3": "mni",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Mansi",
+    "native": "Mansi",
+    "iso639_3": "mns",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Manx",
+    "native": "Manx Gaelic",
+    "iso639_1": "gv",
+    "iso639_3": "glc",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Mapuche",
+    "native": "Mapudungun",
+    "iso639_3": "arn",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Mari",
+    "native": "marij jylme",
+    "iso639_3": "chm",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Marquesan",
+    "native": "ʻEo ʻenana",
+    "iso639_3": "mrq",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Marquesan",
+    "native": "ʻEo ʻenana",
+    "iso639_3": "mrq",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Marshallese",
+    "native": "Ebon",
+    "iso639_1": "mh",
+    "iso639_3": "mah",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Maxakali",
+    "native": "Mãxakani yĩy ax",
+    "iso639_3": "mbl",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Mingrelian",
+    "native": "margaluri nina",
+    "iso639_3": "xmf",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Miskito",
+    "native": "Miskitu",
+    "iso639_3": "miq",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Mizo",
+    "native": "Mizo ṭawng",
+    "iso639_3": "lus",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Moghol",
+    "native": "Mogholi",
+    "iso639_3": "mhj",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Mohawk",
+    "native": "Kanienʼkéha",
+    "iso639_3": "moh",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Mohegan",
+    "native": "Mohiks-Piqut Uyôtowáwôk",
+    "iso639_3": "xpq",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Moksha",
+    "native": "Mokshan",
+    "iso639_3": "mdf",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
     "name": "Mongolian",
     "native": "Монгол хэл",
     "iso639_1": "mn",
@@ -1473,6 +1675,24 @@
       "Cyrillic",
       "Mongolian",
       "Phags Pa"
+    ]
+  },
+  {
+    "name": "Monguor-Tu",
+    "native": "Dēd Mongol, Tu",
+    "iso639_3": "mjg",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Monguor-Tu",
+    "native": "Dēd Mongol, Tu",
+    "iso639_3": "mjg",
+    "weight": 0,
+    "scripts": [
+      "Latin"
     ]
   },
   {
