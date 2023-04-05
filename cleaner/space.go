@@ -11,18 +11,18 @@ func (c Space[T]) Clean(x T) []rune {
 }
 
 func (c Space[T]) AppendClean(dst []rune, x T) []rune {
-	p := byteseq.Q2B(x)
+	s := byteseq.Q2S(x)
 	var ps bool
-	for i := 0; i < len(p); i++ {
-		if p[i] == ' ' {
+	for _, c1 := range s {
+		if c1 == ' ' {
 			if !ps {
-				dst = append(dst, rune(p[i]))
+				dst = append(dst, c1)
 				ps = true
 				continue
 			}
 		} else {
 			ps = false
-			dst = append(dst, rune(p[i]))
+			dst = append(dst, c1)
 		}
 	}
 
