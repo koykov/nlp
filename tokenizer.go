@@ -40,7 +40,7 @@ func (t StringTokenizer[T]) AppendTokenize(dst Tokens, x T) Tokens {
 	sep, bl := t.Separator, t.BlankLines
 	lo, hi := 0, 0
 	for {
-		p := bytealg.IndexAnyAtStr(s, sep, lo)
+		p := bytealg.IndexAnyAt(s, sep, lo)
 		if p == -1 {
 			hi = len(s)
 			if hi == lo && (bl == TokenizerBlankLinesDiscardEOF || bl == TokenizerBlankLinesDiscard) {
