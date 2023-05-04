@@ -1707,6 +1707,25 @@
     ]
   },
   {
+    "name": "Nahuatl",
+    "native": "Nawatlahtolli",
+    "iso639_3": "nhe",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Nanai",
+    "native": "Nanai",
+    "iso639_3": "gld",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
     "name": "Nepali",
     "native": "नेपाली",
     "iso639_1": "ne",
