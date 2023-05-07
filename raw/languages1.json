@@ -1756,6 +1756,45 @@
     ]
   },
   {
+    "name": "Occitan",
+    "native": "lenga d'òc",
+    "iso639_1": "oc",
+    "iso639_3": "oci",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Oirat",
+    "native": "Oirad kelen",
+    "iso639_3": "xal",
+    "weight": 0,
+    "scripts": [
+      "Cyrillic",
+      "Latin"
+    ]
+  },
+  {
+    "name": "Ojibwe",
+    "native": "Anishinaabemowin",
+    "iso639_1": "oj",
+    "iso639_3": "oji",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Onge",
+    "native": "Öñge",
+    "iso639_3": "OON",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
     "name": "Oromo",
     "native": "Afaan Oromoo",
     "iso639_1": "om",
@@ -1773,6 +1812,15 @@
     "weight": 0,
     "scripts": [
       "Telugu"
+    ]
+  },
+  {
+    "name": "Ottoman Turkish",
+    "native": "Lisân-ı Osmânî",
+    "iso639_3": "ota",
+    "weight": 0,
+    "scripts": [
+      "Latin"
     ]
   },
   {
