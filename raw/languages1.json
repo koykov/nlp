@@ -1824,24 +1824,51 @@
     ]
   },
   {
-    "name": "Punjabi",
-    "native": "ਪੰਜਾਬੀ",
-    "iso639_1": "pa",
-    "iso639_3": "pan",
+    "name": "Pali",
+    "native": "Pāḷi",
+    "iso639_1": "pi",
+    "iso639_3": "pli",
     "weight": 0,
     "scripts": [
-      "Arabic",
-      "Gurmukhi"
+      "Latin"
+    ]
+  },
+  {
+    "name": "Papiamento",
+    "native": "Papiamentu",
+    "iso639_3": "pap",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Pashto",
+    "native": "Pax̌tó",
+    "iso639_1": "ps",
+    "iso639_3": "pus",
+    "weight": 0,
+    "scripts": [
+      "Latin"
     ]
   },
   {
     "name": "Persian",
-    "native": "فارسی",
+    "native": "fārsi",
     "iso639_1": "fa",
     "iso639_3": "fas",
     "weight": 0,
     "scripts": [
-      "Arabic"
+      "Latin"
+    ]
+  },
+  {
+    "name": "Phoenician",
+    "native": "Phoenician",
+    "iso639_3": "phn",
+    "weight": 0,
+    "scripts": [
+      "Latin"
     ]
   },
   {
@@ -1855,6 +1882,15 @@
     ]
   },
   {
+    "name": "Ponapean",
+    "native": "Lokaiahn Pohnpei",
+    "iso639_3": "pon",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
     "name": "Portuguese",
     "native": "Português",
     "iso639_1": "pt",
@@ -1862,6 +1898,26 @@
     "weight": 0,
     "scripts": [
       "Latin"
+    ]
+  },
+  {
+    "name": "Prussian",
+    "native": "Prūsiskai",
+    "iso639_3": "prg",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Punjabi",
+    "native": "ਪੰਜਾਬੀ",
+    "iso639_1": "pa",
+    "iso639_3": "pan",
+    "weight": 0,
+    "scripts": [
+      "Arabic",
+      "Gurmukhi"
     ]
   },
   {
