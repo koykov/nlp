@@ -7,9 +7,11 @@ import (
 )
 
 const (
-	flagClean = 0
-	flagMod   = 1
-	flagToken = 2
+	flagClean = iota
+	flagMod
+	flagToken
+	flagSD
+	flagSDP
 )
 
 type Ctx[T byteseq.Byteseq] struct {
@@ -26,6 +28,7 @@ type Ctx[T byteseq.Byteseq] struct {
 
 	sd    ScriptDetector[T]
 	bufSC []Script
+	scr   Script
 	BufSP ScriptProba
 
 	// BufLP LanguageProba
