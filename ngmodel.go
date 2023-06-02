@@ -4,7 +4,6 @@ import (
 	"encoding/binary"
 	"io"
 	"sort"
-	"strings"
 	"sync"
 	"unicode"
 
@@ -20,21 +19,22 @@ const (
 )
 
 type NGModel[T byteseq.Byteseq] struct {
-	Version        uint64
-	WordSeparators string
+	Version   uint64
+	Tokenizer Tokenizer[T]
 
-	o  sync.Once
-	ws string
-	u  map[Unigram]struct{}
-	b  map[Bigram]struct{}
-	t  map[Trigram]struct{}
-	q  map[Quadrigram]struct{}
-	f  map[Fivegram]struct{}
+	o   sync.Once
+	tkn Tokenizer[T]
+	u   map[Unigram]struct{}
+	b   map[Bigram]struct{}
+	t   map[Trigram]struct{}
+	q   map[Quadrigram]struct{}
+	f   map[Fivegram]struct{}
 
 	ul, bl, tl, ql, fl uint64
 
 	buf  []byte
 	bufR []rune
+	bufT Tokens
 }
 
 func (m *NGModel[T]) Parse(text T) *NGModel[T] {
@@ -42,19 +42,10 @@ func (m *NGModel[T]) Parse(text T) *NGModel[T] {
 		return m
 	}
 	m.o.Do(m.init)
-	s := byteseq.Q2S(text)
-	off := 0
-	for {
-		p := strings.IndexAny(s[off:], m.ws)
-		if p == -1 {
-			p = len(s) - off
-		}
-		w := s[off : off+p]
-		m.parseWord(w)
-		if off = off + p + 1; off >= len(s) {
-			break
-		}
-	}
+	m.bufT.Reset()
+	m.tkn.AppendTokenize(m.bufT, text).Each(func(_ int, t Token) {
+		m.parseWord(t.String())
+	})
 
 	return m
 }
@@ -262,10 +253,10 @@ func (m *NGModel[T]) flushBuf(w io.Writer) (n int, err error) {
 }
 
 func (m *NGModel[T]) init() {
-	if len(m.WordSeparators) == 0 {
-		m.WordSeparators = ngmWordSep
+	if m.Tokenizer == nil {
+		m.Tokenizer = StringTokenizer[T]{Separator: ngmWordSep}
 	}
-	m.ws = m.WordSeparators
+	m.tkn = m.Tokenizer
 
 	m.u = make(map[Unigram]struct{}, m.ul)
 	m.b = make(map[Bigram]struct{}, m.bl)
