@@ -1931,13 +1931,39 @@
     ]
   },
   {
+    "name": "Rajasthani",
+    "native": "Rājasthānī",
+    "iso639_3": "raj",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Rarotongan",
+    "native": "Māori Kūki ʻĀirani",
+    "iso639_3": "rar",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Romani",
+    "native": "Roma",
+    "iso639_3": "rom",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
     "name": "Romanian",
     "native": "Română",
     "iso639_1": "ro",
     "iso639_3": "ron",
     "weight": 0,
     "scripts": [
-      "Cyrillic",
       "Latin"
     ]
   },
@@ -1949,6 +1975,15 @@
     "weight": 0,
     "scripts": [
       "Cyrillic"
+    ]
+  },
+  {
+    "name": "Rutul",
+    "native": "myxʼabišdy č̣el",
+    "iso639_3": "rut",
+    "weight": 0,
+    "scripts": [
+      "Latin"
     ]
   },
   {
