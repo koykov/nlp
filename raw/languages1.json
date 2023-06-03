@@ -1987,13 +1987,61 @@
     ]
   },
   {
-    "name": "Saraiki",
-    "native": "Sarā'īkī",
-    "iso639_1": "",
-    "iso639_3": "skr",
+    "name": "Salar",
+    "native": "Salarcha",
+    "iso639_3": "slr",
     "weight": 0,
     "scripts": [
-      "Arabic"
+      "Latin"
+    ]
+  },
+  {
+    "name": "Sami",
+    "native": "Saami",
+    "iso639_3": "smi",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Samoan",
+    "native": "Gagana faʻa Sāmoa",
+    "iso639_1": "sm",
+    "iso639_3": "smo",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Sanskrit",
+    "native": "Saṃskṛtam",
+    "iso639_1": "sa",
+    "iso639_3": "san",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Scottish Gaelic",
+    "native": "Gàidhlig",
+    "iso639_1": "gd",
+    "iso639_3": "gla",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Selkup",
+    "native": "Selkup",
+    "iso639_3": "sel",
+    "weight": 0,
+    "scripts": [
+      "Latin",
+      "Cyrillic"
     ]
   },
   {
@@ -2005,6 +2053,16 @@
     "scripts": [
       "Cyrillic",
       "Latin"
+    ]
+  },
+  {
+    "name": "Shor",
+    "native": "shor tili",
+    "iso639_3": "cjs",
+    "weight": 0,
+    "scripts": [
+      "Latin",
+      "Cyrillic"
     ]
   },
   {
@@ -2074,6 +2132,15 @@
     "native": "Español",
     "iso639_1": "es",
     "iso639_3": "spa",
+    "weight": 0,
+    "scripts": [
+      "Latin"
+    ]
+  },
+  {
+    "name": "Svan",
+    "native": "Lušnu nin",
+    "iso639_3": "sva",
     "weight": 0,
     "scripts": [
       "Latin"
