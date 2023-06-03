@@ -42,8 +42,7 @@ func NewCtx[T byteseq.Byteseq]() *Ctx[T] {
 }
 
 func (ctx *Ctx[T]) SetText(text T) *Ctx[T] {
-	ctx.SetBit(flagClean, false)
-	ctx.SetBit(flagToken, false)
+	ctx.Bitset.Reset()
 	ctx.src = text
 	ctx.buf = append(ctx.buf[:0], ctx.src...)
 	return ctx
@@ -95,7 +94,8 @@ func (ctx *Ctx[T]) Reset() *Ctx[T] {
 	ctx.bufT.Reset()
 	ctx.ResetCleaners().
 		ResetModifiers().
-		ResetTokenizer()
+		ResetTokenizer().
+		ResetScriptDetector()
 	ctx.err = nil
 	return ctx
 }

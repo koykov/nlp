@@ -42,6 +42,11 @@ func (ctx *Ctx[T]) DetectScriptProbaT(text T) (ScriptProba, error) {
 	return ctx.BufSP, ctx.err
 }
 
+func (ctx *Ctx[T]) ResetScriptDetector() *Ctx[T] {
+	ctx.sd = nil
+	return ctx
+}
+
 func (ctx *Ctx[T]) chkSD() ScriptDetector[T] {
 	if ctx.sd == nil {
 		ctx.sd = NewUnicodeScriptDetector[T]()
