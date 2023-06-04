@@ -34,10 +34,8 @@ func (ctx *Ctx[T]) DetectScript() *Ctx[T] {
 	return ctx
 }
 
-func (ctx *Ctx[T]) DetectScriptT(text T) (Script, error) {
-	ctx.SetText(text).
-		DetectScript()
-	return ctx.scr, ctx.err
+func (ctx *Ctx[T]) GetScript() Script {
+	return ctx.scr
 }
 
 func (ctx *Ctx[T]) DetectScriptProba() *Ctx[T] {
@@ -52,10 +50,8 @@ func (ctx *Ctx[T]) DetectScriptProba() *Ctx[T] {
 	return ctx
 }
 
-func (ctx *Ctx[T]) DetectScriptProbaT(text T) (ScriptProba, error) {
-	ctx.SetText(text).
-		DetectScriptProba()
-	return ctx.BufSP, ctx.err
+func (ctx *Ctx[T]) GetScriptProba() ScriptProba {
+	return ctx.BufSP
 }
 
 func (ctx *Ctx[T]) ResetScriptDetector() *Ctx[T] {
