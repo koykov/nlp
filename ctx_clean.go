@@ -31,12 +31,6 @@ func (ctx *Ctx[T]) Clean() *Ctx[T] {
 	return ctx
 }
 
-func (ctx *Ctx[T]) CleanT(t T) T {
-	return ctx.SetText(t).
-		Clean().
-		GetText()
-}
-
 func (ctx *Ctx[T]) ResetCleaners() *Ctx[T] {
 	ctx.cln = ctx.cln[:0]
 	return ctx

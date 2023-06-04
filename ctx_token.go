@@ -20,12 +20,6 @@ func (ctx *Ctx[T]) Tokenize() *Ctx[T] {
 	return ctx
 }
 
-func (ctx *Ctx[T]) TokenizeT(t T) Tokens {
-	return ctx.SetText(t).
-		Tokenize().
-		GetTokens()
-}
-
 func (ctx *Ctx[T]) GetTokens() Tokens {
 	return ctx.bufT
 }

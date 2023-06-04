@@ -26,12 +26,6 @@ func (ctx *Ctx[T]) Modify() *Ctx[T] {
 	return ctx
 }
 
-func (ctx *Ctx[T]) ModifyT(t T) T {
-	return ctx.SetText(t).
-		Modify().
-		GetText()
-}
-
 func (ctx *Ctx[T]) ResetModifiers() *Ctx[T] {
 	ctx.mod = ctx.mod[:0]
 	return ctx
