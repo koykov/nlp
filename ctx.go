@@ -63,22 +63,6 @@ func (ctx *Ctx[T]) GetRunes() []rune {
 	return ctx.bufR
 }
 
-func (ctx *Ctx[T]) LimitScripts(list []Script) *Ctx[T] {
-	ctx.bufSC = append(ctx.bufSC[:0], list...)
-	ctx.BufSP = ctx.BufSP[:0]
-	for i := 0; i < len(list); i++ {
-		ctx.BufSP = append(ctx.BufSP, ScriptScore{
-			Script: list[i],
-			Score:  0,
-		})
-	}
-	return ctx
-}
-
-func (ctx *Ctx[T]) GetScripts() []Script {
-	return ctx.bufSC
-}
-
 func (ctx *Ctx[T]) GetError() error {
 	return ctx.err
 }

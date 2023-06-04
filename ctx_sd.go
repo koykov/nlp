@@ -6,6 +6,22 @@ func (ctx *Ctx[T]) WithScriptDetector(ds ScriptDetector[T]) *Ctx[T] {
 	return ctx
 }
 
+func (ctx *Ctx[T]) LimitScripts(list []Script) *Ctx[T] {
+	ctx.bufSC = append(ctx.bufSC[:0], list...)
+	ctx.BufSP = ctx.BufSP[:0]
+	for i := 0; i < len(list); i++ {
+		ctx.BufSP = append(ctx.BufSP, ScriptScore{
+			Script: list[i],
+			Score:  0,
+		})
+	}
+	return ctx
+}
+
+func (ctx *Ctx[T]) GetScriptsLimit() []Script {
+	return ctx.bufSC
+}
+
 func (ctx *Ctx[T]) DetectScript() *Ctx[T] {
 	if ctx.chkSrcErr() {
 		return ctx

@@ -67,7 +67,7 @@ func (d UnicodeScriptDetector[T]) dsProba(ctx *Ctx[T]) error {
 		s = distStep(l)
 	}
 
-	scripts := ctx.GetScripts()
+	scripts := ctx.GetScriptsLimit()
 	sl := len(scripts)
 	if sl == 0 {
 		return nil
